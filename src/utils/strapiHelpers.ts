@@ -1,17 +1,25 @@
 /**
- * Helper functions for working with Strapi content
+ * Helper functions for working with CMS content (Sanity)
  */
 
+import { urlFor } from '../lib/sanity';
+
 /**
- * Renders Strapi blocks/rich text content as plain text
- * @param blocks - Array of Strapi block objects
- * @returns Plain text string
+ * Renders Portable Text / Sanity rich text blocks as plain text.
+ * Works with both Sanity Portable Text arrays and legacy Strapi block arrays.
  */
 export const renderStrapiBlocks = (blocks: any[]): string => {
   if (!blocks || blocks.length === 0) return '';
-  
+
   return blocks
     .map((block: any) => {
+      // Sanity Portable Text style: { _type: 'block', children: [{ text }] }
+      if (block._type === 'block' && block.children) {
+        return block.children
+          .map((child: any) => child.text || '')
+          .join('');
+      }
+      // Legacy Strapi style
       if (block.type === 'paragraph' && block.children) {
         return block.children
           .map((child: any) => child.text || '')
@@ -24,7 +32,7 @@ export const renderStrapiBlocks = (blocks: any[]): string => {
       }
       if (block.type === 'list' && block.children) {
         return block.children
-          .map((item: any) => 
+          .map((item: any) =>
             item.children?.map((child: any) => child.text || '').join('') || ''
           )
           .join(' ');
@@ -36,17 +44,30 @@ export const renderStrapiBlocks = (blocks: any[]): string => {
 };
 
 /**
- * Maps Strapi person data to PersonTile props
- * @param person - Strapi person object
- * @returns Mapped person object
+ * Maps a Sanity person document to PersonTile-compatible props.
+ * Handles both Sanity direct fields and legacy Strapi nested attributes.
  */
 export const mapStrapiPersonData = (person: any) => {
   return {
-    id: person.id,
+    id: person._id || person.id,
     name: person.name || person.attributes?.name,
     position: person.position || person.attributes?.position,
-    email: person.email || person.attributes?.email || "",
-    phone: person.phone || person.attributes?.phone || "",
-    image: person.image?.url || person.attributes?.image?.data?.attributes?.url || "",
+    email: person.email || person.attributes?.email || '',
+    phone: person.phone || person.attributes?.phone || '',
+    // For Sanity images, return the image object itself so getStrapiMediaUrl can process it.
+    // For legacy Strapi, return the URL string.
+    image: person.image || person.attributes?.image?.data?.attributes?.url || '',
   };
+};
+
+/**
+ * Get a Sanity image URL string from an image object.
+ * Convenience wrapper for components that need a plain URL string.
+ */
+export const getSanityImageUrl = (imageObj: any, width?: number): string => {
+  if (!imageObj) return '';
+  if (typeof imageObj === 'string') return imageObj;
+  let img = urlFor(imageObj).auto('format').quality(80);
+  if (width) img = img.width(width);
+  return img.url();
 };

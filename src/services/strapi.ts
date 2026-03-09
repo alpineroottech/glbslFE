@@ -1,329 +1,448 @@
-import axios from 'axios';
+import { sanityFetch, urlFor } from '../lib/sanity';
 
-const API_URL = (import.meta as any).env.VITE_STRAPI_API_URL || 'http://localhost:1337';
-console.log('🔍 API_URL being used:', API_URL);
-
-const api = axios.create({
-  baseURL: API_URL,
-  timeout: 30000, // Increased to 30 seconds for production
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
-
-// Add request interceptor to log requests
-api.interceptors.request.use(
-  (config) => {
-    console.log('🚀 Making API request to:', `${config.baseURL || ''}${config.url || ''}`);
-    return config;
-  },
-  (error) => {
-    console.error('❌ Request error:', error);
-    return Promise.reject(error);
-  }
-);
-
-// Add response interceptor to log responses
-api.interceptors.response.use(
-  (response) => {
-    console.log('✅ API response received:', response.status, response.data);
-    return response;
-  },
-  (error) => {
-    console.error('❌ API response error:', error.response?.status, error.response?.data, error.message);
-    return Promise.reject(error);
-  }
-);
-
+// ── Locale helper ──────────────────────────────────────────────────
+const ALLOWED_LOCALES = ['en', 'ne'];
 const getLocale = () => {
-  return (localStorage.getItem('language') as string) || 'en';
+  const lang = localStorage.getItem('language');
+  return lang && ALLOWED_LOCALES.includes(lang) ? lang : 'en';
 };
 
-export const getStrapiMediaUrl = (url?: string | null) => {
-  if (!url) return '';
-  if (url.startsWith('http')) return url;
-  return `${API_URL}${url}`;
+// ── Image URL helper (replaces getStrapiMediaUrl) ──────────────────
+// Accepts either a Sanity image object or a plain URL string.
+export const getStrapiMediaUrl = (source?: any): string => {
+  if (!source) return '';
+  if (typeof source === 'string') {
+    if (source.startsWith('http')) return source;
+    return '';
+  }
+  // Sanity image object
+  return urlFor(source).auto('format').quality(80).url();
 };
 
+// ── GROQ query fragments ──────────────────────────────────────────
+const PERSON_FIELDS = `
+  _id,
+  name,
+  position,
+  department,
+  bio,
+  email,
+  phone,
+  image,
+  order,
+  personType
+`;
+
+const REPORT_FIELDS = `
+  _id,
+  title,
+  "slug": slug.current,
+  description,
+  reportType,
+  publishDate,
+  fiscalYear,
+  quarter,
+  fileSource,
+  uploadedFile { asset->{ url } },
+  fileId,
+  fileName,
+  featured,
+  isActive,
+  order,
+  tags,
+  seoTitle,
+  seoDescription
+`;
+
+const NOTICE_FIELDS = `
+  _id,
+  title,
+  "slug": slug.current,
+  content,
+  noticeType,
+  publishDate,
+  expiryDate,
+  isUrgent,
+  priority,
+  isActive,
+  noticeImage,
+  fileSource,
+  uploadedFile { asset->{ url } },
+  attachmentFileId,
+  attachmentFileName,
+  attachmentFileSize,
+  viewCount,
+  tags,
+  displayPopup,
+  seoTitle,
+  seoDescription
+`;
+
+// ── About Service ─────────────────────────────────────────────────
 export const aboutService = {
   getAboutUs: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/about-us-setting?locale=${locale}&populate=*`);
-    return res.data.data || null;
+    const lang = getLocale();
+    return sanityFetch<any>(
+      `*[_type == "aboutUsSetting" && language == $lang][0] {
+        mission, vision, goal, aboutUsDescription, aboutUsImage
+      }`,
+      { lang },
+    );
   },
+
   getBoardMembers: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/people?filters[personType][$eq]=boardMember&locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "person" && language == $lang && personType == "boardMember"] | order(order asc) { ${PERSON_FIELDS} }`,
+      { lang },
+    );
   },
+
   getManagementTeam: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/people?filters[personType][$eq]=managementTeam&locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "person" && language == $lang && personType == "managementTeam"] | order(order asc) { ${PERSON_FIELDS} }`,
+      { lang },
+    );
   },
+
   getCorporateTeam: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/people?filters[personType][$eq]=corporateTeam&locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "person" && language == $lang && personType == "corporateTeam"] | order(order asc) { ${PERSON_FIELDS} }`,
+      { lang },
+    );
   },
+
   getCommitteeMembers: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/people?filters[personType][$eq]=committeeMember&locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "person" && language == $lang && personType == "committeeMember"] | order(order asc) { ${PERSON_FIELDS} }`,
+      { lang },
+    );
   },
+
   getCommittees: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/committees?locale=${locale}&populate[members][populate][person][populate]=image`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "committee" && language == $lang] {
+        _id,
+        name,
+        description,
+        members[] {
+          _key,
+          committeePosition,
+          roleDescription,
+          order,
+          person-> {
+            _id, name, position, department, image, email, phone
+          }
+        }
+      }`,
+      { lang },
+    );
   },
+
   getMonitoringSupervision: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/people?filters[personType][$eq]=monitoringSupervision&locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "person" && language == $lang && personType == "monitoringSupervision"] | order(order asc) { ${PERSON_FIELDS} }`,
+      { lang },
+    );
   },
+
   getOrganizationStructure: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/organization-structure?locale=${locale}&populate=*`);
-    return res.data.data || null;
+    const lang = getLocale();
+    return sanityFetch<any>(
+      `*[_type == "organizationStructure" && language == $lang][0] {
+        title, description, structureImage
+      }`,
+      { lang },
+    );
   },
-  // Get key officers for homepage
+
   getInformationOfficer: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/people?filters[personType][$eq]=informationOfficer&locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data?.[0] || null;
+    const lang = getLocale();
+    const results = await sanityFetch<any[]>(
+      `*[_type == "person" && language == $lang && personType == "informationOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      { lang },
+    );
+    return results?.[0] || null;
   },
+
   getComplianceOfficer: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/people?filters[personType][$eq]=complianceOfficer&locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data?.[0] || null;
+    const lang = getLocale();
+    const results = await sanityFetch<any[]>(
+      `*[_type == "person" && language == $lang && personType == "complianceOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      { lang },
+    );
+    return results?.[0] || null;
   },
+
   getComplaintOfficer: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/people?filters[personType][$eq]=complaintOfficer&locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data?.[0] || null;
+    const lang = getLocale();
+    const results = await sanityFetch<any[]>(
+      `*[_type == "person" && language == $lang && personType == "complaintOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      { lang },
+    );
+    return results?.[0] || null;
   },
 };
 
+// ── Services Service ──────────────────────────────────────────────
 export const servicesService = {
   getLoanProducts: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/loan-products?locale=${locale}&sort=order:asc`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "loanProduct" && language == $lang] | order(order asc) {
+        _id, name, volume, rate, serviceCharge, term, order
+      }`,
+      { lang },
+    );
   },
+
   getSavingsProducts: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/savings-products?locale=${locale}&sort=order:asc`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "savingsProduct" && language == $lang] | order(order asc) {
+        _id, name, interestRate, order
+      }`,
+      { lang },
+    );
   },
+
   getRemittanceService: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/remittance-service?locale=${locale}&populate=*`);
-    return res.data.data || null;
+    const lang = getLocale();
+    return sanityFetch<any>(
+      `*[_type == "remittanceService" && language == $lang][0] {
+        title, description, images,
+        features[] { _key, title, description, icon }
+      }`,
+      { lang },
+    );
   },
+
   getMemberWelfareService: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/member-welfare-servicee?locale=${locale}&populate=*`);
-    return res.data.data || null;
+    const lang = getLocale();
+    return sanityFetch<any>(
+      `*[_type == "memberWelfareService" && language == $lang][0] {
+        title, description,
+        welfareServices[] { _key, title, description, icon }
+      }`,
+      { lang },
+    );
   },
+
   getServiceCategories: async () => {
-    const locale = getLocale();
-    const res = await api.get(`/api/service-categories?locale=${locale}&populate=*&sort=order:asc`);
-    return res.data.data || [];
+    const lang = getLocale();
+    return sanityFetch<any[]>(
+      `*[_type == "serviceCategory" && language == $lang] | order(order asc) {
+        _id, title, "slug": slug.current, description, icon, order
+      }`,
+      { lang },
+    );
   },
 };
 
+// ── Reports Service ───────────────────────────────────────────────
 export const reportsService = {
-  // Get all active reports with proper population (including hybrid upload fields)
   getAllReports: async () => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/reports?locale=${locale}&filters[isActive][$eq]=true&populate=*&sort=featured:desc,publishDate:desc`);
-      return res.data || { data: [] };
+      const lang = getLocale();
+      const data = await sanityFetch<any[]>(
+        `*[_type == "report" && language == $lang && isActive == true] | order(featured desc, publishDate desc) { ${REPORT_FIELDS} }`,
+        { lang },
+      );
+      return { data: data || [] };
     } catch (error) {
       console.error('Error fetching all reports:', error);
       return { data: [] };
     }
   },
 
-  // Get reports by category
   getReportsByCategory: async (categorySlug: string) => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/reports?locale=${locale}&filters[category][slug][$eq]=${categorySlug}&filters[isActive][$eq]=true&populate=*&sort=publishDate:desc`);
-      return res.data || { data: [] };
+      const lang = getLocale();
+      const data = await sanityFetch<any[]>(
+        `*[_type == "report" && language == $lang && isActive == true && references(*[_type == "reportCategory" && slug.current == $categorySlug]._id)] | order(publishDate desc) { ${REPORT_FIELDS} }`,
+        { lang, categorySlug },
+      );
+      return { data: data || [] };
     } catch (error) {
       console.error('Error fetching reports by category:', error);
       return { data: [] };
     }
   },
 
-  // Get reports by type (quarterly, annual, agm, base-rate, staff-training, governance, other)
   getReportsByType: async (reportType: string) => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/reports?locale=${locale}&filters[reportType][$eq]=${reportType}&filters[isActive][$eq]=true&populate=*&sort=publishDate:desc`);
-      return res.data || { data: [] };
+      const lang = getLocale();
+      const data = await sanityFetch<any[]>(
+        `*[_type == "report" && language == $lang && isActive == true && reportType == $reportType] | order(publishDate desc) { ${REPORT_FIELDS} }`,
+        { lang, reportType },
+      );
+      return { data: data || [] };
     } catch (error) {
       console.error(`Error fetching reports by type ${reportType}:`, error);
       return { data: [] };
     }
   },
 
-  // Get featured reports
   getFeaturedReports: async () => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/reports?locale=${locale}&filters[featured][$eq]=true&filters[isActive][$eq]=true&populate=*&sort=publishDate:desc`);
-      return res.data || { data: [] };
+      const lang = getLocale();
+      const data = await sanityFetch<any[]>(
+        `*[_type == "report" && language == $lang && isActive == true && featured == true] | order(publishDate desc) { ${REPORT_FIELDS} }`,
+        { lang },
+      );
+      return { data: data || [] };
     } catch (error) {
       console.error('Error fetching featured reports:', error);
       return { data: [] };
     }
   },
 
-  // Get single report
   getReport: async (slug: string) => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/reports?locale=${locale}&filters[slug][$eq]=${slug}&populate=*`);
-      return res.data?.data?.[0] || null;
+      const lang = getLocale();
+      return sanityFetch<any>(
+        `*[_type == "report" && language == $lang && slug.current == $slug][0] { ${REPORT_FIELDS} }`,
+        { lang, slug },
+      );
     } catch (error) {
       console.error('Error fetching report:', error);
       return null;
     }
-  }
+  },
 };
 
+// ── Notices Service ───────────────────────────────────────────────
 export const noticesService = {
-  // Get all active notices with proper population (including hybrid upload fields)
   getNotices: async () => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/notices?locale=${locale}&filters[isActive][$eq]=true&sort=publishDate:desc&populate=*`);
-      return res.data || { data: [] };
+      const lang = getLocale();
+      const data = await sanityFetch<any[]>(
+        `*[_type == "notice" && language == $lang && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        { lang },
+      );
+      return { data: data || [] };
     } catch (error) {
       console.error('Error fetching notices:', error);
       return { data: [] };
     }
   },
 
-  // Get notices by type
   getNoticesByType: async (noticeType: string) => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/notices?locale=${locale}&filters[noticeType][$eq]=${noticeType}&filters[isActive][$eq]=true&sort=publishDate:desc&populate=*`);
-      return res.data || { data: [] };
+      const lang = getLocale();
+      const data = await sanityFetch<any[]>(
+        `*[_type == "notice" && language == $lang && noticeType == $noticeType && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        { lang, noticeType },
+      );
+      return { data: data || [] };
     } catch (error) {
       console.error('Error fetching notices by type:', error);
       return { data: [] };
     }
   },
 
-  // Get urgent notices
   getUrgentNotices: async () => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/notices?locale=${locale}&filters[featured][$eq]=true&filters[isActive][$eq]=true&sort=publishDate:desc&populate=*`);
-      return res.data || { data: [] };
+      const lang = getLocale();
+      const data = await sanityFetch<any[]>(
+        `*[_type == "notice" && language == $lang && isUrgent == true && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        { lang },
+      );
+      return { data: data || [] };
     } catch (error) {
       console.error('Error fetching urgent notices:', error);
       return { data: [] };
     }
   },
 
-  // Get single notice
   getNotice: async (slug: string) => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/notices?locale=${locale}&filters[slug][$eq]=${slug}&populate=*`);
-      return res.data?.data?.[0] || null;
+      const lang = getLocale();
+      return sanityFetch<any>(
+        `*[_type == "notice" && language == $lang && slug.current == $slug][0] { ${NOTICE_FIELDS} }`,
+        { lang, slug },
+      );
     } catch (error) {
       console.error('Error fetching notice:', error);
       return null;
     }
   },
 
-  // Get popup notices
   getPopupNotices: async () => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/notices?locale=${locale}&filters[DisplayPopup][$eq]=true&filters[isActive][$eq]=true&sort=publishDate:desc&populate=*`);
-      return res.data?.data || [];
+      const lang = getLocale();
+      return sanityFetch<any[]>(
+        `*[_type == "notice" && language == $lang && displayPopup == true && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        { lang },
+      );
     } catch (error) {
       console.error('Error fetching popup notices:', error);
       return [];
     }
-  }
+  },
 };
 
-// Hero Images Service
+// ── Hero Images Service ───────────────────────────────────────────
 export const heroImagesService = {
   getHeroImages: async () => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/hero-images?locale=${locale}&populate=*&sort=order:asc`);
-      return res.data.data || [];
+      return sanityFetch<any[]>(
+        `*[_type == "heroImage" && isActive == true] | order(order asc) {
+          _id, title, image, altText, caption, order
+        }`,
+      );
     } catch (error) {
       console.error('Error fetching hero images:', error);
       return [];
     }
-  }
+  },
 };
 
-// Testimonials Service
+// ── Testimonials Service ──────────────────────────────────────────
 export const testimonialsService = {
   getTestimonials: async () => {
     try {
-      const locale = getLocale();
-      const res = await api.get(`/api/testimonials?locale=${locale}&populate=*&sort=Order:asc`);
-      return res.data.data || [];
+      const lang = getLocale();
+      return sanityFetch<any[]>(
+        `*[_type == "testimonial" && language == $lang && isActive == true] | order(order asc) {
+          _id, name, position, organization, image, testimonial, order
+        }`,
+        { lang },
+      );
     } catch (error) {
       console.error('Error fetching testimonials:', error);
       return [];
     }
-  }
+  },
 };
 
-// Helper functions for Google Drive integration
+// ── Google Drive helpers (unchanged — still used for reports/notices) ─
 export const googleDriveHelpers = {
-  // Generate view URL for embedding
-  getViewUrl: (fileId: string) => {
-    return `https://drive.google.com/file/d/${fileId}/preview`;
-  },
+  getViewUrl: (fileId: string) =>
+    `https://drive.google.com/file/d/${fileId}/preview`,
 
-  // Generate download URL
-  getDownloadUrl: (fileId: string) => {
-    return `https://drive.google.com/uc?export=download&id=${fileId}`;
-  },
+  getDownloadUrl: (fileId: string) =>
+    `https://drive.google.com/uc?export=download&id=${fileId}`,
 
-  // Generate thumbnail URL
-  getThumbnailUrl: (fileId: string, size: string = 'w400') => {
-    return `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`;
-  },
+  getThumbnailUrl: (fileId: string, size: string = 'w400') =>
+    `https://drive.google.com/thumbnail?id=${fileId}&sz=${size}`,
 
-  // Open file in new tab
   openInNewTab: (fileId: string) => {
-    const url = `https://drive.google.com/file/d/${fileId}/view`;
-    window.open(url, '_blank');
+    window.open(`https://drive.google.com/file/d/${fileId}/view`, '_blank');
   },
 
-  // Download file directly
   downloadFile: async (fileId: string, fileName: string, trackingCallback?: () => void) => {
-    const downloadUrl = googleDriveHelpers.getDownloadUrl(fileId);
-
-    // Track download if callback provided
-    if (trackingCallback) {
-      trackingCallback();
-    }
-
-    // Create temporary link for download
+    if (trackingCallback) trackingCallback();
     const link = document.createElement('a');
-    link.href = downloadUrl;
+    link.href = googleDriveHelpers.getDownloadUrl(fileId);
     link.download = fileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  }
+  },
 };
-
-export default api;

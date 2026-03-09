@@ -7,10 +7,9 @@ import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
 import { reportsService, googleDriveHelpers } from "../../../services/strapi";
 
-// TypeScript interface for Report from Strapi v5 API with Hybrid Upload Support
+// TypeScript interface for Report from Sanity CMS with Hybrid Upload Support
 interface StrapiReport {
-  id: number;
-  documentId: string;
+  _id: string;
   title: string;
   slug: string;
   description?: string;
@@ -18,56 +17,51 @@ interface StrapiReport {
   publishDate?: string;
   fiscalYear?: string;
   quarter?: string;
-  // NEW HYBRID UPLOAD FIELDS
-  File_Source?: "Upload" | "Google_Drive";
-  Uploaded_File?: {
-    url: string;
-    name: string;
-    size: number;
-    mime: string;
+  // HYBRID UPLOAD FIELDS
+  fileSource?: "Upload" | "Google_Drive";
+  uploadedFile?: {
+    asset?: {
+      url?: string;
+    };
   };
-  // EXISTING GOOGLE DRIVE FIELDS (still present for backwards compatibility)
-  file_Id?: string;
+  // GOOGLE DRIVE FIELDS
+  fileId?: string;
   fileName?: string;
   featured?: boolean;
   isActive?: boolean;
   order?: number;
-  tags?: string;
+  tags?: string[];
   seoTitle?: string;
   seoDescription?: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  locale: string;
 }
 
 // HYBRID FILE HANDLING UTILITIES FOR REPORTS
 // Get file URL based on source (Google Drive or Direct Upload)
 const getReportFileUrl = (report: StrapiReport): string | null => {
-  if (report.File_Source === 'Google_Drive' && report.file_Id) {
-    return `https://drive.google.com/file/d/${report.file_Id}/view`;
-  } else if (report.File_Source === 'Upload' && report.Uploaded_File?.url) {
-    return report.Uploaded_File.url;
+  if (report.fileSource === 'Google_Drive' && report.fileId) {
+    return `https://drive.google.com/file/d/${report.fileId}/view`;
+  } else if (report.fileSource === 'Upload' && report.uploadedFile?.asset?.url) {
+    return report.uploadedFile.asset.url;
   }
   return null;
 };
 
 // Get download URL based on source
 const getReportDownloadUrl = (report: StrapiReport): string | null => {
-  if (report.File_Source === 'Google_Drive' && report.file_Id) {
-    return googleDriveHelpers.getDownloadUrl(report.file_Id);
-  } else if (report.File_Source === 'Upload' && report.Uploaded_File?.url) {
-    return report.Uploaded_File.url;
+  if (report.fileSource === 'Google_Drive' && report.fileId) {
+    return googleDriveHelpers.getDownloadUrl(report.fileId);
+  } else if (report.fileSource === 'Upload' && report.uploadedFile?.asset?.url) {
+    return report.uploadedFile.asset.url;
   }
   return null;
 };
 
 // Get file name for display
 const getReportFileName = (report: StrapiReport): string => {
-  if (report.File_Source === 'Google_Drive' && report.fileName) {
+  if (report.fileSource === 'Google_Drive' && report.fileName) {
     return report.fileName;
-  } else if (report.File_Source === 'Upload' && report.Uploaded_File?.name) {
-    return report.Uploaded_File.name;
+  } else if (report.fileSource === 'Upload' && report.fileName) {
+    return report.fileName;
   }
   return 'Report File';
 };
@@ -75,19 +69,13 @@ const getReportFileName = (report: StrapiReport): string => {
 // Check if report has any file attached
 const hasReportFile = (report: StrapiReport): boolean => {
   return (
-    (report.File_Source === 'Google_Drive' && !!report.file_Id) ||
-    (report.File_Source === 'Upload' && !!report.Uploaded_File?.url)
+    (report.fileSource === 'Google_Drive' && !!report.fileId) ||
+    (report.fileSource === 'Upload' && !!report.uploadedFile?.asset?.url)
   );
 };
 
 // Get file size for display
-const getReportFileSize = (report: StrapiReport): string => {
-  if (report.File_Source === 'Upload' && report.Uploaded_File?.size) {
-    const size = report.Uploaded_File.size;
-    if (size < 1024) return `${size} B`;
-    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
-    return `${(size / (1024 * 1024)).toFixed(1)} MB`;
-  }
+const getReportFileSize = (_report: StrapiReport): string => {
   return '';
 };
 
@@ -230,11 +218,11 @@ const QuarterlyReportPage: React.FC = () => {
             setViewerOpen(false);
             setSelectedReport(null);
           }}
-          fileUrl={selectedReport.File_Source === 'Google_Drive' 
-            ? selectedReport.file_Id || '' 
+          fileUrl={selectedReport.fileSource === 'Google_Drive' 
+            ? selectedReport.fileId || '' 
             : getReportFileUrl(selectedReport) || ''}
           fileName={getReportFileName(selectedReport)}
-          fileSource={selectedReport.File_Source}
+          fileSource={selectedReport.fileSource}
         />
       )}
 
@@ -276,7 +264,7 @@ const QuarterlyReportPage: React.FC = () => {
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 pt-16 2xl:pt-20">
               {reports.map((report: StrapiReport, index: number) => (
                 <div
-                  key={report.id}
+                  key={report._id}
                   className="overflow-x-hidden 3xl:w-[410px] group"
                   data-aos="fade-up"
                   data-aos-duration={800 + (index * 200)}
@@ -286,8 +274,8 @@ const QuarterlyReportPage: React.FC = () => {
                       <PDFPreview 
                         title={report.title} 
                         description={report.description || "Click to view report"}
-                        fileId={report.File_Source === 'Google_Drive' ? report.file_Id : undefined}
-                        fileUrl={report.File_Source === 'Upload' ? (getReportFileUrl(report) || undefined) : undefined}
+                        fileId={report.fileSource === 'Google_Drive' ? report.fileId : undefined}
+                        fileUrl={report.fileSource === 'Upload' ? (getReportFileUrl(report) || undefined) : undefined}
                         showThumbnail={true}
                       />
                     </div>
@@ -331,11 +319,11 @@ const QuarterlyReportPage: React.FC = () => {
                         {hasReportFile(report) && (
                           <div className="mb-2">
                             <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                              report.File_Source === 'Google_Drive' 
+                              report.fileSource === 'Google_Drive' 
                                 ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' 
                                 : 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
                             }`}>
-                              {report.File_Source === 'Google_Drive' ? '📂 Google Drive' : '📁 Direct Upload'}
+                              {report.fileSource === 'Google_Drive' ? '📂 Google Drive' : '📁 Direct Upload'}
                             </span>
                           </div>
                         )}

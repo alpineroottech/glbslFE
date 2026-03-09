@@ -57,7 +57,7 @@ const Committee: React.FC = () => {
             {loading && <p>Loading...</p>}
             {error && <p className="text-red-500">{error}</p>}
             {!loading && !error && committees.map((committee) => (
-              <div key={committee.id}>
+              <div key={committee._id}>
                 <h3 className="font-Garamond text-2xl font-semibold mb-6 text-center text-lightBlack dark:text-white">
                   {committee.name}
                 </h3>
@@ -75,14 +75,14 @@ const Committee: React.FC = () => {
                         .map((member: any) => {
                           const person = member.person;
                           return (
-                            <div key={`${committee.id}-${person.id}`}>
+                            <div key={`${committee._id}-${person._id}`}>
                               <PersonTile
-                                id={person.id}
+                                id={person._id}
                                 name={person.name}
-                                position={member.committeePosition} // Use committee-specific position
+                                position={member.committeePosition}
                                 email={person.email || ""}
                                 phone={person.phone || ""}
-                                image={getStrapiMediaUrl(person.image?.url)}
+                                image={getStrapiMediaUrl(person.image)}
                               />
                               {member.roleDescription && (
                                 <p className="text-sm text-lightGray mt-2 text-center px-4">

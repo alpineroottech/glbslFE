@@ -7,45 +7,35 @@ import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
 import { noticesService, googleDriveHelpers } from "../../../services/strapi";
 
-// TypeScript interface for Notice from Strapi v5 API with Hybrid Upload Support
+// TypeScript interface for Notice from Sanity CMS with Hybrid Upload Support
 interface StrapiNotice {
-  id: number;
-  documentId: string;
+  _id: string;
   title: string;
   slug: string;
-  content?: Array<{
-    type: string;
-    children: Array<{
-      text: string;
-      type: string;
-    }>;
-  }>;
+  content?: any[]; // Portable Text blocks
   noticeType?: string;
   publishDate?: string;
   expiryDate?: string;
   isUrgent?: boolean;
   priority?: number;
   isActive?: boolean;
-  // NEW HYBRID UPLOAD FIELDS
-  FileSource?: "Upload" | "Google_Drive";
-  UploadedFile?: {
-    url: string;
-    name: string;
-    size: number;
-    mime: string;
+  noticeImage?: any; // Sanity image object
+  // HYBRID UPLOAD FIELDS
+  fileSource?: "Upload" | "Google_Drive";
+  uploadedFile?: {
+    asset?: {
+      url?: string;
+    };
   };
-  // EXISTING GOOGLE DRIVE FIELDS (still present for backwards compatibility)
-  attatchmentFile_Id?: string;
-  attatchmentFileName?: string;
-  attatchmentFileSize?: string;
+  // GOOGLE DRIVE FIELDS
+  attachmentFileId?: string;
+  attachmentFileName?: string;
+  attachmentFileSize?: string;
   viewCount?: number;
-  tags?: string;
+  tags?: string[];
+  displayPopup?: boolean;
   seoTitle?: string;
   seoDescription?: string;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  locale: string;
 }
 
 // Helper function to extract text from rich content
@@ -63,33 +53,30 @@ const extractTextFromContent = (content?: Array<any>): string => {
 // HYBRID FILE HANDLING UTILITIES
 // Get file URL based on source (Google Drive or Direct Upload)
 const getNoticeFileUrl = (notice: StrapiNotice): string | null => {
-  if (notice.FileSource === 'Google_Drive' && notice.attatchmentFile_Id) {
-    // Use existing Google Drive logic
-    return `https://drive.google.com/file/d/${notice.attatchmentFile_Id}/view`;
-  } else if (notice.FileSource === 'Upload' && notice.UploadedFile?.url) {
-    // Use direct upload from DigitalOcean Spaces
-    return notice.UploadedFile.url;
+  if (notice.fileSource === 'Google_Drive' && notice.attachmentFileId) {
+    return `https://drive.google.com/file/d/${notice.attachmentFileId}/view`;
+  } else if (notice.fileSource === 'Upload' && notice.uploadedFile?.asset?.url) {
+    return notice.uploadedFile.asset.url;
   }
-  return null; // No file available
+  return null;
 };
 
 // Get download URL based on source
 const getNoticeDownloadUrl = (notice: StrapiNotice): string | null => {
-  if (notice.FileSource === 'Google_Drive' && notice.attatchmentFile_Id) {
-    return googleDriveHelpers.getDownloadUrl(notice.attatchmentFile_Id);
-  } else if (notice.FileSource === 'Upload' && notice.UploadedFile?.url) {
-    // For direct uploads, the URL is already a direct download link
-    return notice.UploadedFile.url;
+  if (notice.fileSource === 'Google_Drive' && notice.attachmentFileId) {
+    return googleDriveHelpers.getDownloadUrl(notice.attachmentFileId);
+  } else if (notice.fileSource === 'Upload' && notice.uploadedFile?.asset?.url) {
+    return notice.uploadedFile.asset.url;
   }
   return null;
 };
 
 // Get file name for display
 const getNoticeFileName = (notice: StrapiNotice): string => {
-  if (notice.FileSource === 'Google_Drive' && notice.attatchmentFileName) {
-    return notice.attatchmentFileName;
-  } else if (notice.FileSource === 'Upload' && notice.UploadedFile?.name) {
-    return notice.UploadedFile.name;
+  if (notice.fileSource === 'Google_Drive' && notice.attachmentFileName) {
+    return notice.attachmentFileName;
+  } else if (notice.fileSource === 'Upload' && notice.attachmentFileName) {
+    return notice.attachmentFileName;
   }
   return 'Attachment';
 };
@@ -97,21 +84,15 @@ const getNoticeFileName = (notice: StrapiNotice): string => {
 // Check if notice has any file attached
 const hasNoticeFile = (notice: StrapiNotice): boolean => {
   return (
-    (notice.FileSource === 'Google_Drive' && !!notice.attatchmentFile_Id) ||
-    (notice.FileSource === 'Upload' && !!notice.UploadedFile?.url)
+    (notice.fileSource === 'Google_Drive' && !!notice.attachmentFileId) ||
+    (notice.fileSource === 'Upload' && !!notice.uploadedFile?.asset?.url)
   );
 };
 
 // Get file size for display
 const getNoticeFileSize = (notice: StrapiNotice): string => {
-  if (notice.FileSource === 'Google_Drive' && notice.attatchmentFileSize) {
-    return notice.attatchmentFileSize;
-  } else if (notice.FileSource === 'Upload' && notice.UploadedFile?.size) {
-    // Convert bytes to readable format
-    const size = notice.UploadedFile.size;
-    if (size < 1024) return `${size} B`;
-    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
-    return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  if (notice.fileSource === 'Google_Drive' && notice.attachmentFileSize) {
+    return notice.attachmentFileSize;
   }
   return '';
 };
@@ -174,7 +155,7 @@ const NoticePage: React.FC = () => {
         await navigator.share({
           title: `${notice.title} - GLBSL`,
           text: `Check out our notice: ${notice.title}`,
-          url: `${window.location.origin}/reports/notices/${notice.id}`,
+          url: `${window.location.origin}/reports/notices/${notice._id}`,
         });
       } catch (error) {
         console.log('Error sharing:', error);
@@ -195,11 +176,11 @@ const NoticePage: React.FC = () => {
             setViewerOpen(false);
             setSelectedNotice(null);
           }}
-          fileUrl={selectedNotice.FileSource === 'Google_Drive' 
-            ? selectedNotice.attatchmentFile_Id || '' 
+          fileUrl={selectedNotice.fileSource === 'Google_Drive' 
+            ? selectedNotice.attachmentFileId || '' 
             : getNoticeFileUrl(selectedNotice) || ''}
           fileName={getNoticeFileName(selectedNotice)}
-          fileSource={selectedNotice.FileSource}
+          fileSource={selectedNotice.fileSource}
         />
       )}
 
@@ -260,7 +241,7 @@ const NoticePage: React.FC = () => {
                 <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 pt-8">
                   {notices.map((notice: StrapiNotice, index: number) => (
                     <div
-                      key={notice.id}
+                      key={notice._id}
                       className="overflow-x-hidden 3xl:w-[410px] group"
                       data-aos="fade-up"
                       data-aos-duration={800 + (index * 200)}
@@ -270,8 +251,8 @@ const NoticePage: React.FC = () => {
                           <PDFPreview 
                             title={notice.title} 
                             description={extractTextFromContent(notice.content) || "Click to view notice"}
-                            fileId={notice.FileSource === 'Google_Drive' ? notice.attatchmentFile_Id : undefined}
-                            fileUrl={notice.FileSource === 'Upload' ? notice.UploadedFile?.url : undefined}
+                            fileId={notice.fileSource === 'Google_Drive' ? notice.attachmentFileId : undefined}
+                            fileUrl={notice.fileSource === 'Upload' ? notice.uploadedFile?.asset?.url : undefined}
                             showThumbnail={hasNoticeFile(notice)}
                           />
                         </div>
@@ -334,12 +315,12 @@ const NoticePage: React.FC = () => {
                                     📎 {getNoticeFileName(notice)}
                                   </span>
                                   <div className="flex items-center space-x-2">
-                                    {notice.FileSource === 'Upload' && (
+                                    {notice.fileSource === 'Upload' && (
                                       <span className="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded">
                                         Direct Download
                                       </span>
                                     )}
-                                    {notice.FileSource === 'Google_Drive' && (
+                                    {notice.fileSource === 'Google_Drive' && (
                                       <span className="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded">
                                         Google Drive
                                       </span>

@@ -5,15 +5,13 @@ import { servicesService } from "../../../../services/strapi";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 
 interface LoanProductItem {
-  id: number;
-  documentId: string;
+  _id: string;
   name: string;
   volume: string;
   rate: string;
   serviceCharge: string;
   term: string;
   order: number;
-  locale: string;
 }
 
 // LoanServicesPage component for displaying loan products

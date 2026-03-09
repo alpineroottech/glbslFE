@@ -4,7 +4,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { servicesService } from "../../../services/strapi";
 
 interface SavingsProduct {
-  id: number;
+  _id: string;
   name: string;
   interestRate: string;
 }
@@ -22,16 +22,16 @@ const InterestCalculatorPage: React.FC = () => {
   const [savingsTypes, setSavingsTypes] = useState<SavingsProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch savings products from Strapi
+  // Fetch savings products from Sanity
   useEffect(() => {
     const fetchSavingsProducts = async () => {
       try {
         setLoading(true);
         const data = await servicesService.getSavingsProducts();
         const mappedSavingsTypes = data.map((savings: any) => ({
-          id: savings.id,
-          name: savings.name || savings.attributes?.name,
-          interestRate: savings.interestRate || savings.attributes?.interestRate || '0'
+          _id: savings._id,
+          name: savings.name,
+          interestRate: savings.interestRate || '0'
         }));
         setSavingsTypes(mappedSavingsTypes);
       } catch (error) {

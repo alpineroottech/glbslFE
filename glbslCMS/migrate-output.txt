@@ -1,0 +1,245 @@
+﻿
+> gurans-cms@1.0.0 migrate
+> tsx scripts/migrate.ts
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  Strapi  ΓåÆ  Sanity  Migration
+  Strapi : https://gurans-cms-dlm49.ondigitalocean.app
+  Sanity : v41axjo7 / production
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+
+Verifying Strapi connectivity...
+Γ£ô Strapi reachable
+
+
+ΓöÇΓöÇ heroImage (no i18n) ΓöÇΓöÇ
+node.exe :   ΓÜá Skipped ΓÇö hero-images API returned 404.
+At line:1 char:1
++ & "C:\nvm4w\nodejs/node.exe" "C:\nvm4w\nodejs/node_modules/npm/bin/np ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (  ΓÜá Skipped Γ...I returned 404. 
+   :String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  ΓåÆ To fix: Strapi Admin ΓåÆ Settings ΓåÆ Roles ΓåÆ find your API token role 
+ΓåÆ enable hero-image find/findOne ΓåÆ Save
+  0 item(s)
+
+ΓöÇΓöÇ savingsProduct ΓöÇΓöÇ
+  [en] 9 item(s)
+  Γ£ô savingsProduct-a7k6izn5ga4o3tmxt9vjzodc
+  Γ£ô savingsProduct-cijr46exhiktav12wdkmabqi
+  Γ£ô savingsProduct-hfpvu7ny7umrgcne0ljp58v3
+  Γ£ô savingsProduct-klfxcba45301jqdci9n8jg0p
+  Γ£ô savingsProduct-mz9or5q3zymd6zq2wcivl3r9
+  Γ£ô savingsProduct-rjy55ol2060m1mbnesii416d
+  Γ£ô savingsProduct-xsjmrchsh3hfpftkkxoszttf
+  Γ£ô savingsProduct-y9rl7exl9je0ifqhxgvompfm
+  Γ£ô savingsProduct-yk26pd48b94ycblnuh5gmi8c
+  [ne] 9 item(s)
+  Γ£ô savingsProduct-rtxs0b3275mh6dt1ymuo4ofv__i18n_ne
+  Γ£ô savingsProduct-w7on2to5dada8rkhvbz479zw__i18n_ne
+  Γ£ô savingsProduct-z0wcn68uphh0loefvw1ztu25__i18n_ne
+  Γ£ô savingsProduct-w26f57jb9122aal8kjg1st6e__i18n_ne
+  Γ£ô savingsProduct-nji6x8eue5o36smw93s90rca__i18n_ne
+  Γ£ô savingsProduct-f3jc402h4wpxra5ciz8llp3r__i18n_ne
+  Γ£ô savingsProduct-fgjaz4y8xb8nmonn38dmwa1i__i18n_ne
+  Γ£ô savingsProduct-bxlza3qlqd3muubnc6m6e5f2__i18n_ne
+  Γ£ô savingsProduct-qmwr6voo4hko7tilpowpr4en__i18n_ne
+
+ΓöÇΓöÇ loanProduct ΓöÇΓöÇ
+  [en] 12 item(s)
+  Γ£ô loanProduct-azedpnbomomtmf9e2eprhfzq
+  Γ£ô loanProduct-d55rfq23dwd74q2h741jm45b
+  Γ£ô loanProduct-eom2lno2vuzfw99my6bauqyp
+  Γ£ô loanProduct-g39tvlq901164d9hj20diefd
+  Γ£ô loanProduct-gppieii6meeay15aotyv206f
+  Γ£ô loanProduct-h15b4li9rvaq8herjye67d55
+  Γ£ô loanProduct-hqft0jik82t2m1jqwmofh1sm
+  Γ£ô loanProduct-i53ypjg2uaavn1yd5tvwv7hd
+  Γ£ô loanProduct-k0ld9ymuv3uotyuhh1jbjv0o
+  Γ£ô loanProduct-td8pgm99ou4czd2u2xll32jp
+  Γ£ô loanProduct-uqz1cx5igzjy8hcb9cxk3rwv
+  Γ£ô loanProduct-x3nuz2celk6hh2u0vfnqs39j
+  [ne] 12 item(s)
+  Γ£ô loanProduct-fy6hjp4leerdahspyec8eqxx__i18n_ne
+  Γ£ô loanProduct-h7ii1r0f8idnefeo5ij3mx49__i18n_ne
+  Γ£ô loanProduct-mgcm2ddqkoz6urmpn2p4paon__i18n_ne
+  Γ£ô loanProduct-dh87bst650ohfkt1rimmg01d__i18n_ne
+  Γ£ô loanProduct-wygpc1l998dqj7ztxky7zm84__i18n_ne
+  Γ£ô loanProduct-e0ivickdk5op61hzssp1r2rz__i18n_ne
+  Γ£ô loanProduct-wrhtw15irfkbfyjwpv9itd90__i18n_ne
+  Γ£ô loanProduct-u670eho3yd9g8hpzh3yn2kwc__i18n_ne
+  Γ£ô loanProduct-go3vakca4mspbsf0g0vmtoig__i18n_ne
+  Γ£ô loanProduct-rkocr8ihrnoa10zo6f6smd7i__i18n_ne
+  Γ£ô loanProduct-bmxdgchhn2568czyrr5ugvhi__i18n_ne
+  Γ£ô loanProduct-pbn9twyv896a5qhbgo33s7yg__i18n_ne
+
+ΓöÇΓöÇ reportCategory ΓöÇΓöÇ
+  [en] 0 item(s)
+  [ne] 0 item(s)
+
+ΓöÇΓöÇ serviceCategory ΓöÇΓöÇ
+  [en] 0 item(s)
+  [ne] 0 item(s)
+
+ΓöÇΓöÇ testimonial ΓöÇΓöÇ
+  ΓÜá [en] fetch failed: Strapi /api/testimonials?pagination[page]=1&pagination
+[pageSize]=100&locale=en&populate=* ΓåÆ 404 Not Found
+  ΓÜá [ne] fetch failed: Strapi /api/testimonials?pagination[page]=1&pagination
+[pageSize]=100&locale=ne&populate=* ΓåÆ 404 Not Found
+
+ΓöÇΓöÇ notice ΓöÇΓöÇ
+  [en] 3 item(s)
+    Γåæ image: Gemini_Generated_Image_rbkeq7rbkeq7rbke.png
+  Γ£ô notice-k4ki9q7tqwwtcj3i9fnvxols
+  Γ£ô notice-nfgjlql7p9oz71kxq0ecdo64
+  Γ£ô notice-srcrqesz6of4d4h8gb75knvo
+  [ne] 0 item(s)
+
+ΓöÇΓöÇ report ΓöÇΓöÇ
+  [en] 6 item(s)
+  Γ£ô report-w99onqe8ukvq3gym0ztzz5kr
+  Γ£ô report-rbieey5sjqn1xp1yzqvq98va
+  Γ£ô report-d0iwknzw7tfwgu940vj30eax
+  Γ£ô report-i25gwc9ko1cr3pi545yrosuc
+  Γ£ô report-lzeou8yb7ltpamikivd4vgk7
+  Γ£ô report-sftqwcq9isamjpk3kb7e3ihx
+  [ne] 0 item(s)
+
+ΓöÇΓöÇ person ΓöÇΓöÇ
+  [en] 36 item(s)
+    Γåæ image: Bijay-Sir.jpg
+  Γ£ô person-x9xxsonmw0xajw3sg7ioccar
+    Γåæ image: Bhesh Bahadur Basnet.jpg
+  Γ£ô person-o5k2jx4riwq28r5vl0h507om
+    Γåæ image: Madan Khatiwada.jpg
+  Γ£ô person-yojirnl8m0kzticvynppzpg6
+    Γåæ image: shiva-updated.jpg
+  Γ£ô person-v3c7oupwvkhih4jpyvx0zvm3
+    Γåæ image: Manoj-Karki.jpg
+  Γ£ô person-jlymuy9v91zwx79stdimh8xc
+    Γåæ image: Mamata-Bhandari.jpg
+  Γ£ô person-tkkbp8u4bdx4jkkaxogs8l6m
+    Γåæ image: Jagganath-Kuikel.jpg
+  Γ£ô person-f7h4lpoorfmu7gk64n65tdfz
+    Γåæ image: Ashok Gautam.jpg
+  Γ£ô person-a7o2cwg40vak76352hnekzsh
+    Γåæ image: Prof.Dr. Pramod Kumar Jha.jpg
+  Γ£ô person-y9vtvfhco9n1imqah22l4k2u
+    Γåæ image: Arjun Prasad Niroula.jpg
+  Γ£ô person-gtl7ufqinaow0b7otomp52v0
+    Γåæ image: Ruja Koirala.jpg
+  Γ£ô person-rudtly3ph73aedpgydxwma5v
+    Γåæ image: Bishnu-Prasad-Upadhayay.jpg
+  Γ£ô person-w8kv0fst5tpssi4jt0yxh844
+    Γåæ image: Dilli-Basnet.jpg
+  Γ£ô person-ailu8kxrevhg4dfjyuteaixj
+    Γåæ image: Ashok-Bhattarai.jpg
+  Γ£ô person-rav4cnlqa7pkrt2w32dwtrgw
+  Γ£ô person-dxo0mu7aznal4dtz8w6r3had
+  Γ£ô person-rw9b5m0dtaxlawjkl2djvd7h
+    Γåæ image: GLBSL Logo.png
+  Γ£ô person-yvf4p6fcmocled9jb1581ov5
+  Γ£ô person-g3g4q122jzhbgzk3ak8lzs4r
+  Γ£ô person-s2444cov054fo00wixo3utqm
+    Γåæ image: Niroj-Poudel.jpg
+  Γ£ô person-pci7mjlfugs4xbel54rchayh
+    Γåæ image: Ram-Prasad-Pokharel.jpg
+  Γ£ô person-jtzt5wcnc11f9w0cwpc81qts
+  Γ£ô person-pf965em03g6ulae3hm2gpec4
+  Γ£ô person-qzz2s1chw1lysy8z546z1v6h
+  Γ£ô person-a9wrdi3sic08qoaa2so8f6ks
+    Γåæ image: Uday Narayan Baral.jpg
+  Γ£ô person-jfh86k05fw6v3asxqpvhpcos
+  Γ£ô person-fdnxwxhnygtzy4hsa6omq1oj
+  Γ£ô person-fidtsjgwk4ydfj320j48wykf
+    Γåæ image: Mrs.-Sabita-Dhungel.jpg
+  Γ£ô person-mh5k9bgd7w0zfiz5xd7ytybm
+  Γ£ô person-o3zz6acaglky07siy87wglc6
+  Γ£ô person-yww18dypmt04nau1aguiq5j9
+  Γ£ô person-lbiiesxx4790dzxxgbnaje9c
+  Γ£ô person-tjppbexrb3fqpki437p6xo9b
+  Γ£ô person-knrc4x5tlsgyflh13ozsr736
+    Γåæ image: Ronisha-Khadka.jpg
+  Γ£ô person-r8b3kpmjxjg2tm644s3z0qgv
+    Γåæ image: Bibhutee.jpg
+  Γ£ô person-u1o16x89gb2fao7scaukxlsn
+    Γåæ image: Abisesh.jpeg
+  Γ£ô person-e263819erksp5ea7g1uhgo6j
+  [ne] 31 item(s)
+  Γ£ô person-gawc8r5tvzri2xpam3ujiwpo__i18n_ne
+  Γ£ô person-ko83ut0ha63kxvbu1j5guso0__i18n_ne
+  Γ£ô person-soyz6d61zgm64ae7pjiwufg4__i18n_ne
+  Γ£ô person-fu9mh5szaeisaoixhara1ugn__i18n_ne
+  Γ£ô person-blh4lth3xvt76h1mwcb8hukd__i18n_ne
+  Γ£ô person-iveqdwva132hcfnhcxyhx49x__i18n_ne
+  Γ£ô person-c6796drtxcbrgosqxlyvqyce__i18n_ne
+  Γ£ô person-ej4ic6k2e6dcdj6m211yu2xg__i18n_ne
+  Γ£ô person-o9kavbu1r4s3h38vskf6fx7n__i18n_ne
+  Γ£ô person-tmlrrlzab1tb0pphz6z02qwu__i18n_ne
+  Γ£ô person-jgpwoy68ptltwpji8eyte8o1__i18n_ne
+  Γ£ô person-o24ixh8j1armabrmn5i60exp__i18n_ne
+  Γ£ô person-r8ysfhywdf2o9xh1b2p1q3of__i18n_ne
+  Γ£ô person-trqg1n64zo6jfdhejlqh9lyl__i18n_ne
+  Γ£ô person-a84byor1ntb4g5sfcaczg7ly__i18n_ne
+  Γ£ô person-hle11bwqcxdyhxdblds21qv5__i18n_ne
+  Γ£ô person-vvvjss2gcqek938vuixuelyk__i18n_ne
+  Γ£ô person-mh37zmb2bsbmvsaskbrp3qf0__i18n_ne
+  Γ£ô person-zgpr88c0fnfsv8ia2nejh2zg__i18n_ne
+  Γ£ô person-hp521ua0gbwebdrrk3ud0ooc__i18n_ne
+  Γ£ô person-gpza14rtjppg5iqvf05aa55a__i18n_ne
+  Γ£ô person-ut1oqksy3wnipawtf2l0tl4c__i18n_ne
+  Γ£ô person-jl3tmpptg0mp11yeqn0o1hxr__i18n_ne
+  Γ£ô person-v56p3dh15dfgqvvwdmesfmt8__i18n_ne
+  Γ£ô person-hu452x3pnlxje98ek3d40d86__i18n_ne
+  Γ£ô person-rc5fydin0wz9w1btvfgbgc4n__i18n_ne
+  Γ£ô person-u2jscxn9uwypj21vohd1c0fr__i18n_ne
+    Γåæ image: Bijay Kumar Dahal.jpg
+  Γ£ô person-ym8rf8svpocvibl7nbcy8waa__i18n_ne
+  Γ£ô person-f86e1ib682noqsnmz0mcm4ns__i18n_ne
+  Γ£ô person-azeqn2wrf3qyjkzr60rkvuy5__i18n_ne
+  Γ£ô person-ylixeicpbcj2towb9xd07qtp__i18n_ne
+
+ΓöÇΓöÇ committee ΓöÇΓöÇ
+  [en] 4 item(s)
+  Γ£ô committee-f2uvevm87p73dkj5h0lm33z3
+  Γ£ô committee-zvlxx6rd7bjkjvefdina5s2d
+  Γ£ô committee-toqax7ggs3i0omdx0m0ze70e
+  Γ£ô committee-od8wtzltwnlix2sp39dyd8bd
+  [ne] 4 item(s)
+  Γ£ô committee-fk5xwmuctikehc7c7zszgheg__i18n_ne
+  Γ£ô committee-xv90qb53qlbveoj8h1l6b4eb__i18n_ne
+  Γ£ô committee-byc4a2d7l66g96n00zolhpbd__i18n_ne
+  Γ£ô committee-l18zyi70bkfn28d0bwzg5qzi__i18n_ne
+
+ΓöÇΓöÇ aboutUsSetting (singleton) ΓöÇΓöÇ
+    ΓÜá DO Spaces [About_Page_ac87ce0691.png]: UnknownError
+    ΓÜá 
+https://gurans-cms-dlm49.ondigitalocean.app/uploads/About_Page_ac87ce0691.png: 
+404
+  Γ£ô [en] aboutUsSetting
+  Γ£ô [ne] aboutUsSetting__i18n_ne
+
+ΓöÇΓöÇ organizationStructure (singleton) ΓöÇΓöÇ
+  ΓÜá [en] Strapi /api/organization-structure?locale=en&populate=* ΓåÆ 404 Not 
+Found
+  ΓÜá [ne] Strapi /api/organization-structure?locale=ne&populate=* ΓåÆ 404 Not 
+Found
+
+ΓöÇΓöÇ memberWelfareService (singleton) ΓöÇΓöÇ
+  Γ£ô [en] memberWelfareService
+  ΓÜá [ne] Strapi 
+/api/member-welfare-servicee?locale=ne&populate[welfareServices][populate]=* 
+ΓåÆ 404 Not Found
+
+ΓöÇΓöÇ remittanceService (singleton) ΓöÇΓöÇ
+  ΓÜá [en] Strapi /api/remittance-service?locale=en&populate=* ΓåÆ 404 Not 
+Found
+  ΓÜá [ne] Strapi /api/remittance-service?locale=ne&populate=* ΓåÆ 404 Not 
+Found
+
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ
+  Γ£ô Migration complete!
+  Γåæ 24 unique asset(s) uploaded to Sanity CDN
+ΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉΓòÉ

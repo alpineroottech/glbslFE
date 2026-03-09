@@ -31,8 +31,6 @@ const Offers: React.FC = () => {
           }),
         ]);
 
-        console.log('Fetched officers:', { informationOfficer, complianceOfficer, complaintOfficer });
-
         const officersList = [informationOfficer, complianceOfficer, complaintOfficer]
           .filter(officer => officer !== null)
           .map((officer: any) => {
@@ -43,7 +41,6 @@ const Offers: React.FC = () => {
             };
           });
 
-        console.log('Mapped officers list:', officersList);
         setOfficers(officersList);
       } catch (err) {
         console.error("Error fetching officers:", err);

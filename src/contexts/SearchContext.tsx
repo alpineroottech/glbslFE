@@ -363,44 +363,44 @@ export const SearchProvider: React.FC<SearchProviderProps> = ({ children }) => {
   const [dynamicSearchIndex, setDynamicSearchIndex] = useState<SearchResult[]>(searchIndex);
   const { language } = useLanguage();
 
-  // Fetch dynamic content from Strapi and update search index
+  // Fetch dynamic content from Sanity and update search index
   useEffect(() => {
     const fetchDynamicContent = async () => {
       try {
         // Fetch board members
         const boardMembers = await aboutService.getBoardMembers();
         const boardMemberNames = boardMembers.map((member: any) => {
-          const name = member.name || member.attributes?.name || '';
-          const position = member.position || member.attributes?.position || '';
+          const name = member.name || '';
+          const position = member.position || '';
           return `${name} ${position}`.toLowerCase();
         }).filter((name: string) => name.trim());
 
         // Fetch management team
         const managementTeam = await aboutService.getManagementTeam();
         const managementNames = managementTeam.map((member: any) => {
-          const name = member.name || member.attributes?.name || '';
-          const position = member.position || member.attributes?.position || '';
+          const name = member.name || '';
+          const position = member.position || '';
           return `${name} ${position}`.toLowerCase();
         }).filter((name: string) => name.trim());
 
         // Fetch corporate team
         const corporateTeam = await aboutService.getCorporateTeam();
         const corporateNames = corporateTeam.map((member: any) => {
-          const name = member.name || member.attributes?.name || '';
-          const position = member.position || member.attributes?.position || '';
+          const name = member.name || '';
+          const position = member.position || '';
           return `${name} ${position}`.toLowerCase();
         }).filter((name: string) => name.trim());
 
         // Fetch loan products
         const loanProducts = await servicesService.getLoanProducts();
         const loanNames = loanProducts.map((product: any) => {
-          return (product.name || product.attributes?.name || '').toLowerCase();
+          return (product.name || '').toLowerCase();
         }).filter((name: string) => name.trim());
 
         // Fetch savings products
         const savingsProducts = await servicesService.getSavingsProducts();
         const savingsNames = savingsProducts.map((product: any) => {
-          return (product.name || product.attributes?.name || '').toLowerCase();
+          return (product.name || '').toLowerCase();
         }).filter((name: string) => name.trim());
 
         // Update search index with dynamic content

@@ -12,10 +12,8 @@ import { heroImagesService, getStrapiMediaUrl } from "../../services/strapi";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 interface HeroImage {
-  id: number;
-  image: {
-    url: string;
-  };
+  _id: string;
+  image: any; // Sanity image object
   order: number;
 }
 
@@ -32,12 +30,11 @@ const HeroSection: React.FC = () => {
         
         // Map the data to extract image URLs
         const mappedImages = data.map((item: any) => ({
-          id: item.id,
-          image: item.image || item.attributes?.image,
-          order: item.order || item.attributes?.order || 0
+          _id: item._id,
+          image: item.image,
+          order: item.order || 0
         }));
         
-        console.log('Fetched hero images:', mappedImages);
         setHeroImages(mappedImages);
       } catch (error) {
         console.error('Error loading hero images:', error);
@@ -58,7 +55,7 @@ const HeroSection: React.FC = () => {
   ];
 
   const imagesToShow = heroImages.length > 0 
-    ? heroImages.map(img => getStrapiMediaUrl(img.image?.url))
+    ? heroImages.map(img => getStrapiMediaUrl(img.image))
     : fallbackImages;
 
   if (loading) {

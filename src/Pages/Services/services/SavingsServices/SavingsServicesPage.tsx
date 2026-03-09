@@ -5,12 +5,10 @@ import { servicesService } from "../../../../services/strapi";
 import { useLanguage } from "../../../../contexts/LanguageContext";
 
 interface SavingsItem {
-  id: number;
-  documentId: string;
+  _id: string;
   name: string;
   interestRate: string;
   order: number;
-  locale: string;
 }
 
 // SavingsServicesPage component for displaying savings products

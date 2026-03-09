@@ -4,39 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { noticesService, getStrapiMediaUrl } from '../../services/strapi';
 
 interface Notice {
-  id: number;
+  _id: string;
   slug?: string;
   title?: string;
-  image?: {
-    url?: string;
-  };
-  noticeImage?: {
-    url?: string;
-    formats?: {
-      large?: { url?: string };
-      medium?: { url?: string };
-      small?: { url?: string };
-    };
-  };
-  UploadedFile?: {
-    url?: string;
-    name?: string;
-    mime?: string;
-  };
-  attributes?: {
-    slug?: string;
-    title?: string;
-    image?: {
-      data?: {
-        attributes?: {
-          url?: string;
-        };
-      };
-    };
-    UploadedFile?: {
+  noticeImage?: any; // Sanity image object
+  uploadedFile?: {
+    asset?: {
       url?: string;
-      name?: string;
-      mime?: string;
+      originalFilename?: string;
+      mimeType?: string;
     };
   };
 }
@@ -51,8 +27,6 @@ const NoticePopup: React.FC = () => {
     const fetchPopupNotices = async () => {
       try {
         const data = await noticesService.getPopupNotices();
-        console.log('Popup notices fetched:', data);
-        console.log('First notice full data:', JSON.stringify(data[0], null, 2));
         if (data && data.length > 0) {
           setNotices(data);
           setIsVisible(true);
@@ -98,21 +72,27 @@ const NoticePopup: React.FC = () => {
 
   const currentNotice = notices[currentIndex];
   
-  // Extract file URL from UploadedFile (PDF or any document)
-  const fileUrl = currentNotice?.UploadedFile?.url ||
-                  currentNotice?.attributes?.UploadedFile?.url ||
-                  currentNotice?.noticeImage?.url ||
-                  currentNotice?.image?.url;
-                   
-  const fullFileUrl = getStrapiMediaUrl(fileUrl);
-  const fileName = currentNotice?.UploadedFile?.name || currentNotice?.attributes?.UploadedFile?.name || 'Notice';
-  const mimeType = currentNotice?.UploadedFile?.mime || currentNotice?.attributes?.UploadedFile?.mime || '';
-  const title = currentNotice?.title || currentNotice?.attributes?.title || 'Notice';
+  // Extract file URL from uploadedFile (PDF or any document) or noticeImage
+  const fileUrl = currentNotice?.uploadedFile?.asset?.url || null;
+  const imageUrl = currentNotice?.noticeImage ? getStrapiMediaUrl(currentNotice.noticeImage) : null;
+  const fullFileUrl = fileUrl || imageUrl || '';
+  const fileName = currentNotice?.uploadedFile?.asset?.originalFilename || 'Notice';
+  const mimeType = currentNotice?.uploadedFile?.asset?.mimeType || '';
+  const title = currentNotice?.title || 'Notice';
 
-  console.log('Current notice:', currentNotice);
-  console.log('File URL:', fileUrl);
-  console.log('Full File URL:', fullFileUrl);
-  console.log('MIME Type:', mimeType);
+  // Validate URL for iframe/image safety
+  const isValidUrl = (url: string): boolean => {
+    try {
+      const parsed = new URL(url);
+      return ['https:', 'http:'].includes(parsed.protocol);
+    } catch {
+      return false;
+    }
+  };
+
+  if (!fullFileUrl || !isValidUrl(fullFileUrl)) {
+    return null;
+  }
 
   // Check if it's a PDF
   const isPDF = mimeType === 'application/pdf' || fullFileUrl.endsWith('.pdf');

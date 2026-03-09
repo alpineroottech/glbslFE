@@ -4,7 +4,7 @@ import { useLanguage } from "../../../contexts/LanguageContext";
 import { servicesService } from "../../../services/strapi";
 
 interface LoanProduct {
-  id: number;
+  _id: string;
   name: string;
   rate: string;
 }
@@ -19,16 +19,16 @@ const EMICalculatorPage: React.FC = () => {
   const [loanTypes, setLoanTypes] = useState<LoanProduct[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch loan products from Strapi
+  // Fetch loan products from Sanity
   useEffect(() => {
     const fetchLoanProducts = async () => {
       try {
         setLoading(true);
         const data = await servicesService.getLoanProducts();
         const mappedLoanTypes = data.map((loan: any) => ({
-          id: loan.id,
-          name: loan.name || loan.attributes?.name,
-          rate: loan.rate || loan.attributes?.rate || '0'
+          _id: loan._id,
+          name: loan.name,
+          rate: loan.rate || '0'
         }));
         setLoanTypes(mappedLoanTypes);
       } catch (error) {

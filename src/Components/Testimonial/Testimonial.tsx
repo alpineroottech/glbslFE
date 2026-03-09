@@ -4,25 +4,16 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { testimonialsService, getStrapiMediaUrl } from "../../services/strapi";
 
-// TypeScript interface for Testimonial from Strapi
+// TypeScript interface for Testimonial from Sanity
 interface StrapiTestimonial {
-  id: number;
-  documentId: string;
-  Name: string;
-  Testimonial: string;
-  Organization?: string;
-  Position?: string;
-  Image?: {
-    url: string;
-    name: string;
-    alternativeText?: string;
-  };
-  Order?: number;
+  _id: string;
+  name: string;
+  testimonial: string;
+  organization?: string;
+  position?: string;
+  image?: any; // Sanity image object
+  order?: number;
   isActive?: boolean;
-  createdAt: string;
-  updatedAt: string;
-  publishedAt: string;
-  locale: string;
 }
 
 const Testimonial: React.FC = () => {
@@ -71,8 +62,8 @@ const Testimonial: React.FC = () => {
 
   // Render a single testimonial card
   const renderTestimonialCard = (testimonial: StrapiTestimonial) => {
-    const imageUrl = testimonial.Image?.url
-      ? getStrapiMediaUrl(testimonial.Image.url)
+    const imageUrl = testimonial.image
+      ? getStrapiMediaUrl(testimonial.image)
       : "/images/home-1/testi-author.png"; // Default fallback image
 
     return (
@@ -85,7 +76,7 @@ const Testimonial: React.FC = () => {
         />
 
         <p className="font-Lora text-sm sm:text-base leading-[26px] text-gray dark:text-lightGray font-normal xl:text-lg mt-[30px] italic mb-[45px] before:absolute before:h-[30px] before:left-0 before:bottom-[-36px] before:bg-khaki before:w-[1px] relative">
-          "{testimonial.Testimonial}"
+          "{testimonial.testimonial}"
         </p>
         <span className="w-[1px] h-[25px] bg-[#ddd]"></span>
 
@@ -93,19 +84,19 @@ const Testimonial: React.FC = () => {
           <img
             src={imageUrl}
             className="w-[65px] h-[65px] rounded-full object-cover"
-            alt={testimonial.Image?.alternativeText || testimonial.Name}
+            alt={testimonial.name}
           />
 
           <div>
             <h4 className="text-base lg:text-[22px] leading-[26px] text-lightBlack dark:text-white font-semibold font-Garamond">
-              {testimonial.Name}
+              {testimonial.name}
             </h4>
-            {(testimonial.Position || testimonial.Organization) && (
+            {(testimonial.position || testimonial.organization) && (
               <p className="pt-1 text-sm md:text-base leading-[26px] font-normal text-gray dark:text-lightGray flex items-center">
                 <span className="w-5 h-[1px] inline-block text-khaki bg-khaki mr-2"></span>
-                {testimonial.Position}
-                {testimonial.Position && testimonial.Organization && ", "}
-                {testimonial.Organization}
+                {testimonial.position}
+                {testimonial.position && testimonial.organization && ", "}
+                {testimonial.organization}
               </p>
             )}
           </div>
@@ -179,7 +170,7 @@ const Testimonial: React.FC = () => {
             >
               {testimonials.map((testimonial) => (
                 <div
-                  key={testimonial.id}
+                  key={testimonial._id}
                   className="keen-slider__slide number-slide1"
                 >
                   <div

@@ -9,34 +9,25 @@ import { noticesService, googleDriveHelpers } from "../../../services/strapi";
 
 // Reuse the StrapiNotice interface
 interface StrapiNotice {
-  id: number;
-  documentId: string;
+  _id: string;
   title: string;
   slug: string;
-  content?: Array<{
-    type: string;
-    children: Array<{
-      text: string;
-      type: string;
-    }>;
-  }>;
+  content?: any[]; // Portable Text blocks
   noticeType?: string;
   publishDate?: string;
   expiryDate?: string;
   isUrgent?: boolean;
   priority?: number;
   isActive?: boolean;
-  FileSource?: "Upload" | "Google_Drive";
-  UploadedFile?: {
-    url: string;
-    name: string;
-    size: number;
-    mime: string;
+  fileSource?: "Upload" | "Google_Drive";
+  uploadedFile?: {
+    asset?: {
+      url?: string;
+    };
   };
-  attatchmentFile_Id?: string;
-  attatchmentFileName?: string;
-  attatchmentFileSize?: string;
-  updatedAt: string;
+  attachmentFileId?: string;
+  attachmentFileName?: string;
+  attachmentFileSize?: string;
 }
 
 // Helper to extract text
@@ -52,43 +43,36 @@ const extractTextFromContent = (content?: Array<any>): string => {
 
 // Helper to get file URL
 const getNoticeFileUrl = (notice: StrapiNotice): string | null => {
-  if (notice.FileSource === 'Google_Drive' && notice.attatchmentFile_Id) {
-    return `https://drive.google.com/file/d/${notice.attatchmentFile_Id}/view`;
-  } else if (notice.FileSource === 'Upload' && notice.UploadedFile?.url) {
-    return notice.UploadedFile.url;
+  if (notice.fileSource === 'Google_Drive' && notice.attachmentFileId) {
+    return `https://drive.google.com/file/d/${notice.attachmentFileId}/view`;
+  } else if (notice.fileSource === 'Upload' && notice.uploadedFile?.asset?.url) {
+    return notice.uploadedFile.asset.url;
   }
   return null;
 };
 
 // Helper to get download URL
 const getNoticeDownloadUrl = (notice: StrapiNotice): string | null => {
-  if (notice.FileSource === 'Google_Drive' && notice.attatchmentFile_Id) {
-    return googleDriveHelpers.getDownloadUrl(notice.attatchmentFile_Id);
-  } else if (notice.FileSource === 'Upload' && notice.UploadedFile?.url) {
-    return notice.UploadedFile.url;
+  if (notice.fileSource === 'Google_Drive' && notice.attachmentFileId) {
+    return googleDriveHelpers.getDownloadUrl(notice.attachmentFileId);
+  } else if (notice.fileSource === 'Upload' && notice.uploadedFile?.asset?.url) {
+    return notice.uploadedFile.asset.url;
   }
   return null;
 };
 
 // Helper to get file name
 const getNoticeFileName = (notice: StrapiNotice): string => {
-  if (notice.FileSource === 'Google_Drive' && notice.attatchmentFileName) {
-    return notice.attatchmentFileName;
-  } else if (notice.FileSource === 'Upload' && notice.UploadedFile?.name) {
-    return notice.UploadedFile.name;
+  if (notice.attachmentFileName) {
+    return notice.attachmentFileName;
   }
   return 'Application Form';
 };
 
 // Helper to get file size
 const getNoticeFileSize = (notice: StrapiNotice): string => {
-  if (notice.FileSource === 'Google_Drive' && notice.attatchmentFileSize) {
-    return notice.attatchmentFileSize;
-  } else if (notice.FileSource === 'Upload' && notice.UploadedFile?.size) {
-    const size = notice.UploadedFile.size;
-    if (size < 1024) return `${size} B`;
-    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
-    return `${(size / (1024 * 1024)).toFixed(1)} MB`;
+  if (notice.fileSource === 'Google_Drive' && notice.attachmentFileSize) {
+    return notice.attachmentFileSize;
   }
   return '';
 };
@@ -116,9 +100,7 @@ const ApplicationFormPage: React.FC = () => {
         if (formNotice) {
           setApplicationForm(formNotice);
         } else {
-          // If no specific form found, we could show a fallback or nothing
-          // For now, we'll just leave it null which will show the "No form available" state
-          console.log('No application form notice found');
+          // If no specific form found, leave it null which shows the "No form available" state
         }
         setError(null);
       } catch (err) {
@@ -162,11 +144,11 @@ const ApplicationFormPage: React.FC = () => {
         <PDFViewer
           isOpen={viewerOpen}
           onClose={() => setViewerOpen(false)}
-          fileUrl={applicationForm.FileSource === 'Google_Drive'
-            ? applicationForm.attatchmentFile_Id || ''
+          fileUrl={applicationForm.fileSource === 'Google_Drive'
+            ? applicationForm.attachmentFileId || ''
             : getNoticeFileUrl(applicationForm) || ''}
           fileName={getNoticeFileName(applicationForm)}
-          fileSource={applicationForm.FileSource}
+          fileSource={applicationForm.fileSource}
         />
       )}
 
@@ -233,8 +215,8 @@ const ApplicationFormPage: React.FC = () => {
                           <PDFPreview
                             title={applicationForm.title}
                             description=""
-                            fileId={applicationForm.FileSource === 'Google_Drive' ? applicationForm.attatchmentFile_Id : undefined}
-                            fileUrl={applicationForm.FileSource === 'Upload' ? applicationForm.UploadedFile?.url : undefined}
+                            fileId={applicationForm.fileSource === 'Google_Drive' ? applicationForm.attachmentFileId : undefined}
+                            fileUrl={applicationForm.fileSource === 'Upload' ? applicationForm.uploadedFile?.asset?.url : undefined}
                             showThumbnail={true}
                           />
                           <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">

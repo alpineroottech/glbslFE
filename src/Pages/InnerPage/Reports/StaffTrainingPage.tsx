@@ -7,26 +7,24 @@ import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
 import { reportsService, googleDriveHelpers } from "../../../services/strapi";
 
-// TypeScript interface for Report from Strapi v5 API with Hybrid Upload Support
+// TypeScript interface for Report from Sanity CMS with Hybrid Upload Support
 interface StrapiReport {
-  id: number;
-  documentId: string;
+  _id: string;
   title: string;
   slug: string;
   description?: string;
   reportType?: string;
   publishDate?: string;
   fiscalYear?: string;
-  // NEW HYBRID UPLOAD FIELDS
-  File_Source?: "Upload" | "Google_Drive";
-  Uploaded_File?: {
-    url: string;
-    name: string;
-    size: number;
-    mime: string;
+  // HYBRID UPLOAD FIELDS
+  fileSource?: "Upload" | "Google_Drive";
+  uploadedFile?: {
+    asset?: {
+      url?: string;
+    };
   };
-  // EXISTING GOOGLE DRIVE FIELDS (still present for backwards compatibility)
-  file_Id?: string;
+  // GOOGLE DRIVE FIELDS
+  fileId?: string;
   fileName?: string;
 }
 
@@ -56,40 +54,34 @@ const StaffTrainingPage: React.FC = () => {
 
   // HELPER: Get file URL based on source (Google Drive or Direct Upload)
   const getReportFileUrl = (report: StrapiReport): string | null => {
-    if (report.File_Source === 'Google_Drive' && report.file_Id) {
-      return `https://drive.google.com/file/d/${report.file_Id}/view`;
-    } else if (report.File_Source === 'Upload' && report.Uploaded_File?.url) {
-      return report.Uploaded_File.url;
+    if (report.fileSource === 'Google_Drive' && report.fileId) {
+      return `https://drive.google.com/file/d/${report.fileId}/view`;
+    } else if (report.fileSource === 'Upload' && report.uploadedFile?.asset?.url) {
+      return report.uploadedFile.asset.url;
     }
     return null;
   };
 
-  // HELPER: Determine download URL based on File_Source
+  // HELPER: Determine download URL based on fileSource
   const getReportDownloadUrl = (report: StrapiReport): string | null => {
-    if (report.File_Source === "Upload" && report.Uploaded_File?.url) {
-      return report.Uploaded_File.url;
-    } else if (report.File_Source === "Google_Drive" && report.file_Id) {
-      return googleDriveHelpers.getDownloadUrl(report.file_Id);
+    if (report.fileSource === "Upload" && report.uploadedFile?.asset?.url) {
+      return report.uploadedFile.asset.url;
+    } else if (report.fileSource === "Google_Drive" && report.fileId) {
+      return googleDriveHelpers.getDownloadUrl(report.fileId);
     }
     return null;
   };
 
   // HELPER: Get file name for download
   const getReportFileName = (report: StrapiReport): string => {
-    if (report.File_Source === "Upload" && report.Uploaded_File?.name) {
-      return report.Uploaded_File.name;
-    } else if (report.File_Source === "Google_Drive" && report.fileName) {
+    if (report.fileName) {
       return report.fileName;
     }
     return `${report.title}.pdf`;
   };
 
   // HELPER: Get file size display
-  const getFileSize = (report: StrapiReport): string => {
-    if (report.File_Source === "Upload" && report.Uploaded_File?.size) {
-      const sizeInMB = (report.Uploaded_File.size / (1024 * 1024)).toFixed(2);
-      return `${sizeInMB} MB`;
-    }
+  const getFileSize = (_report: StrapiReport): string => {
     return "N/A";
   };
 
@@ -200,7 +192,7 @@ const StaffTrainingPage: React.FC = () => {
             <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 pt-16 2xl:pt-20">
               {reports.map((report, index) => (
                 <div
-                  key={report.documentId}
+                  key={report._id}
                   className="overflow-x-hidden 3xl:w-[410px] group"
                   data-aos="fade-up"
                   data-aos-duration={800 + (index * 200)}
@@ -250,7 +242,7 @@ const StaffTrainingPage: React.FC = () => {
                         </p>
                         <div className="flex items-center justify-between">
                           <span className="text-xs text-gray-500 dark:text-gray-400">
-                            {report.File_Source === "Upload" ? `File Size: ${getFileSize(report)}` : 'Google Drive File'}
+                            {report.fileSource === "Upload" ? `File Size: ${getFileSize(report)}` : 'Google Drive File'}
                           </span>
                           <div className="flex space-x-2">
                             <button
@@ -297,11 +289,11 @@ const StaffTrainingPage: React.FC = () => {
             setViewerOpen(false);
             setSelectedReport(null);
           }}
-          fileUrl={selectedReport.File_Source === 'Google_Drive' 
-            ? selectedReport.file_Id || '' 
+          fileUrl={selectedReport.fileSource === 'Google_Drive' 
+            ? selectedReport.fileId || '' 
             : getReportFileUrl(selectedReport) || ''}
           fileName={getReportFileName(selectedReport)}
-          fileSource={selectedReport.File_Source}
+          fileSource={selectedReport.fileSource}
         />
       )}
     </section>
