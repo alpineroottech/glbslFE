@@ -1,8 +1,38 @@
-# React + Vite
+# Gurans Laghubitta Bittiya Sanstha Ltd. — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + TypeScript + Vite frontend for the Gurans Bank (GLBSL) website with bilingual (English/Nepali) support.
 
-Currently, two official plugins are available:
+## Tech Stack
+- **Frontend**: React 18, TypeScript, Vite
+- **CMS**: Sanity v3 (embedded studio at `/studio`)
+- **Styling**: Tailwind CSS + Flowbite
+- **Deployment**: Vercel
+- **Email**: Resend (serverless via `api/send-email.ts`)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Getting Started
+
+```bash
+npm install
+npm run dev        # dev server on http://localhost:3000
+npm run build      # production build
+npm run preview    # preview production build
+```
+
+## Environment Variables
+
+Copy `.env.example` to `.env` and fill in values:
+
+| Variable | Description |
+|---|---|
+| `VITE_SANITY_PROJECT_ID` | Sanity project ID |
+| `VITE_SANITY_DATASET` | Sanity dataset (production) |
+
+The `RESEND_API_KEY` must be set in the **Vercel dashboard** only — never in `.env`.
+
+## CMS Studio
+
+Navigate to `http://localhost:3000/studio` to access Sanity Studio. The studio is embedded directly in the app (no second server needed).
+
+## Documentation
+
+See the `/documentation` folder for setup guides, changelogs, and feature documentation.

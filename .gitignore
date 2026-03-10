@@ -22,3 +22,19 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.env
+.env.local
+.env.development.local
+.env.test.local
+
+# SSH keys – never commit private or public keys
+*.pem
+*.key
+*.pub
+id_rsa
+id_ed25519
+
+#Node modules
+node_modules/
+
+

@@ -1,8 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.VITE_RESEND_API_KEY);
-
 // Escape HTML special characters to prevent HTML injection in email templates
 const escapeHtml = (str: string): string => {
   return String(str)
@@ -19,7 +17,7 @@ const safeField = (value: any): string => {
   return escapeHtml(String(value)).replace(/\n/g, '<br>');
 };
 
-const resend = new Resend(process.env.VITE_RESEND_API_KEY);
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Email template generators
 const getContactEmailHtml = (data: any) => `
