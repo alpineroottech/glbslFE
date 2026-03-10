@@ -8,7 +8,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion: '2026-03-08',
-  useCdn: false, // Disabled for immediate content updates from Studio
+  useCdn: true, // CDN enabled for better performance (1-5 min cache delay for new content)
 });
 
 const builder = imageUrlBuilder(client);
