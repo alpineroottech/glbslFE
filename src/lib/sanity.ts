@@ -8,7 +8,7 @@ export const client = createClient({
   projectId,
   dataset,
   apiVersion: '2026-03-08',
-  useCdn: true,
+  useCdn: false, // Disabled for immediate content updates from Studio
 });
 
 const builder = imageUrlBuilder(client);
