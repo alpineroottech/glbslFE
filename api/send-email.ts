@@ -3,6 +3,24 @@ import { Resend } from 'resend';
 
 const resend = new Resend(process.env.VITE_RESEND_API_KEY);
 
+// Escape HTML special characters to prevent HTML injection in email templates
+const escapeHtml = (str: string): string => {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+};
+
+// Safe field helper: escape and preserve newlines as <br>
+const safeField = (value: any): string => {
+  if (value === undefined || value === null || value === '') return 'N/A';
+  return escapeHtml(String(value)).replace(/\n/g, '<br>');
+};
+
+const resend = new Resend(process.env.VITE_RESEND_API_KEY);
+
 // Email template generators
 const getContactEmailHtml = (data: any) => `
 <!DOCTYPE html>
@@ -29,11 +47,11 @@ const getContactEmailHtml = (data: any) => `
     <div class="content">
       <p style="margin-bottom: 20px; color: #555;">You have received a new contact form submission from the Gurans Bank website:</p>
       <table class="info-table">
-        <tr><td>Name:</td><td>${data.name || 'N/A'}</td></tr>
-        <tr><td>Email:</td><td>${data.email || 'N/A'}</td></tr>
-        <tr><td>Phone:</td><td>${data.phone || 'N/A'}</td></tr>
-        <tr><td>Subject:</td><td>${data.subject || 'N/A'}</td></tr>
-        <tr><td>Message:</td><td>${(data.message || 'N/A').replace(/\n/g, '<br>')}</td></tr>
+        <tr><td>Name:</td><td>${safeField(data.name)}</td></tr>
+        <tr><td>Email:</td><td>${safeField(data.email)}</td></tr>
+        <tr><td>Phone:</td><td>${safeField(data.phone)}</td></tr>
+        <tr><td>Subject:</td><td>${safeField(data.subject)}</td></tr>
+        <tr><td>Message:</td><td>${safeField(data.message)}</td></tr>
         <tr><td>Submitted:</td><td>${new Date().toLocaleString('en-US', { timeZone: 'Asia/Kathmandu' })}</td></tr>
         <tr><td>Language:</td><td>${data.language === 'ne' ? 'Nepali (नेपाली)' : 'English'}</td></tr>
       </table>
@@ -76,10 +94,10 @@ const getComplaintEmailHtml = (data: any) => `
         <strong>⚠️ Action Required:</strong> A new complaint has been registered and requires attention.
       </div>
       <table class="info-table">
-        <tr><td>Full Name:</td><td>${data.fullName || 'N/A'}</td></tr>
-        <tr><td>Mobile Number:</td><td>${data.mobileNumber || 'N/A'}</td></tr>
-        <tr><td>Branch Office:</td><td>${data.branchOffice || 'N/A'}</td></tr>
-        <tr><td>Complaint Details:</td><td>${(data.complaint || 'N/A').replace(/\n/g, '<br>')}</td></tr>
+        <tr><td>Full Name:</td><td>${safeField(data.fullName)}</td></tr>
+        <tr><td>Mobile Number:</td><td>${safeField(data.mobileNumber)}</td></tr>
+        <tr><td>Branch Office:</td><td>${safeField(data.branchOffice)}</td></tr>
+        <tr><td>Complaint Details:</td><td>${safeField(data.complaint)}</td></tr>
         <tr><td>Submitted:</td><td>${new Date().toLocaleString('en-US', { timeZone: 'Asia/Kathmandu' })}</td></tr>
         <tr><td>Language:</td><td>${data.language === 'ne' ? 'Nepali (नेपाली)' : 'English'}</td></tr>
       </table>
@@ -122,16 +140,16 @@ const getLoanEmailHtml = (data: any) => `
         <strong>Loan Amount Requested:</strong> <span class="accent">रु ${data.loanAmount ? Number(data.loanAmount).toLocaleString('en-NP') : 'N/A'}</span>
       </div>
       <table class="info-table">
-        <tr><td>Full Name:</td><td>${data.fullName || 'N/A'}</td></tr>
-        <tr><td>Email:</td><td>${data.email || 'N/A'}</td></tr>
-        <tr><td>Mobile Number:</td><td>${data.mobileNumber || 'N/A'}</td></tr>
-        <tr><td>Branch Office:</td><td>${data.branchOffice || 'N/A'}</td></tr>
-        <tr><td>Province:</td><td>${data.province || 'N/A'}</td></tr>
-        <tr><td>District:</td><td>${data.district || 'N/A'}</td></tr>
-        <tr><td>Local Body:</td><td>${data.localBody || 'N/A'}</td></tr>
-        <tr><td>Ward Number:</td><td>${data.wardNumber || 'N/A'}</td></tr>
+        <tr><td>Full Name:</td><td>${safeField(data.fullName)}</td></tr>
+        <tr><td>Email:</td><td>${safeField(data.email)}</td></tr>
+        <tr><td>Mobile Number:</td><td>${safeField(data.mobileNumber)}</td></tr>
+        <tr><td>Branch Office:</td><td>${safeField(data.branchOffice)}</td></tr>
+        <tr><td>Province:</td><td>${safeField(data.province)}</td></tr>
+        <tr><td>District:</td><td>${safeField(data.district)}</td></tr>
+        <tr><td>Local Body:</td><td>${safeField(data.localBody)}</td></tr>
+        <tr><td>Ward Number:</td><td>${safeField(data.wardNumber)}</td></tr>
         <tr><td>Loan Amount:</td><td>रु ${data.loanAmount ? Number(data.loanAmount).toLocaleString('en-NP') : 'N/A'}</td></tr>
-        <tr><td>Special Notes:</td><td>${(data.specialNote || 'N/A').replace(/\n/g, '<br>')}</td></tr>
+        <tr><td>Special Notes:</td><td>${safeField(data.specialNote)}</td></tr>
         <tr><td>Submitted:</td><td>${new Date().toLocaleString('en-US', { timeZone: 'Asia/Kathmandu' })}</td></tr>
         <tr><td>Language:</td><td>${data.language === 'ne' ? 'Nepali (नेपाली)' : 'English'}</td></tr>
       </table>
@@ -146,14 +164,18 @@ const getLoanEmailHtml = (data: any) => `
 `;
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Handle CORS
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  );
+  // Handle CORS - restrict to known origins
+  const allowedOrigins = [
+    'https://guranslaghubitta.com.np',
+    'https://www.guranslaghubitta.com.np',
+    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
+  ].filter(Boolean);
+  const origin = req.headers.origin || '';
+  const allowedOrigin = allowedOrigins.includes(origin) ? origin : (allowedOrigins[0] || '*');
+  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Vary', 'Origin');
 
   // Handle preflight
   if (req.method === 'OPTIONS') {
@@ -209,7 +231,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       html: htmlContent,
     });
 
-    console.log('Email sent successfully:', emailResponse);
+    if (!emailResponse.data?.id) {
+      throw new Error('Email send failed');
+    }
 
     return res.status(200).json({ 
       success: true, 
@@ -219,8 +243,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   } catch (error: any) {
     console.error('Error sending email:', error);
     return res.status(500).json({ 
-      error: 'Failed to send email', 
-      details: error.message 
+      error: 'Failed to send email'
     });
   }
 }

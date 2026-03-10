@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import React, { Suspense } from "react";
 
 // Main app (only Home1 in this repo)
 import Main from "../Main/Main";
@@ -55,8 +56,19 @@ import {
   RegisterComplaintNRBPage 
 } from "../Pages/InnerPage/Gunaso";
 
+// Sanity Studio – lazy loaded so it only downloads when visiting /studio
+const StudioPage = React.lazy(() => import('../Pages/Studio/StudioPage'))
+
 // Only the primary route is kept (Home1). Extra homepage routes removed.
 const router = createBrowserRouter([
+  {
+    path: "/studio/*",
+    element: (
+      <Suspense fallback={<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>Loading Studio…</div>}>
+        <StudioPage />
+      </Suspense>
+    ),
+  },
   {
     path: "/",
     element: <Main />,

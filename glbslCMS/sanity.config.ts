@@ -25,6 +25,7 @@ const i18nDocumentTypes = [
 export default defineConfig({
   name: 'gurans-cms',
   title: 'Gurans Laghubitta CMS',
+  basePath: '/studio',
 
   projectId: process.env.SANITY_STUDIO_PROJECT_ID || 'v41axjo7',
   dataset: process.env.SANITY_STUDIO_DATASET || 'production',

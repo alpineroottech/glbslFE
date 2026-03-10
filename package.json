@@ -7,7 +7,9 @@
     "dev": "vite",
     "dev:3000": "vite --port 3000",
     "dev:5173": "vite --port 5173",
+    "dev:cms": "cd glbslCMS && npm run dev",
     "build": "vite build",
+    "build:cms": "cd glbslCMS && npx sanity build && xcopy /E /Y /I glbslCMS\\dist\\index.html public\\studio\\ && xcopy /E /Y /I glbslCMS\\dist\\static public\\static\\",
     "lint": "eslint . --ext js,jsx,ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "check-node": "node -e \"const v=process.versions.node.split('.').map(Number); if(v[0]>20 || (v[0]===20 && (v[1]>19 || (v[1]===19 && v[2]>=0)))){console.log('Node OK',process.versions.node);} else {console.error('Node version too old:',process.versions.node); process.exit(1);} \""
@@ -15,7 +17,10 @@
   "dependencies": {
     "@portabletext/react": "^6.0.3",
     "@sanity/client": "^7.16.0",
+    "@sanity/document-internationalization": "^3.3.3",
+    "@sanity/icons": "^3.7.4",
     "@sanity/image-url": "^2.0.3",
+    "@sanity/vision": "^3.99.0",
     "@vercel/node": "^5.5.9",
     "aos": "^3.0.0-beta.6",
     "axios": "^1.11.0",
@@ -32,6 +37,7 @@
     "react-router-dom": "^6.15.0",
     "react-select": "^5.8.0",
     "resend": "^6.4.2",
+    "sanity": "^3.99.0",
     "styled-components": "^6.1.1",
     "sweetalert2": "^11.9.0",
     "swiper": "^10.2.0",
