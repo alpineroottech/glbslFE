@@ -1,26 +1,9 @@
 import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
-import {documentInternationalization} from '@sanity/document-internationalization'
+import {languageFilter} from '@sanity/language-filter'
 import {schemaTypes} from './schemas'
 import {structure, newDocumentOptions} from './structure'
-
-// All document types that support i18n (everything except heroImage)
-const i18nDocumentTypes = [
-  'aboutUsSetting',
-  'memberWelfareService',
-  'organizationStructure',
-  'remittanceService',
-  'committee',
-  'loanProduct',
-  'notice',
-  'person',
-  'report',
-  'reportCategory',
-  'savingsProduct',
-  'serviceCategory',
-  'testimonial',
-]
 
 export default defineConfig({
   name: 'gurans-cms',
@@ -35,12 +18,20 @@ export default defineConfig({
       structure,
     }),
     visionTool(),
-    documentInternationalization({
+    languageFilter({
       supportedLanguages: [
         {id: 'en', title: 'English'},
-        {id: 'ne', title: 'Nepali (नेपाली)'},
+        {id: 'ne', title: 'Nepali'},
       ],
-      schemaTypes: i18nDocumentTypes,
+      defaultLanguages: ['en'],
+      documentTypes: ['aboutUsSetting', 'memberWelfareService', 'organizationStructure', 'remittanceService', 'committee', 'loanProduct', 'notice', 'person', 'report', 'reportCategory', 'savingsProduct', 'serviceCategory', 'testimonial'],
+      filterField: (enclosingType, member, selectedLanguageIds) => {
+        // Only filter these specific field types
+        if (!['localeString', 'localeText', 'localeBlock'].includes(enclosingType.name)) {
+          return true
+        }
+        return selectedLanguageIds.includes(member.name)
+      },
     }),
   ],
 

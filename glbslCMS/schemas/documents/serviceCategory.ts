@@ -5,17 +5,10 @@ export default defineType({
   title: 'Service Category',
   type: 'document',
   fields: [
-    defineField({
-      name: 'language',
-      title: 'Language',
-      type: 'string',
-      readOnly: true,
-      hidden: true,
-    }),
-    defineField({
+defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'localeString',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -30,8 +23,7 @@ export default defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localeBlock',
     }),
     defineField({
       name: 'icon',

@@ -5,24 +5,16 @@ export default defineType({
   title: 'Committee',
   type: 'document',
   fields: [
-    defineField({
-      name: 'language',
-      title: 'Language',
-      type: 'string',
-      readOnly: true,
-      hidden: true,
-    }),
-    defineField({
+defineField({
       name: 'name',
       title: 'Name',
-      type: 'string',
+      type: 'localeString',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localeBlock',
     }),
     defineField({
       name: 'members',

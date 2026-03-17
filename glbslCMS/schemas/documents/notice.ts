@@ -5,17 +5,10 @@ export default defineType({
   title: 'Notice',
   type: 'document',
   fields: [
-    defineField({
-      name: 'language',
-      title: 'Language',
-      type: 'string',
-      readOnly: true,
-      hidden: true,
-    }),
-    defineField({
+defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
+      type: 'localeString',
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -31,8 +24,7 @@ export default defineType({
     defineField({
       name: 'content',
       title: 'Content',
-      type: 'array',
-      of: [{type: 'block'}],
+      type: 'localeBlock',
     }),
     defineField({
       name: 'noticeType',
@@ -151,13 +143,13 @@ export default defineType({
     defineField({
       name: 'seoTitle',
       title: 'SEO Title',
-      type: 'string',
+      type: 'localeString',
       group: 'seo',
     }),
     defineField({
       name: 'seoDescription',
       title: 'SEO Description',
-      type: 'text',
+      type: 'localeText',
       group: 'seo',
     }),
   ],

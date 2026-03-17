@@ -22,10 +22,10 @@ export const getStrapiMediaUrl = (source?: any): string => {
 // ── GROQ query fragments ──────────────────────────────────────────
 const PERSON_FIELDS = `
   _id,
-  name,
-  position,
-  department,
-  bio,
+  "name": coalesce(name[$lang], name.en),
+  "position": coalesce(position[$lang], position.en),
+  "department": coalesce(department[$lang], department.en),
+  "bio": coalesce(bio[$lang], bio.en),
   email,
   phone,
   image,
@@ -35,9 +35,9 @@ const PERSON_FIELDS = `
 
 const REPORT_FIELDS = `
   _id,
-  title,
+  "title": coalesce(title[$lang], title.en),
   "slug": slug.current,
-  description,
+  "description": coalesce(description[$lang], description.en),
   reportType,
   publishDate,
   fiscalYear,
@@ -50,15 +50,15 @@ const REPORT_FIELDS = `
   isActive,
   order,
   tags,
-  seoTitle,
-  seoDescription
+  "seoTitle": coalesce(seoTitle[$lang], seoTitle.en),
+  "seoDescription": coalesce(seoDescription[$lang], seoDescription.en)
 `;
 
 const NOTICE_FIELDS = `
   _id,
-  title,
+  "title": coalesce(title[$lang], title.en),
   "slug": slug.current,
-  content,
+  "content": coalesce(content[$lang], content.en),
   noticeType,
   publishDate,
   expiryDate,
@@ -74,8 +74,8 @@ const NOTICE_FIELDS = `
   viewCount,
   tags,
   displayPopup,
-  seoTitle,
-  seoDescription
+  "seoTitle": coalesce(seoTitle[$lang], seoTitle.en),
+  "seoDescription": coalesce(seoDescription[$lang], seoDescription.en)
 `;
 
 // ── About Service ─────────────────────────────────────────────────
@@ -83,8 +83,8 @@ export const aboutService = {
   getAboutUs: async () => {
     const lang = getLocale();
     return sanityFetch<any>(
-      `*[_type == "aboutUsSetting" && language == $lang][0] {
-        mission, vision, goal, aboutUsDescription, aboutUsImage
+      `*[_type == "aboutUsSetting" ][0] {
+        "mission": coalesce(mission[$lang], mission.en), "vision": coalesce(vision[$lang], vision.en), "goal": coalesce(goal[$lang], goal.en), "aboutUsDescription": coalesce(aboutUsDescription[$lang], aboutUsDescription.en), aboutUsImage
       }`,
       { lang },
     );
@@ -93,7 +93,7 @@ export const aboutService = {
   getBoardMembers: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "boardMember"] | order(order asc) { ${PERSON_FIELDS} }`,
+      `*[_type == "person" && personType == "boardMember"] | order(order asc) { ${PERSON_FIELDS} }`,
       { lang },
     );
   },
@@ -101,7 +101,7 @@ export const aboutService = {
   getManagementTeam: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "managementTeam"] | order(order asc) { ${PERSON_FIELDS} }`,
+      `*[_type == "person" && personType == "managementTeam"] | order(order asc) { ${PERSON_FIELDS} }`,
       { lang },
     );
   },
@@ -109,7 +109,7 @@ export const aboutService = {
   getCorporateTeam: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "corporateTeam"] | order(order asc) { ${PERSON_FIELDS} }`,
+      `*[_type == "person" && personType == "corporateTeam"] | order(order asc) { ${PERSON_FIELDS} }`,
       { lang },
     );
   },
@@ -117,7 +117,7 @@ export const aboutService = {
   getCommitteeMembers: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "committeeMember"] | order(order asc) { ${PERSON_FIELDS} }`,
+      `*[_type == "person" && personType == "committeeMember"] | order(order asc) { ${PERSON_FIELDS} }`,
       { lang },
     );
   },
@@ -125,17 +125,17 @@ export const aboutService = {
   getCommittees: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "committee" && language == $lang] {
+      `*[_type == "committee" ] {
         _id,
-        name,
-        description,
+        "name": coalesce(name[$lang], name.en),
+        "description": coalesce(description[$lang], description.en),
         members[] {
           _key,
           committeePosition,
           roleDescription,
           order,
           person-> {
-            _id, name, position, department, image, email, phone
+            _id, "name": coalesce(name[$lang], name.en), "position": coalesce(position[$lang], position.en), "department": coalesce(department[$lang], department.en), image, email, phone
           }
         }
       }`,
@@ -146,7 +146,7 @@ export const aboutService = {
   getMonitoringSupervision: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "monitoringSupervision"] | order(order asc) { ${PERSON_FIELDS} }`,
+      `*[_type == "person" && personType == "monitoringSupervision"] | order(order asc) { ${PERSON_FIELDS} }`,
       { lang },
     );
   },
@@ -154,8 +154,8 @@ export const aboutService = {
   getOrganizationStructure: async () => {
     const lang = getLocale();
     return sanityFetch<any>(
-      `*[_type == "organizationStructure" && language == $lang][0] {
-        title, description, structureImage
+      `*[_type == "organizationStructure" ][0] {
+        "title": coalesce(title[$lang], title.en), "description": coalesce(description[$lang], description.en), structureImage
       }`,
       { lang },
     );
@@ -164,7 +164,7 @@ export const aboutService = {
   getInformationOfficer: async () => {
     const lang = getLocale();
     const results = await sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "informationOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      `*[_type == "person" && personType == "informationOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
       { lang },
     );
     return results?.[0] || null;
@@ -173,7 +173,7 @@ export const aboutService = {
   getComplianceOfficer: async () => {
     const lang = getLocale();
     const results = await sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "complianceOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      `*[_type == "person" && personType == "complianceOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
       { lang },
     );
     return results?.[0] || null;
@@ -182,7 +182,7 @@ export const aboutService = {
   getComplaintOfficer: async () => {
     const lang = getLocale();
     const results = await sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "complaintOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      `*[_type == "person" && personType == "complaintOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
       { lang },
     );
     return results?.[0] || null;
@@ -194,8 +194,8 @@ export const servicesService = {
   getLoanProducts: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "loanProduct" && language == $lang] | order(order asc) {
-        _id, name, volume, rate, serviceCharge, term, order
+      `*[_type == "loanProduct" ] | order(order asc) {
+        _id, "name": coalesce(name[$lang], name.en), volume, rate, serviceCharge, term, order
       }`,
       { lang },
     );
@@ -204,8 +204,8 @@ export const servicesService = {
   getSavingsProducts: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "savingsProduct" && language == $lang] | order(order asc) {
-        _id, name, interestRate, order
+      `*[_type == "savingsProduct" ] | order(order asc) {
+        _id, "name": coalesce(name[$lang], name.en), interestRate, order
       }`,
       { lang },
     );
@@ -214,9 +214,9 @@ export const servicesService = {
   getRemittanceService: async () => {
     const lang = getLocale();
     return sanityFetch<any>(
-      `*[_type == "remittanceService" && language == $lang][0] {
-        title, description, images,
-        features[] { _key, title, description, icon }
+      `*[_type == "remittanceService" ][0] {
+        "title": coalesce(title[$lang], title.en), "description": coalesce(description[$lang], description.en), images,
+        features[] { _key, "title": coalesce(title[$lang], title.en), "description": coalesce(description[$lang], description.en), icon }
       }`,
       { lang },
     );
@@ -225,9 +225,9 @@ export const servicesService = {
   getMemberWelfareService: async () => {
     const lang = getLocale();
     return sanityFetch<any>(
-      `*[_type == "memberWelfareService" && language == $lang][0] {
-        title, description,
-        welfareServices[] { _key, title, description, icon }
+      `*[_type == "memberWelfareService" ][0] {
+        "title": coalesce(title[$lang], title.en), "description": coalesce(description[$lang], description.en),
+        welfareServices[] { _key, "title": coalesce(title[$lang], title.en), "description": coalesce(description[$lang], description.en), icon }
       }`,
       { lang },
     );
@@ -236,8 +236,8 @@ export const servicesService = {
   getServiceCategories: async () => {
     const lang = getLocale();
     return sanityFetch<any[]>(
-      `*[_type == "serviceCategory" && language == $lang] | order(order asc) {
-        _id, title, "slug": slug.current, description, icon, order
+      `*[_type == "serviceCategory" ] | order(order asc) {
+        _id, "title": coalesce(title[$lang], title.en), "slug": slug.current, "description": coalesce(description[$lang], description.en), icon, order
       }`,
       { lang },
     );
@@ -250,7 +250,7 @@ export const reportsService = {
     try {
       const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "report" && language == $lang && isActive == true] | order(featured desc, publishDate desc) { ${REPORT_FIELDS} }`,
+        `*[_type == "report" && isActive == true] | order(featured desc, publishDate desc) { ${REPORT_FIELDS} }`,
         { lang },
       );
       return { data: data || [] };
@@ -264,7 +264,7 @@ export const reportsService = {
     try {
       const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "report" && language == $lang && isActive == true && references(*[_type == "reportCategory" && slug.current == $categorySlug]._id)] | order(publishDate desc) { ${REPORT_FIELDS} }`,
+        `*[_type == "report" && isActive == true && references(*[_type == "reportCategory" && slug.current == $categorySlug]._id)] | order(publishDate desc) { ${REPORT_FIELDS} }`,
         { lang, categorySlug },
       );
       return { data: data || [] };
@@ -278,7 +278,7 @@ export const reportsService = {
     try {
       const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "report" && language == $lang && isActive == true && reportType == $reportType] | order(publishDate desc) { ${REPORT_FIELDS} }`,
+        `*[_type == "report" && isActive == true && reportType == $reportType] | order(publishDate desc) { ${REPORT_FIELDS} }`,
         { lang, reportType },
       );
       return { data: data || [] };
@@ -292,7 +292,7 @@ export const reportsService = {
     try {
       const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "report" && language == $lang && isActive == true && featured == true] | order(publishDate desc) { ${REPORT_FIELDS} }`,
+        `*[_type == "report" && isActive == true && featured == true] | order(publishDate desc) { ${REPORT_FIELDS} }`,
         { lang },
       );
       return { data: data || [] };
@@ -306,7 +306,7 @@ export const reportsService = {
     try {
       const lang = getLocale();
       return sanityFetch<any>(
-        `*[_type == "report" && language == $lang && slug.current == $slug][0] { ${REPORT_FIELDS} }`,
+        `*[_type == "report" && slug.current == $slug][0] { ${REPORT_FIELDS} }`,
         { lang, slug },
       );
     } catch (error) {
@@ -322,7 +322,7 @@ export const noticesService = {
     try {
       const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "notice" && language == $lang && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        `*[_type == "notice" && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
         { lang },
       );
       return { data: data || [] };
@@ -336,7 +336,7 @@ export const noticesService = {
     try {
       const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "notice" && language == $lang && noticeType == $noticeType && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        `*[_type == "notice" && noticeType == $noticeType && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
         { lang, noticeType },
       );
       return { data: data || [] };
@@ -350,7 +350,7 @@ export const noticesService = {
     try {
       const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "notice" && language == $lang && isUrgent == true && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        `*[_type == "notice" && isUrgent == true && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
         { lang },
       );
       return { data: data || [] };
@@ -364,7 +364,7 @@ export const noticesService = {
     try {
       const lang = getLocale();
       return sanityFetch<any>(
-        `*[_type == "notice" && language == $lang && slug.current == $slug][0] { ${NOTICE_FIELDS} }`,
+        `*[_type == "notice" && slug.current == $slug][0] { ${NOTICE_FIELDS} }`,
         { lang, slug },
       );
     } catch (error) {
@@ -377,7 +377,7 @@ export const noticesService = {
     try {
       const lang = getLocale();
       return sanityFetch<any[]>(
-        `*[_type == "notice" && language == $lang && displayPopup == true && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        `*[_type == "notice" && displayPopup == true && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
         { lang },
       );
     } catch (error) {
@@ -393,7 +393,7 @@ export const heroImagesService = {
     try {
       return sanityFetch<any[]>(
         `*[_type == "heroImage" && isActive == true] | order(order asc) {
-          _id, title, image, altText, caption, order
+          _id, "title": coalesce(title[$lang], title.en), image, altText, caption, order
         }`,
       );
     } catch (error) {
@@ -409,8 +409,8 @@ export const testimonialsService = {
     try {
       const lang = getLocale();
       return sanityFetch<any[]>(
-        `*[_type == "testimonial" && language == $lang && isActive == true] | order(order asc) {
-          _id, name, position, organization, image, testimonial, order
+        `*[_type == "testimonial" && isActive == true] | order(order asc) {
+          _id, "name": coalesce(name[$lang], name.en), "position": coalesce(position[$lang], position.en), organization, image, testimonial, order
         }`,
         { lang },
       );
