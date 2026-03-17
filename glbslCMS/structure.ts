@@ -34,6 +34,27 @@ function singletonListItem(
     .child(S.document().schemaType(typeName).documentId(typeName))
 }
 
+// Helper to create a list of documents, filtering out the translated (Nepali) versions
+// so they don't clutter the main list. Users will access translations via the Document UI.
+function i18nDocumentList(
+  S: StructureBuilder,
+  typeName: string,
+  title: string,
+  icon?: React.ComponentType
+) {
+  return S.listItem()
+    .title(title)
+    .icon(icon)
+    .child(
+      S.documentList()
+        .id(typeName)
+        .title(title)
+        .schemaType(typeName)
+        .filter('_type == $type && language != "ne"')
+        .params({ type: typeName })
+    )
+}
+
 export const structure = (S: StructureBuilder) =>
   S.list()
     .title('Content')
@@ -70,14 +91,8 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title('People & Committees')
             .items([
-              S.listItem()
-                .title('People')
-                .icon(UsersIcon)
-                .child(S.documentTypeList('person').title('People')),
-              S.listItem()
-                .title('Committees')
-                .icon(UsersIcon)
-                .child(S.documentTypeList('committee').title('Committees')),
+              i18nDocumentList(S, 'person', 'People', UsersIcon),
+              i18nDocumentList(S, 'committee', 'Committees', UsersIcon),
             ])
         ),
 
@@ -89,14 +104,8 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title('Financial Products')
             .items([
-              S.listItem()
-                .title('Loan Products')
-                .icon(CreditCardIcon)
-                .child(S.documentTypeList('loanProduct').title('Loan Products')),
-              S.listItem()
-                .title('Savings Products')
-                .icon(CreditCardIcon)
-                .child(S.documentTypeList('savingsProduct').title('Savings Products')),
+              i18nDocumentList(S, 'loanProduct', 'Loan Products', CreditCardIcon),
+              i18nDocumentList(S, 'savingsProduct', 'Savings Products', CreditCardIcon),
             ])
         ),
 
@@ -108,20 +117,14 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title('Services')
             .items([
-              S.listItem()
-                .title('Service Categories')
-                .icon(TagIcon)
-                .child(S.documentTypeList('serviceCategory').title('Service Categories')),
+              i18nDocumentList(S, 'serviceCategory', 'Service Categories', TagIcon),
               singletonListItem(S, 'memberWelfareService', 'Member Welfare Service', HeartIcon),
               singletonListItem(S, 'remittanceService', 'Remittance Service', TransferIcon),
             ])
         ),
 
       // === NOTICES ===
-      S.listItem()
-        .title('Notices')
-        .icon(DocumentTextIcon)
-        .child(S.documentTypeList('notice').title('Notices')),
+      i18nDocumentList(S, 'notice', 'Notices', DocumentTextIcon),
 
       // === REPORTS ===
       S.listItem()
@@ -131,22 +134,13 @@ export const structure = (S: StructureBuilder) =>
           S.list()
             .title('Reports')
             .items([
-              S.listItem()
-                .title('All Reports')
-                .icon(DocumentTextIcon)
-                .child(S.documentTypeList('report').title('Reports')),
-              S.listItem()
-                .title('Report Categories')
-                .icon(TagIcon)
-                .child(S.documentTypeList('reportCategory').title('Report Categories')),
+              i18nDocumentList(S, 'report', 'All Reports', DocumentTextIcon),
+              i18nDocumentList(S, 'reportCategory', 'Report Categories', TagIcon),
             ])
         ),
 
       // === TESTIMONIALS ===
-      S.listItem()
-        .title('Testimonials')
-        .icon(StarIcon)
-        .child(S.documentTypeList('testimonial').title('Testimonials')),
+      i18nDocumentList(S, 'testimonial', 'Testimonials', StarIcon),
     ])
 
 // Filter out singletons from the default "New document" menu
