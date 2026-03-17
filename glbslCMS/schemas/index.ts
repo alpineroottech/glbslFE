@@ -3,9 +3,6 @@
 // Object types (reusable components)
 import committeeMember from './objects/committeeMember'
 import serviceFeature from './objects/serviceFeature'
-import localeString from './objects/localeString'
-import localeText from './objects/localeText'
-import localeBlock from './objects/localeBlock'
 
 // Singleton document types
 import aboutUsSetting from './documents/aboutUsSetting'
@@ -29,9 +26,6 @@ export const schemaTypes = [
   // Objects
   committeeMember,
   serviceFeature,
-  localeString,
-  localeText,
-  localeBlock,
 
   // Singletons
   aboutUsSetting,

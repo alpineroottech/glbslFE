@@ -5,7 +5,14 @@ export default defineType({
   title: 'About Us Setting',
   type: 'document',
   fields: [
-defineField({
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
+    defineField({
       name: 'mission',
       title: 'Mission',
       type: 'array',

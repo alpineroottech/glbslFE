@@ -5,10 +5,17 @@ export default defineType({
   title: 'Report',
   type: 'document',
   fields: [
-defineField({
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
-      type: 'localeString',
+      type: 'string',
       validation: (rule) => rule.required().max(200),
     }),
     defineField({
@@ -24,7 +31,7 @@ defineField({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'localeText',
+      type: 'text',
       validation: (rule) => rule.max(1000),
     }),
     defineField({
@@ -131,13 +138,13 @@ defineField({
     defineField({
       name: 'seoTitle',
       title: 'SEO Title',
-      type: 'localeString',
+      type: 'string',
       group: 'seo',
     }),
     defineField({
       name: 'seoDescription',
       title: 'SEO Description',
-      type: 'localeText',
+      type: 'text',
       group: 'seo',
     }),
   ],

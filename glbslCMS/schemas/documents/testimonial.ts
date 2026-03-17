@@ -5,10 +5,17 @@ export default defineType({
   title: 'Testimonial',
   type: 'document',
   fields: [
-defineField({
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
+    defineField({
       name: 'name',
       title: 'Name',
-      type: 'localeString',
+      type: 'string',
       validation: (rule) => rule.required(),
     }),
     defineField({

@@ -5,16 +5,24 @@ export default defineType({
   title: 'Member Welfare Service',
   type: 'document',
   fields: [
-defineField({
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
+    defineField({
       name: 'title',
       title: 'Title',
-      type: 'localeString',
+      type: 'string',
       validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'localeBlock',
+      type: 'array',
+      of: [{type: 'block'}],
     }),
     defineField({
       name: 'welfareServices',

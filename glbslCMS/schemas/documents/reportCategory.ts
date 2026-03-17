@@ -5,10 +5,17 @@ export default defineType({
   title: 'Report Category',
   type: 'document',
   fields: [
-defineField({
+    defineField({
+      name: 'language',
+      title: 'Language',
+      type: 'string',
+      readOnly: true,
+      hidden: true,
+    }),
+    defineField({
       name: 'name',
       title: 'Name',
-      type: 'localeString',
+      type: 'string',
       validation: (rule) => rule.required().max(100),
     }),
     defineField({
@@ -24,7 +31,7 @@ defineField({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'localeText',
+      type: 'text',
       validation: (rule) => rule.max(500),
     }),
     defineField({
