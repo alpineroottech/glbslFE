@@ -58,7 +58,7 @@ const Testimonial: React.FC = () => {
     };
 
     fetchTestimonials();
-  }, []);
+  }, [language]);
 
   // Render a single testimonial card
   const renderTestimonialCard = (testimonial: StrapiTestimonial) => {
