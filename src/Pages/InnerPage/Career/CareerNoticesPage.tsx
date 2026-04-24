@@ -4,6 +4,7 @@ import { BsDownload, BsEye, BsShare } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import { noticesService, googleDriveHelpers } from "../../../services/strapi";
 
 // TypeScript interface for Notice from Sanity CMS with Hybrid Upload Support
@@ -108,6 +109,7 @@ const CareerNoticesPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [selectedNotice, setSelectedNotice] = useState<StrapiNotice | null>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const fetchNotices = async () => {
@@ -133,7 +135,7 @@ const CareerNoticesPage: React.FC = () => {
     };
 
     fetchNotices();
-  }, []);
+  }, [language]);
 
   const handleDownload = (notice: StrapiNotice) => {
     const downloadUrl = getNoticeDownloadUrl(notice);

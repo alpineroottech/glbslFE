@@ -5,6 +5,7 @@ import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import { reportsService, googleDriveHelpers } from "../../../services/strapi";
 
 // TypeScript interface for Report from Sanity CMS with Hybrid Upload Support
@@ -34,6 +35,7 @@ const GovernanceReportPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [selectedReport, setSelectedReport] = useState<StrapiReport | null>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const fetchGovernanceReports = async () => {
@@ -42,15 +44,15 @@ const GovernanceReportPage: React.FC = () => {
         const response = await reportsService.getReportsByType('governance');
         setReports(response.data || []);
       } catch (err) {
-        setError('Failed to load governance reports');
-        console.error('Error fetching governance reports:', err);
+        setError('Failed to load corporate governance reports');
+        console.error('Error fetching corporate governance reports:', err);
       } finally {
         setLoading(false);
       }
     };
 
     fetchGovernanceReports();
-  }, []);
+  }, [language]);
 
   // HELPER: Get file URL based on source (Google Drive or Direct Upload)
   const getReportFileUrl = (report: StrapiReport): string | null => {

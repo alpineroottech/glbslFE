@@ -5,6 +5,7 @@ import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import { noticesService, googleDriveHelpers } from "../../../services/strapi";
 
 // Reuse the StrapiNotice interface
@@ -82,6 +83,7 @@ const ApplicationFormPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const fetchApplicationForm = async () => {
@@ -112,7 +114,7 @@ const ApplicationFormPage: React.FC = () => {
     };
 
     fetchApplicationForm();
-  }, []);
+  }, [language]);
 
   const handleDownload = () => {
     if (!applicationForm) return;

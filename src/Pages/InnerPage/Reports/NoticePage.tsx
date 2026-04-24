@@ -5,6 +5,7 @@ import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
+import { useLanguage } from '../../../contexts/LanguageContext';
 import { noticesService, googleDriveHelpers } from "../../../services/strapi";
 
 // TypeScript interface for Notice from Sanity CMS with Hybrid Upload Support
@@ -113,6 +114,8 @@ const NoticePage: React.FC = () => {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [selectedNotice, setSelectedNotice] = useState<StrapiNotice | null>(null);
 
+  const { language } = useLanguage();
+
   useEffect(() => {
     const fetchNotices = async () => {
       try {
@@ -129,7 +132,7 @@ const NoticePage: React.FC = () => {
     };
 
     fetchNotices();
-  }, []);
+  }, [language]); // Depend on language from context
 
   const handleDownload = (notice: StrapiNotice) => {
     const downloadUrl = getNoticeDownloadUrl(notice);

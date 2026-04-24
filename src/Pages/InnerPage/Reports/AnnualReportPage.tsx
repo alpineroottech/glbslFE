@@ -5,6 +5,7 @@ import { HiArrowLongLeft } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
+import { useLanguage } from "../../../contexts/LanguageContext";
 import { reportsService, googleDriveHelpers } from "../../../services/strapi";
 
 // TypeScript interface for Report from Sanity CMS with Hybrid Upload Support
@@ -34,6 +35,7 @@ const AnnualReportPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [selectedReport, setSelectedReport] = useState<StrapiReport | null>(null);
+  const { language } = useLanguage();
 
   useEffect(() => {
     const fetchAnnualReports = async () => {
@@ -50,7 +52,7 @@ const AnnualReportPage: React.FC = () => {
     };
 
     fetchAnnualReports();
-  }, []);
+  }, [language]);
 
   // HELPER: Get file URL based on source (Google Drive or Direct Upload)
   const getReportFileUrl = (report: StrapiReport): string | null => {

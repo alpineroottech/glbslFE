@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoMdClose } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '../../contexts/LanguageContext';
 import { noticesService, getStrapiMediaUrl } from '../../services/strapi';
 
 interface Notice {
@@ -23,6 +24,8 @@ const NoticePopup: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
   const navigate = useNavigate();
 
+  const { language } = useLanguage();
+
   useEffect(() => {
     const fetchPopupNotices = async () => {
       try {
@@ -37,7 +40,7 @@ const NoticePopup: React.FC = () => {
     };
 
     fetchPopupNotices();
-  }, []);
+  }, [language]); // Depend on language from context
 
   useEffect(() => {
     if (!isVisible || notices.length === 0) return;
