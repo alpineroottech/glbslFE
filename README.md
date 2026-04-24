@@ -36,3 +36,18 @@ Navigate to `http://localhost:3000/studio` to access Sanity Studio. The studio i
 ## Documentation
 
 See the `/documentation` folder for setup guides, changelogs, and feature documentation.
+
+## Must Follow Practices
+
+Keep your coding proficiency equivalent to that of an intermediate level developer. 
+Keep variable names easy to understand  for future reference.
+Avoid writing complex code when a simple one can do the job. 
+Avoid writing unnecessary comments in the code.
+Make sure there are no coding vulnerabilities in the code
+Make sure there are no security vulnerabilities  in the code.
+Always recheck your code after you have finished writing it.
+Do not stop iterating unless the application is error-free and running perfectly fine.
+Always check for blunders, and catastrophic errors in the code and eliminate them before you finish iterating.
+Always commit after iterating. 
+
+
