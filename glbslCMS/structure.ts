@@ -117,13 +117,10 @@ export const structure = (S: StructureBuilder) =>
             ])
         ),
 
-      // === NOTICES ===
-      S.listItem()
-        .title('Notices')
-        .icon(DocumentTextIcon)
-        .child(S.documentTypeList('notice').title('Notices')),
-
       // === REPORTS ===
+      // Organized by report type so each category has its own filtered list.
+      // "Report Categories" document type is kept in the schema for data
+      // compatibility but is no longer surfaced in the sidebar.
       S.listItem()
         .title('Reports')
         .icon(DocumentTextIcon)
@@ -134,11 +131,103 @@ export const structure = (S: StructureBuilder) =>
               S.listItem()
                 .title('All Reports')
                 .icon(DocumentTextIcon)
-                .child(S.documentTypeList('report').title('Reports')),
+                .child(
+                  S.documentTypeList('report')
+                    .title('All Reports')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.divider(),
               S.listItem()
-                .title('Report Categories')
-                .icon(TagIcon)
-                .child(S.documentTypeList('reportCategory').title('Report Categories')),
+                .title('Annual Reports')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('Annual Reports')
+                    .filter('_type == "report" && reportType == "annual"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('Quarterly Reports')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('Quarterly Reports')
+                    .filter('_type == "report" && reportType == "quarterly"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('AGM Minutes')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('AGM Minutes')
+                    .filter('_type == "report" && reportType == "agm"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('Base Rate Reports')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('Base Rate Reports')
+                    .filter('_type == "report" && reportType == "base-rate"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('Staff Training Reports')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('Staff Training Reports')
+                    .filter('_type == "report" && reportType == "staff-training"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('Governance Reports')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('Governance Reports')
+                    .filter('_type == "report" && reportType == "governance"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('Other Reports')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('Other Reports')
+                    .filter('_type == "report" && reportType == "other"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+            ])
+        ),
+
+      // === NOTICES ===
+      S.listItem()
+        .title('Notices')
+        .icon(DocumentTextIcon)
+        .child(
+          S.list()
+            .title('Notices')
+            .items([
+              S.listItem()
+                .title('All Notices')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('notice')
+                    .title('All Notices')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('Career Notices')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.documentTypeList('notice')
+                    .title('Career Notices')
+                    .filter('_type == "notice" && noticeType == "career"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
             ])
         ),
 

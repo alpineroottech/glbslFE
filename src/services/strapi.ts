@@ -245,13 +245,14 @@ export const servicesService = {
 };
 
 // ── Reports Service ───────────────────────────────────────────────
+// Language filter intentionally removed from all report queries:
+// reports contain the same file content regardless of language, so a
+// single English upload must be visible in both EN and NE views.
 export const reportsService = {
   getAllReports: async () => {
     try {
-      const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "report" && language == $lang && isActive == true] | order(featured desc, publishDate desc) { ${REPORT_FIELDS} }`,
-        { lang },
+        `*[_type == "report" && isActive == true] | order(publishDate desc, _createdAt desc) { ${REPORT_FIELDS} }`,
       );
       return { data: data || [] };
     } catch (error) {
@@ -262,10 +263,9 @@ export const reportsService = {
 
   getReportsByCategory: async (categorySlug: string) => {
     try {
-      const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "report" && language == $lang && isActive == true && references(*[_type == "reportCategory" && slug.current == $categorySlug]._id)] | order(publishDate desc) { ${REPORT_FIELDS} }`,
-        { lang, categorySlug },
+        `*[_type == "report" && isActive == true && references(*[_type == "reportCategory" && slug.current == $categorySlug]._id)] | order(publishDate desc, _createdAt desc) { ${REPORT_FIELDS} }`,
+        { categorySlug },
       );
       return { data: data || [] };
     } catch (error) {
@@ -276,10 +276,9 @@ export const reportsService = {
 
   getReportsByType: async (reportType: string) => {
     try {
-      const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "report" && language == $lang && isActive == true && reportType == $reportType] | order(publishDate desc) { ${REPORT_FIELDS} }`,
-        { lang, reportType },
+        `*[_type == "report" && isActive == true && reportType == $reportType] | order(publishDate desc, _createdAt desc) { ${REPORT_FIELDS} }`,
+        { reportType },
       );
       return { data: data || [] };
     } catch (error) {
@@ -290,10 +289,8 @@ export const reportsService = {
 
   getFeaturedReports: async () => {
     try {
-      const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "report" && language == $lang && isActive == true && featured == true] | order(publishDate desc) { ${REPORT_FIELDS} }`,
-        { lang },
+        `*[_type == "report" && isActive == true && featured == true] | order(publishDate desc, _createdAt desc) { ${REPORT_FIELDS} }`,
       );
       return { data: data || [] };
     } catch (error) {
@@ -304,10 +301,9 @@ export const reportsService = {
 
   getReport: async (slug: string) => {
     try {
-      const lang = getLocale();
       return sanityFetch<any>(
-        `*[_type == "report" && language == $lang && slug.current == $slug][0] { ${REPORT_FIELDS} }`,
-        { lang, slug },
+        `*[_type == "report" && isActive == true && slug.current == $slug][0] { ${REPORT_FIELDS} }`,
+        { slug },
       );
     } catch (error) {
       console.error('Error fetching report:', error);
@@ -332,12 +328,13 @@ export const noticesService = {
     }
   },
 
+  // Language filter removed from getNoticesByType so career notices (which
+  // contain the same content regardless of language) are always visible.
   getNoticesByType: async (noticeType: string) => {
     try {
-      const lang = getLocale();
       const data = await sanityFetch<any[]>(
-        `*[_type == "notice" && language == $lang && noticeType == $noticeType && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
-        { lang, noticeType },
+        `*[_type == "notice" && noticeType == $noticeType && isActive == true] | order(publishDate desc, _createdAt desc) { ${NOTICE_FIELDS} }`,
+        { noticeType },
       );
       return { data: data || [] };
     } catch (error) {
