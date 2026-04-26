@@ -7,7 +7,6 @@ import GoToTop from "../Shared/GoToTop";
 import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import HelmetChanger from "../Shared/Helmet/Helmet";
 import NoticePopup from "../Components/NoticePopup/NoticePopup";
 
 const Main: React.FC = () => {
@@ -18,7 +17,6 @@ const Main: React.FC = () => {
 
   return (
     <>
-      <HelmetChanger title="Hotel Booking" />
       <ScrollToTop />
       <GoToTop />
       <NoticePopup />
