@@ -6,7 +6,7 @@ import router from "./Router/Router";
 import { HelmetProvider } from "react-helmet-async";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { SearchProvider } from "./contexts/SearchContext";
-import ErrorBoundary from "./components/ErrorBoundary";
+import ErrorBoundary from "./Components/ErrorBoundary";
 
 const helmetContext = {};
 const rootElement = document.getElementById("root");
