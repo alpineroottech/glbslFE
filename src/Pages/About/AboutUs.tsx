@@ -7,7 +7,7 @@ const AboutUs: React.FC = () => {
   const [content, setContent] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     const fetch = async () => {
@@ -31,8 +31,8 @@ const AboutUs: React.FC = () => {
       {/* About Us Content */}
       <div className="dark:bg-normalBlack py-20 2xl:py-[120px]">
         <div className="Container">
-          <div className="text-center sm:px-8 md:px-[80px] lg:px-[120px] xl:px-[200px] 2xl:px-[335px] mx-auto px-5 Container mb-16">
-            {/* Section logo */}
+          {/* Section header - centered */}
+          <div className="text-center mb-10">
             <div className="flex items-center justify-center space-x-2">
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
               <img
@@ -43,11 +43,14 @@ const AboutUs: React.FC = () => {
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
             </div>
             <h1 className="text-xl sm:text-2xl md:text-3xl 2xl:text-[38px] leading-[42px] 2xl:leading-[52px] text-lightBlack dark:text-white mt-[10px] mb-[14px] font-Garamond font-semibold uppercase">
-              ABOUT US
+              {t('about.title')}
             </h1>
-            <p className="font-Lora leading-7 lg:leading-[26px] text-lightGray font-normal text-sm sm:text-base">
+          </div>
+          {/* Description - full width, left-aligned */}
+          <div className="mb-16">
+            <p className="font-Lora leading-7 lg:leading-8 text-lightGray dark:text-lightGray font-normal text-base lg:text-lg max-w-3xl">
               {loading ? 'Loading...' : error ? error : (
-                content?.aboutUsDescription?.[0]?.children?.[0]?.text || 
+                content?.aboutUsDescription?.[0]?.children?.[0]?.text ||
                 'Discover our story, vision, and commitment to excellence in financial services'
               )}
             </p>
@@ -58,7 +61,7 @@ const AboutUs: React.FC = () => {
               {/* Vision Section */}
               <div>
                 <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-Garamond font-semibold text-lightBlack dark:text-white mb-4">
-                  Our Vision
+                  {t('about.our_vision')}
                 </h2>
                 <p className="text-base sm:text-lg leading-7 lg:leading-8 text-lightGray dark:text-lightGray font-Lora">
                   {content?.vision?.[0]?.children?.[0]?.text || 'To be the premier destination for luxury hospitality, setting new standards in comfort, service excellence, and memorable experiences.'}
@@ -68,7 +71,7 @@ const AboutUs: React.FC = () => {
               {/* Mission Section */}
               <div>
                 <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-Garamond font-semibold text-lightBlack dark:text-white mb-4">
-                  Our Mission
+                  {t('about.our_mission')}
                 </h2>
                 <p className="text-base sm:text-lg leading-7 lg:leading-8 text-lightGray dark:text-lightGray font-Lora mb-4">
                   {content?.mission?.[0]?.children?.[0]?.text || 'We are committed to providing exceptional hospitality services through personalized attention, world-class amenities, and sustainable practices.'}
@@ -81,14 +84,13 @@ const AboutUs: React.FC = () => {
               {/* Core Values */}
               <div>
                 <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-Garamond font-semibold text-lightBlack dark:text-white mb-4">
-                  Our Core Values
+                  {t('about.our_core_values')}
                 </h2>
                 <ul className="space-y-3">
-                  {/* Keep static fallback values for now */}
                   <li className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-khaki rounded-full mt-3 flex-shrink-0"></div>
                     <div>
-                      <h3 className="text-lg font-Garamond font-semibold text-lightBlack dark:text-white">Excellence</h3>
+                      <h3 className="text-lg font-Garamond font-semibold text-lightBlack dark:text-white">{t('about.excellence')}</h3>
                       <p className="text-base leading-6 text-lightGray dark:text-lightGray font-Lora">
                         Delivering superior quality in every aspect of our service
                       </p>
@@ -97,27 +99,27 @@ const AboutUs: React.FC = () => {
                   <li className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-khaki rounded-full mt-3 flex-shrink-0"></div>
                     <div>
-                      <h3 className="text-lg font-Garamond font-semibold text-lightBlack dark:text-white">Hospitality</h3>
+                      <h3 className="text-lg font-Garamond font-semibold text-lightBlack dark:text-white">{t('about.integrity')}</h3>
                       <p className="text-base leading-6 text-lightGray dark:text-lightGray font-Lora">
-                        Creating warm, welcoming experiences that feel like home
+                        Maintaining the highest standards of honesty and transparency
                       </p>
                     </div>
                   </li>
                   <li className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-khaki rounded-full mt-3 flex-shrink-0"></div>
                     <div>
-                      <h3 className="text-lg font-Garamond font-semibold text-lightBlack dark:text-white">Sustainability</h3>
+                      <h3 className="text-lg font-Garamond font-semibold text-lightBlack dark:text-white">{t('about.sustainability')}</h3>
                       <p className="text-base leading-6 text-lightGray dark:text-lightGray font-Lora">
-                        Protecting our environment for future generations
+                        Protecting the environment and community for future generations
                       </p>
                     </div>
                   </li>
                   <li className="flex items-start space-x-3">
                     <div className="w-2 h-2 bg-khaki rounded-full mt-3 flex-shrink-0"></div>
                     <div>
-                      <h3 className="text-lg font-Garamond font-semibold text-lightBlack dark:text-white">Innovation</h3>
+                      <h3 className="text-lg font-Garamond font-semibold text-lightBlack dark:text-white">{t('about.innovation')}</h3>
                       <p className="text-base leading-6 text-lightGray dark:text-lightGray font-Lora">
-                        Continuously evolving to meet changing guest expectations
+                        Continuously evolving to better serve our members
                       </p>
                     </div>
                   </li>

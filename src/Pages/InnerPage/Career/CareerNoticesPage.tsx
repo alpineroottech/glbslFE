@@ -6,6 +6,7 @@ import PDFPreview from "../../../Components/Reports/PDFPreview";
 import PDFViewer from "../../../Components/Reports/PDFViewer";
 import { useLanguage } from "../../../contexts/LanguageContext";
 import { noticesService, googleDriveHelpers } from "../../../services/strapi";
+import Swal from "sweetalert2";
 
 // TypeScript interface for Notice from Sanity CMS with Hybrid Upload Support
 interface StrapiNotice {
@@ -109,7 +110,7 @@ const CareerNoticesPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
   const [selectedNotice, setSelectedNotice] = useState<StrapiNotice | null>(null);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     const fetchNotices = async () => {
@@ -151,7 +152,13 @@ const CareerNoticesPage: React.FC = () => {
       setSelectedNotice(notice);
       setViewerOpen(true);
     } else {
-      alert('No attachment file available for this notice.');
+      Swal.fire({
+        icon: 'info',
+        title: notice.title,
+        html: `<p class="text-sm leading-6 text-left">${extractTextFromContent(notice.content) || 'No additional details available.'}</p>`,
+        confirmButtonColor: '#DAA520',
+        confirmButtonText: 'Close',
+      });
     }
   };
 
@@ -202,7 +209,7 @@ const CareerNoticesPage: React.FC = () => {
           >
             <div className="text-center">
               <h1 className="text-xl sm:text-2xl md:text-3xl 2xl:text-[38px] leading-7 sm:leading-8 md:leading-9 lg:leading-[42px] 2xl:leading-[52px] text-lightBlack dark:text-white font-Garamond font-semibold capitalize">
-                Career Opportunities & Job Vacancies
+                {t('career.page_title')}
               </h1>
               <div className="flex items-center justify-center text-center mx-auto mt-2 lg:mt-[6px]">
                 <div className="w-[100px] h-[1px] bg-[#ccc] dark:bg-[#3b3b3b] mr-5 "></div>
@@ -213,8 +220,8 @@ const CareerNoticesPage: React.FC = () => {
                 />
                 <div className="w-[100px] h-[1px] bg-[#ccc] dark:bg-[#3b3b3b] ml-5"></div>
               </div>
-              <p className="text-center text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-Lora font-normal mt-[10px]">
-                Join our team and build your career with us. Explore current job openings and opportunities
+              <p className="text-center text-base lg:text-lg leading-[26px] text-gray dark:text-lightGray font-Lora font-normal mt-[10px]">
+                {t('career.page_subtitle')}
               </p>
             </div>
           </div>
@@ -241,122 +248,93 @@ const CareerNoticesPage: React.FC = () => {
             <>
               {notices.length === 0 ? (
                 <div className="text-center py-16">
-                  <p className="text-gray-500 dark:text-gray-400">No career opportunities available at the moment.</p>
+                  <p className="text-gray-500 dark:text-gray-400">{t('career.no_notices')}</p>
                 </div>
               ) : (
                 <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-8 pt-8">
                   {notices.map((notice, index) => (
                     <div
                       key={notice._id}
-                      className="overflow-x-hidden 3xl:w-[410px] group"
+                      className="group border border-[#e8e8e8] dark:border-[#424242] rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300"
                       data-aos="fade-up"
                       data-aos-duration={800 + (index * 200)}
                     >
-                      <div className="relative">
+                      {/* Clickable preview area */}
+                      <button
+                        onClick={() => handleView(notice)}
+                        className="w-full text-left block"
+                        aria-label={`View: ${notice.title}`}
+                      >
                         <div className="overflow-hidden">
                           <PDFPreview
                             title={notice.title}
-                            description={extractTextFromContent(notice.content) || "Click to view details"}
+                            description={extractTextFromContent(notice.content) || t('notices.view_details')}
                             fileId={notice.fileSource === 'Google_Drive' ? notice.attachmentFileId : undefined}
                             fileUrl={notice.fileSource === 'Upload' ? notice.uploadedFile?.asset?.url : undefined}
                             showThumbnail={hasNoticeFile(notice)}
                           />
                         </div>
+                      </button>
 
-                        {hasNoticeFile(notice) && (
-                          <div className="flex space-x-2 absolute bottom-2 -left-52 group-hover:left-2 transition-all duration-300">
-                            <button
-                              onClick={() => handleView(notice)}
-                              className="flex items-center justify-center text-[13px] leading-[32px] bg-khaki px-4 py-1 text-white hover:bg-opacity-90 transition-all duration-300"
-                              title="View PDF"
-                            >
-                              <BsEye className="w-3 h-3 mr-1" />
-                              View
-                            </button>
-                            <button
-                              onClick={() => handleDownload(notice)}
-                              className="flex items-center justify-center text-[13px] leading-[32px] bg-green-600 px-4 py-1 text-white hover:bg-opacity-90 transition-all duration-300"
-                              title="Download PDF"
-                            >
-                              <BsDownload className="w-3 h-3 mr-1" />
-                              Download
-                            </button>
-                            <button
-                              onClick={() => handleShare(notice)}
-                              className="flex items-center justify-center text-[13px] leading-[32px] bg-blue-600 px-4 py-1 text-white hover:bg-opacity-90 transition-all duration-300"
-                              title="Share Job Posting"
-                            >
-                              <BsShare className="w-3 h-3" />
-                            </button>
+                      <div className="py-6 px-6 font-Garamond">
+                        {notice.isUrgent && (
+                          <div className="mb-3">
+                            <span className="inline-flex items-center px-2.5 py-1 rounded-full text-sm font-medium bg-red-500 text-white">
+                              {t('notices.urgent')}
+                            </span>
                           </div>
                         )}
-                      </div>
-                      <div className="font-Garamond">
-                        <div className=" border-[1px] border-[#e8e8e8] dark:border-[#424242]  border-t-0">
-                          <div className="py-6 px-[30px]">
-                            {notice.isUrgent && (
-                              <div className="mb-2">
-                                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500 text-white">
-                                  Urgent
-                                </span>
-                              </div>
-                            )}
-                            <h2 className="text-lg lg:text-[20px] xl:text-[22px] leading-[24px] font-semibold text-lightBlack dark:text-white py-3">
-                              {notice.title}
-                            </h2>
-                            <p className="text-sm font-normal text-gray dark:text-lightGray font-Lora mb-3">
-                              {extractTextFromContent(notice.content) || "No description available"}
-                            </p>
-                            {notice.publishDate && (
-                              <p className="text-xs text-gray-500 dark:text-gray-400 mb-2">
-                                Published: {formatDate(notice.publishDate)}
-                              </p>
-                            )}
+                        <h2
+                          className="text-xl lg:text-[22px] leading-[28px] font-semibold text-lightBlack dark:text-white py-2 cursor-pointer hover:text-khaki transition-colors duration-200"
+                          onClick={() => handleView(notice)}
+                        >
+                          {notice.title}
+                        </h2>
+                        <p className="text-base font-normal text-gray dark:text-lightGray font-Lora mb-3 leading-6">
+                          {extractTextFromContent(notice.content) || t('notices.view_details')}
+                        </p>
+                        {notice.publishDate && (
+                          <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                            {t('notices.published')}: {formatDate(notice.publishDate)}
+                          </p>
+                        )}
 
-                            {/* File Information */}
-                            {hasNoticeFile(notice) && (
-                              <div className="mb-3 p-2 bg-gray-50 dark:bg-gray-800 rounded">
-                                <div className="flex items-center justify-between">
-                                  <span className="text-xs text-gray-600 dark:text-gray-400">
-                                    📎 {getNoticeFileName(notice)}
-                                  </span>
-                                  <div className="flex items-center space-x-2">
-                                    {notice.fileSource === 'Upload' && (
-                                      <span className="inline-block bg-green-500 text-white text-xs px-2 py-1 rounded">
-                                        Direct Download
-                                      </span>
-                                    )}
-                                    {notice.fileSource === 'Google_Drive' && (
-                                      <span className="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded">
-                                        Google Drive
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-                                {getNoticeFileSize(notice) && (
-                                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                                    Size: {getNoticeFileSize(notice)}
-                                  </p>
-                                )}
-                              </div>
+                        {hasNoticeFile(notice) && (
+                          <div className="mb-4 p-2 bg-gray-50 dark:bg-gray-800 rounded text-sm">
+                            <span className="text-gray-600 dark:text-gray-400">
+                              📎 {getNoticeFileName(notice)}
+                            </span>
+                            {getNoticeFileSize(notice) && (
+                              <span className="text-gray-400 ml-2">({getNoticeFileSize(notice)})</span>
                             )}
-
-                            <div className="flex space-x-2">
-                              <button
-                                onClick={() => handleView(notice)}
-                                className="text-xs text-khaki hover:text-opacity-80 transition-colors duration-300"
-                              >
-                                View Details
-                              </button>
-                              <span className="text-xs text-gray-300">|</span>
-                              <button
-                                onClick={() => handleDownload(notice)}
-                                className="text-xs text-green-600 hover:text-opacity-80 transition-colors duration-300"
-                              >
-                                Download
-                              </button>
-                            </div>
                           </div>
+                        )}
+
+                        {/* Action buttons — always visible */}
+                        <div className="flex flex-wrap gap-2 mt-2">
+                          <button
+                            onClick={() => handleView(notice)}
+                            className="flex items-center gap-1 text-sm bg-khaki text-white px-3 py-1.5 rounded hover:bg-opacity-90 transition-all duration-200"
+                          >
+                            <BsEye className="w-3.5 h-3.5" />
+                            {t('notices.view_details')}
+                          </button>
+                          {hasNoticeFile(notice) && (
+                            <button
+                              onClick={() => handleDownload(notice)}
+                              className="flex items-center gap-1 text-sm bg-green-600 text-white px-3 py-1.5 rounded hover:bg-opacity-90 transition-all duration-200"
+                            >
+                              <BsDownload className="w-3.5 h-3.5" />
+                              {t('notices.download')}
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleShare(notice)}
+                            className="flex items-center gap-1 text-sm border border-gray-300 dark:border-gray-600 text-gray-600 dark:text-gray-300 px-3 py-1.5 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200"
+                          >
+                            <BsShare className="w-3.5 h-3.5" />
+                            {t('notices.share')}
+                          </button>
                         </div>
                       </div>
                     </div>

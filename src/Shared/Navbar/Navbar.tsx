@@ -34,23 +34,23 @@ const Navbar: React.FC = () => {
       <div className="lg:px-10">
         <div className="flex flex-col lg:flex-row items-center justify-between lg:min-h-[80px]">
           {/* website Logo */}
-          <div className=" w-64 lg:w-52 lg:p-4 lg:pr-8 ">
+          <div className="lg:p-2 lg:pr-6 flex-shrink-0">
             <Link to="/">
               <img
-                src="/images/home-1/logo-1.png"
-                className="hidden lg:block logo-120"
-                alt="website_logo"
+                src="/images/home-1/gurans.png"
+                className="hidden lg:block h-14 w-auto max-w-[200px] object-contain"
+                alt="Gurans Laghubitta logo"
               />
             </Link>
           </div>
           {/* small screen size */}
-          <div className="px-3 w-full lg:hidden flex justify-between text-lightBlack lg:text-white dark:text-white bg-khaki h-[70px]  items-center  p-3">
-            <div className=" w-28  ">
+          <div className="px-3 w-full lg:hidden flex justify-between text-lightBlack lg:text-white dark:text-white bg-khaki h-[70px] items-center p-3">
+            <div className="w-36">
               <Link to="/">
                 <img
-                  src="/images/home-1/brand-1.png"
-                  className="block lg:hidden "
-                  alt="Royella_website_logo"
+                  src="/images/home-1/gurans.png"
+                  className="block lg:hidden h-12 w-auto max-w-[160px] object-contain"
+                  alt="Gurans Laghubitta logo"
                 />
               </Link>
             </div>
@@ -209,19 +209,7 @@ const Navbar: React.FC = () => {
                 </ul>
               </div>
             </NavLink>
-            <NavLink
-              className={`${({ isActive, isPending }: { isActive: boolean; isPending: boolean }) =>
-                isPending
-                  ? "pending"
-                  : isActive
-                  ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 nav-item`}
-              to="/branches"
-            >
-              <span className="nav-item">
-                {t('nav.branches')}
-              </span>
-            </NavLink>
+            {/* Branches link hidden per client request */}
             <NavLink
               className={`${({ isActive, isPending }: { isActive: boolean; isPending: boolean }) =>
                 isPending

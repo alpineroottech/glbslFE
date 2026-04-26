@@ -1189,5 +1189,149 @@ export const translations: Translations = {
   'search.clear_search': {
     en: 'Clear search',
     ne: 'खोज खाली गर्नुहोस्'
+  },
+
+  // About Us page headings
+  'about.our_vision': {
+    en: 'Our Vision',
+    ne: 'हाम्रो दृष्टिकोण'
+  },
+  'about.our_mission': {
+    en: 'Our Mission',
+    ne: 'हाम्रो लक्ष्य'
+  },
+  'about.our_core_values': {
+    en: 'Our Core Values',
+    ne: 'हाम्रा मूल मूल्यहरू'
+  },
+  'about.excellence': {
+    en: 'Excellence',
+    ne: 'उत्कृष्टता'
+  },
+  'about.integrity': {
+    en: 'Integrity',
+    ne: 'इमान्दारिता'
+  },
+  'about.sustainability': {
+    en: 'Sustainability',
+    ne: 'दिगोपन'
+  },
+  'about.innovation': {
+    en: 'Innovation',
+    ne: 'नवीनता'
+  },
+
+  // Notices page
+  'notices.page_title': {
+    en: 'Official Notices & Announcements',
+    ne: 'आधिकारिक सूचनाहरू र घोषणाहरू'
+  },
+  'notices.page_subtitle': {
+    en: 'Stay informed with our latest official notices, announcements, and important updates',
+    ne: 'हाम्रा नवीनतम आधिकारिक सूचनाहरू, घोषणाहरू र महत्त्वपूर्ण अपडेटहरूसँग सूचित रहनुहोस्'
+  },
+  'notices.no_notices': {
+    en: 'No notices available at the moment.',
+    ne: 'अहिले कुनै सूचना उपलब्ध छैन।'
+  },
+  'notices.published': {
+    en: 'Published',
+    ne: 'प्रकाशित'
+  },
+  'notices.urgent': {
+    en: 'Urgent',
+    ne: 'अत्यावश्यक'
+  },
+  'notices.view': {
+    en: 'View',
+    ne: 'हेर्नुहोस्'
+  },
+  'notices.download': {
+    en: 'Download',
+    ne: 'डाउनलोड'
+  },
+  'notices.share': {
+    en: 'Share',
+    ne: 'साझा गर्नुहोस्'
+  },
+  'notices.view_details': {
+    en: 'View Details',
+    ne: 'विवरण हेर्नुहोस्'
+  },
+  'notices.no_file': {
+    en: 'No attachment available',
+    ne: 'कुनै संलग्न फाइल उपलब्ध छैन'
+  },
+
+  // Career Notices page
+  'career.page_title': {
+    en: 'Career Opportunities & Job Vacancies',
+    ne: 'करियर अवसरहरू र रिक्त पदहरू'
+  },
+  'career.page_subtitle': {
+    en: 'Join our team and build your career with us. Explore current job openings and opportunities',
+    ne: 'हाम्रो टोलीमा सामेल हुनुहोस् र हामीसँग आफ्नो करियर बनाउनुहोस्। हालका रोजगार अवसरहरू अन्वेषण गर्नुहोस्'
+  },
+  'career.no_notices': {
+    en: 'No career opportunities available at the moment.',
+    ne: 'अहिले कुनै करियर अवसर उपलब्ध छैन।'
+  },
+
+  // Report pages shared headings
+  'reports.quarterly_title': {
+    en: 'Quarterly Financial Reports',
+    ne: 'त्रैमासिक वित्तीय प्रतिवेदनहरू'
+  },
+  'reports.quarterly_subtitle': {
+    en: 'Access our quarterly financial reports and performance updates',
+    ne: 'हाम्रा त्रैमासिक वित्तीय प्रतिवेदनहरू र प्रदर्शन अपडेटहरू पहुँच गर्नुहोस्'
+  },
+  'reports.annual_title': {
+    en: 'Annual Financial Reports',
+    ne: 'वार्षिक वित्तीय प्रतिवेदनहरू'
+  },
+  'reports.annual_subtitle': {
+    en: 'Comprehensive annual reports covering financial performance and organizational achievements',
+    ne: 'वित्तीय प्रदर्शन र संस्थागत उपलब्धिहरू समेट्ने व्यापक वार्षिक प्रतिवेदनहरू'
+  },
+  'reports.agm_title': {
+    en: 'AGM Minutes',
+    ne: 'साधारण सभाका मिनेटहरू'
+  },
+  'reports.agm_subtitle': {
+    en: 'Official minutes from our Annual General Meetings',
+    ne: 'हाम्रा वार्षिक साधारण सभाका आधिकारिक मिनेटहरू'
+  },
+  'reports.base_rate_title': {
+    en: 'Base Rate Information',
+    ne: 'आधार दर जानकारी'
+  },
+  'reports.base_rate_subtitle': {
+    en: 'Current and historical base rate information as per Nepal Rastra Bank guidelines',
+    ne: 'नेपाल राष्ट्र बैंकको निर्देशन अनुसार वर्तमान र ऐतिहासिक आधार दर जानकारी'
+  },
+  'reports.staff_training_title': {
+    en: 'Staff Training Reports',
+    ne: 'कर्मचारी तालिम प्रतिवेदनहरू'
+  },
+  'reports.staff_training_subtitle': {
+    en: 'Reports on capacity building and staff development programs',
+    ne: 'क्षमता अभिवृद्धि र कर्मचारी विकास कार्यक्रमका प्रतिवेदनहरू'
+  },
+  'reports.governance_title': {
+    en: 'Governance Reports',
+    ne: 'शासन प्रतिवेदनहरू'
+  },
+  'reports.governance_subtitle': {
+    en: 'Corporate governance reports and compliance documents',
+    ne: 'कर्पोरेट शासन प्रतिवेदनहरू र अनुपालन कागजातहरू'
+  },
+  'reports.no_reports': {
+    en: 'No reports available at the moment.',
+    ne: 'अहिले कुनै प्रतिवेदन उपलब्ध छैन।'
+  },
+  'reports.back_to_all': {
+    en: 'Back to All Reports',
+    ne: 'सबै प्रतिवेदनमा फर्कनुहोस्'
   }
 };

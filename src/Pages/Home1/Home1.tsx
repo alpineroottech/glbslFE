@@ -19,7 +19,8 @@ const Home1: React.FC = () => {
       <Facilities />
       <Offers />
       <Reports />
-      <Testimonial />
+      {/* Testimonial section hidden per client request */}
+      {/* <Testimonial /> */}
       {/* <LatestBlog /> */}
     </>
   );

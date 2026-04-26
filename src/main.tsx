@@ -1,5 +1,19 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+
+// When a new deployment changes chunk hashes, browsers with cached HTML
+// may request old chunk files that no longer exist (404). Detect this and
+// reload once so the browser picks up the fresh HTML with updated chunk names.
+window.addEventListener('error', (event) => {
+  const src = (event.target as HTMLScriptElement | null)?.src ?? '';
+  if (src && src.includes('/assets/') && event.target instanceof HTMLScriptElement) {
+    const reloadedKey = 'chunk_reload_attempted';
+    if (!sessionStorage.getItem(reloadedKey)) {
+      sessionStorage.setItem(reloadedKey, '1');
+      window.location.reload();
+    }
+  }
+}, true);
 import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import router from "./Router/Router";

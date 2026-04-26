@@ -57,7 +57,17 @@ import {
 } from "../Pages/InnerPage/Gunaso";
 
 // Sanity Studio – lazy loaded so it only downloads when visiting /studio
-const StudioPage = React.lazy(() => import('../Pages/Studio/StudioPage'))
+// Retry once on chunk load failure (happens after redeployment with new hash names)
+const loadStudioPage = (): Promise<{ default: React.ComponentType }> =>
+  import('../Pages/Studio/StudioPage').catch(() => {
+    if (!sessionStorage.getItem('studio_reload')) {
+      sessionStorage.setItem('studio_reload', '1');
+      window.location.reload();
+    }
+    return { default: () => <div style={{ padding: '2rem', textAlign: 'center' }}>Reloading… please wait.</div> };
+  });
+
+const StudioPage = React.lazy(loadStudioPage);
 
 // Only the primary route is kept (Home1). Extra homepage routes removed.
 const router = createBrowserRouter([
