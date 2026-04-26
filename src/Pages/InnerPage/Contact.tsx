@@ -4,9 +4,20 @@ import BreadCrumb from "../../BreadCrumb/BreadCrumb";
 import { IoIosCall } from "react-icons/io";
 import Swal from "sweetalert2";
 import { useLanguage } from "../../contexts/LanguageContext";
+import { useRateLimitedSubmit } from "../../hooks/useRateLimitedSubmit";
+import {
+  validateName,
+  validateEmail,
+  validatePhone,
+  validateRequired,
+  isFormValid,
+  type FormErrors,
+} from "../../utils/formValidation";
 
 const Contact: React.FC = () => {
   const { t, language } = useLanguage();
+  const { canSubmit, isOnCooldown, markSubmitted } = useRateLimitedSubmit({ cooldownMs: 10000 });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
@@ -15,48 +26,74 @@ const Contact: React.FC = () => {
     subject: '',
     message: ''
   });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+
+  const validate = (data: typeof formData): FormErrors => ({
+    name: validateName(data.name) ?? '',
+    email: validateEmail(data.email) ?? '',
+    phone: validatePhone(data.phone) ?? '',
+    subject: validateRequired(data.subject, 'Subject', 100) ?? '',
+    message: validateRequired(data.message, 'Message', 1000) ?? '',
+  });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    const updatedData = { ...formData, [name]: value };
+    setFormData(updatedData);
+    if (touched[name]) {
+      setErrors(validate(updatedData));
+    }
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
+    const { name } = e.target;
+    setTouched(prev => ({ ...prev, [name]: true }));
+    setErrors(validate(formData));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const allTouched = Object.fromEntries(Object.keys(formData).map(k => [k, true]));
+    setTouched(allTouched);
+
+    const validationErrors = validate(formData);
+    setErrors(validationErrors);
+    if (!isFormValid(validationErrors)) return;
+
+    if (!canSubmit()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Please wait',
+        text: 'Please wait a moment before submitting again.',
+        confirmButtonColor: '#DAA520',
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-      // Show loading state
       Swal.fire({
         title: t('contact.sending'),
         allowOutsideClick: false,
-        didOpen: () => {
-          Swal.showLoading();
-        }
+        didOpen: () => { Swal.showLoading(); }
       });
 
       const response = await fetch('/api/send-email', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           formType: 'contact',
-          data: {
-            ...formData,
-            language: language
-          }
+          data: { ...formData, language }
         })
       });
 
-      if (!response.ok) {
-        throw new Error('Failed to send email');
-      }
+      if (!response.ok) throw new Error('Failed to send email');
 
-      // Success
+      markSubmitted();
+
       Swal.fire({
         icon: 'success',
         title: t('contact.success'),
@@ -64,17 +101,11 @@ const Contact: React.FC = () => {
         confirmButtonColor: '#DAA520'
       });
 
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setTouched({});
+      setErrors({});
 
-    } catch (error) {
-      console.error('Error sending email:', error);
+    } catch {
       Swal.fire({
         icon: 'error',
         title: t('contact.error'),
@@ -86,12 +117,20 @@ const Contact: React.FC = () => {
     }
   };
 
+  const inputClass = (field: string) =>
+    `w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-khaki focus:border-transparent ${
+      touched[field] && errors[field] ? 'border-red-500' : 'border-gray-300'
+    }`;
+
+  const errorMsg = (field: string) =>
+    touched[field] && errors[field] ? (
+      <p className="text-red-400 text-xs mt-1">{errors[field]}</p>
+    ) : null;
+
   return (
     <div>
       <BreadCrumb title="Contact " />
 
-      {/* Contact */}
-      {/* Contact with Us */}
       <div className="py-20 2xl:py-[120px] dark:bg-lightBlack">
         <div className="Container bg-whiteSmoke dark:bg-normalBlack px-7 md:px-10 lg:px-14 2xl:px-20 py-10 md:py-14 lg:py-18 xl:py-20 2xl:py-[100px] ">
           <div className="flex items-center flex-col md:flex-row">
@@ -116,58 +155,41 @@ const Contact: React.FC = () => {
               {/* call */}
               <div className="flex items-center my-4 md:my-5 lg:my-[26px] group">
                 <div className="w-[30px] h-[30px] md:w-[40px] md:h-[40px] lg:w-[50px] lg:h-[50px] 2xl:w-[60px] 2xl:h-[60px] bg-white dark:bg-lightBlack group-hover:bg-khaki dark:group-hover:bg-khaki grid items-center justify-center rounded-full transition-all duration-300">
-                  <IoIosCall
-                    size={22}
-                    className="text-khaki group-hover:text-whiteSmoke"
-                  />
+                  <IoIosCall size={22} className="text-khaki group-hover:text-whiteSmoke" />
                 </div>
                 <div className="ml-3 md:ml-4">
-                  <p className="font-Lora text-sm leading-[26px] text-gray dark:text-lightGray font-normal">
-                    Call Us Now
-                  </p>
-                  <p className="font-Garamond text-lg sm:text-xl md:text-[22px] leading-[26px] text-lightBlack dark:text-white font-medium">
-                    021-464453
-                  </p>
+                  <p className="font-Lora text-sm leading-[26px] text-gray dark:text-lightGray font-normal">Call Us Now</p>
+                  <p className="font-Garamond text-lg sm:text-xl md:text-[22px] leading-[26px] text-lightBlack dark:text-white font-medium">021-464453</p>
                 </div>
               </div>
               <hr className="dark:text-gray dark:bg-gray text-lightGray bg-lightGray h-[1px]" />
+
               {/* email */}
               <div className="flex items-center my-4 md:my-5 lg:my-[26px] group">
                 <div className="w-[30px] h-[30px] md:w-[40px] md:h-[40px] lg:w-[50px] lg:h-[50px] 2xl:w-[60px] 2xl:h-[60px] bg-white dark:bg-lightBlack group-hover:bg-khaki dark:group-hover:bg-khaki grid items-center justify-center rounded-full transition-all duration-300">
-                  <MdEmail
-                    size={22}
-                    className="text-khaki group-hover:text-whiteSmoke"
-                  />
+                  <MdEmail size={22} className="text-khaki group-hover:text-whiteSmoke" />
                 </div>
                 <div className="ml-3 md:ml-4">
-                  <p className="font-Lora text-sm leading-[26px] text-gray dark:text-lightGray font-normal">
-                    Send us an Email
-                  </p>
-                  <p className="font-Garamond text-lg sm:text-xl md:text-[22px] leading-[26px] text-lightBlack dark:text-white font-medium ">
-                    info@glbsl.com.np
-                  </p>
+                  <p className="font-Lora text-sm leading-[26px] text-gray dark:text-lightGray font-normal">Send us an Email</p>
+                  <p className="font-Garamond text-lg sm:text-xl md:text-[22px] leading-[26px] text-lightBlack dark:text-white font-medium ">info@glbsl.com.np</p>
                 </div>
               </div>
               <hr className="dark:text-gray dark:bg-gray text-lightGray bg-lightGray h-[1px]" />
+
               {/* location */}
               <div className="flex items-center my-4 md:my-5 lg:my-[26px] group">
                 <div className="w-[30px] h-[30px] md:w-[40px] md:h-[40px] lg:w-[50px] lg:h-[50px] 2xl:w-[60px] 2xl:h-[60px] bg-white dark:bg-lightBlack group-hover:bg-khaki dark:group-hover:bg-khaki grid items-center justify-center rounded-full transition-all duration-300">
-                  <MdOutlineShareLocation
-                    size={22}
-                    className="text-khaki group-hover:text-whiteSmoke"
-                  />
+                  <MdOutlineShareLocation size={22} className="text-khaki group-hover:text-whiteSmoke" />
                 </div>
                 <div className="ml-3 md:ml-4">
-                  <p className="font-Lora text-sm leading-[26px] text-gray dark:text-lightGray font-normal">
-                    Our Location
-                  </p>
+                  <p className="font-Lora text-sm leading-[26px] text-gray dark:text-lightGray font-normal">Our Location</p>
                   <p className="font-Garamond text-lg sm:text-xl md:text-[22px] leading-[26px] text-lightBlack dark:text-white font-medium ">
-                    Buddhiganga-1,<br /> PuspalalChowk
-Morang
+                    Buddhiganga-1,<br /> PuspalalChowk<br />Morang
                   </p>
                 </div>
               </div>
             </div>
+
             <div
               className="flex-1 py-5 sm:p-5"
               data-aos="zoom-in-up"
@@ -177,63 +199,73 @@ Morang
                 <h2 className="font-Garamond text-[22px] sm:text-2xl md:text-[28px] leading-7 md:leading-8 lg:leading-9 xl:leading-10 2xl:leading-[44px] text-white font-semibold text-center mb-8">
                   GET IN TOUCH
                 </h2>
-                
-                <form onSubmit={handleSubmit} className="space-y-4">
+
+                <form onSubmit={handleSubmit} className="space-y-4" noValidate>
                   <div>
-                    <label className="block text-white text-sm font-medium mb-2">
+                    <label htmlFor="contact-name" className="block text-white text-sm font-medium mb-2">
                       Your Name *
                     </label>
                     <input
+                      id="contact-name"
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-khaki focus:border-transparent"
+                      onBlur={handleBlur}
+                      className={inputClass('name')}
                       placeholder="Your Name"
+                      maxLength={100}
                     />
+                    {errorMsg('name')}
                   </div>
 
                   <div>
-                    <label className="block text-white text-sm font-medium mb-2">
+                    <label htmlFor="contact-email" className="block text-white text-sm font-medium mb-2">
                       Email Address *
                     </label>
                     <input
+                      id="contact-email"
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-khaki focus:border-transparent"
+                      onBlur={handleBlur}
+                      className={inputClass('email')}
                       placeholder="Enter E-mail"
+                      maxLength={100}
                     />
+                    {errorMsg('email')}
                   </div>
 
                   <div>
-                    <label className="block text-white text-sm font-medium mb-2">
+                    <label htmlFor="contact-phone" className="block text-white text-sm font-medium mb-2">
                       Phone Number *
                     </label>
                     <input
+                      id="contact-phone"
                       type="tel"
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-khaki focus:border-transparent"
+                      onBlur={handleBlur}
+                      className={inputClass('phone')}
                       placeholder="Phone Number"
+                      maxLength={20}
                     />
+                    {errorMsg('phone')}
                   </div>
 
                   <div>
-                    <label className="block text-white text-sm font-medium mb-2">
+                    <label htmlFor="contact-subject" className="block text-white text-sm font-medium mb-2">
                       Subject *
                     </label>
                     <select
+                      id="contact-subject"
                       name="subject"
                       value={formData.subject}
                       onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-khaki focus:border-transparent"
+                      onBlur={handleBlur}
+                      className={inputClass('subject')}
                     >
                       <option value="">Select Subject</option>
                       <option value="General Inquiry">General Inquiry</option>
@@ -241,29 +273,33 @@ Morang
                       <option value="Account Services">Account Services</option>
                       <option value="Other">Other</option>
                     </select>
+                    {errorMsg('subject')}
                   </div>
 
                   <div>
-                    <label className="block text-white text-sm font-medium mb-2">
+                    <label htmlFor="contact-message" className="block text-white text-sm font-medium mb-2">
                       Message *
                     </label>
                     <textarea
+                      id="contact-message"
                       name="message"
                       value={formData.message}
                       onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-khaki focus:border-transparent resize-none"
+                      onBlur={handleBlur}
+                      className={inputClass('message')}
                       rows={6}
                       placeholder="Write Message:"
-                    ></textarea>
+                      maxLength={1000}
+                    />
+                    {errorMsg('message')}
                   </div>
 
                   <button
                     type="submit"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isOnCooldown}
                     className="w-full bg-khaki text-white py-3 px-6 rounded-md hover:bg-opacity-90 transition-all duration-300 font-medium disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {isSubmitting ? 'Sending...' : 'SEND MESSAGE'}
+                    {isSubmitting ? 'Sending...' : isOnCooldown ? 'Message Sent!' : 'SEND MESSAGE'}
                   </button>
                 </form>
               </div>
@@ -280,7 +316,8 @@ Morang
           allowFullScreen={true}
           loading="lazy"
           className="w-full"
-        ></iframe>
+          title="Office Location Map"
+        />
       </div>
     </div>
   );

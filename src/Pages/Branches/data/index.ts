@@ -677,7 +677,6 @@ const staticBranchData: BranchData[] = [
 // Current function that returns static data
 // This will be replaced with API calls to Strapi in production
 export const getBranches = (): BranchData[] => {
-  console.log('Fetching branch data (currently using static data)');
   return staticBranchData;
 };
 

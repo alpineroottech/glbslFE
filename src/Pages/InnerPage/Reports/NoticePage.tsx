@@ -161,7 +161,7 @@ const NoticePage: React.FC = () => {
           url: `${window.location.origin}/reports/notices/${notice._id}`,
         });
       } catch (error) {
-        console.log('Error sharing:', error);
+        console.error('Error sharing:', error);
         alert(`${notice.title} link copied to clipboard!`);
       }
     } else {

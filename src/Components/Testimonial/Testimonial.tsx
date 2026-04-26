@@ -3,6 +3,7 @@ import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { testimonialsService, getStrapiMediaUrl } from "../../services/strapi";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 // TypeScript interface for Testimonial from Sanity
 interface StrapiTestimonial {
@@ -17,6 +18,7 @@ interface StrapiTestimonial {
 }
 
 const Testimonial: React.FC = () => {
+  const { language } = useLanguage();
   const [testimonials, setTestimonials] = useState<StrapiTestimonial[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

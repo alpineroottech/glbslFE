@@ -116,7 +116,7 @@ const GovernanceReportPage: React.FC = () => {
           url: `${window.location.origin}/reports/governance/${report.slug}`,
         });
       } catch (error) {
-        console.log('Error sharing:', error);
+        console.error('Error sharing:', error);
         alert(`${report.title} link copied to clipboard!`);
       }
     } else {

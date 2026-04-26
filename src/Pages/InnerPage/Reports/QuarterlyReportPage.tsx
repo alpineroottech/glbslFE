@@ -140,7 +140,7 @@ const QuarterlyReportPage: React.FC = () => {
           url: shareUrl,
         });
       } catch (error) {
-        console.log('Error sharing:', error);
+        console.error('Error sharing:', error);
         // Fallback to clipboard
         await navigator.clipboard.writeText(shareUrl);
         alert('Report link copied to clipboard!');

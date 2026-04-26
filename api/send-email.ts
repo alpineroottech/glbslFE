@@ -3,12 +3,16 @@ import { Resend } from 'resend';
 
 // Escape HTML special characters to prevent HTML injection in email templates
 const escapeHtml = (str: string): string => {
-  return String(str)
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
+  const map: Record<string, string> = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;',
+    '/': '&#47;',
+    '`': '&#96;',
+  };
+  return String(str).replace(/[&<>"'`/]/g, (char) => map[char]);
 };
 
 // Safe field helper: escape and preserve newlines as <br>
@@ -161,16 +165,35 @@ const getLoanEmailHtml = (data: any) => `
 </html>
 `;
 
+// Validate string field: trim, check required, enforce max length
+const validateField = (value: unknown, maxLength: number): string | null => {
+  if (value === undefined || value === null) return null;
+  const str = String(value).trim();
+  if (str.length > maxLength) return null;
+  return str;
+};
+
+const ALLOWED_ORIGINS = [
+  'https://guranslaghubitta.com.np',
+  'https://www.guranslaghubitta.com.np',
+];
+
+const isAllowedOrigin = (origin: string): boolean => {
+  if (process.env.VERCEL_URL && origin === `https://${process.env.VERCEL_URL}`) return true;
+  return ALLOWED_ORIGINS.some((allowed) => origin === allowed);
+};
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  // Handle CORS - restrict to known origins
-  const allowedOrigins = [
-    'https://guranslaghubitta.com.np',
-    'https://www.guranslaghubitta.com.np',
-    process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
-  ].filter(Boolean);
-  const origin = req.headers.origin || '';
-  const allowedOrigin = allowedOrigins.includes(origin) ? origin : (allowedOrigins[0] || '*');
-  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);
+  // Determine request origin (prefer Origin header, fall back to Referer)
+  const origin = (req.headers.origin || req.headers.referer || '').split('?')[0].replace(/\/$/, '');
+
+  // In development (no VERCEL_URL, local origin) allow all; in production enforce allowed list
+  const isDev = process.env.NODE_ENV !== 'production' && !process.env.VERCEL_URL;
+  const originAllowed = isDev || isAllowedOrigin(origin);
+
+  // Handle CORS
+  const corsOrigin = originAllowed ? (origin || ALLOWED_ORIGINS[0]) : ALLOWED_ORIGINS[0];
+  res.setHeader('Access-Control-Allow-Origin', corsOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('Vary', 'Origin');
@@ -181,6 +204,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return;
   }
 
+  // Reject requests from disallowed origins in production
+  if (!originAllowed) {
+    return res.status(403).json({ error: 'Forbidden' });
+  }
+
   // Only allow POST
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
@@ -189,8 +217,25 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   try {
     const { formType, data } = req.body;
 
-    if (!formType || !data) {
-      return res.status(400).json({ error: 'Missing formType or data' });
+    if (!formType || !data || typeof data !== 'object') {
+      return res.status(400).json({ error: 'Missing or invalid formType or data' });
+    }
+
+    // Basic server-side field size validation to prevent payload abuse
+    const MAX_SHORT = 100;
+    const MAX_LONG = 2000;
+    const fieldsTooLong = Object.entries(data).some(([, v]) => {
+      if (typeof v === 'string' && v.length > MAX_LONG) return true;
+      return false;
+    });
+    if (fieldsTooLong) {
+      return res.status(400).json({ error: 'One or more fields exceed maximum allowed length' });
+    }
+
+    // Validate email format if present
+    const emailValue = validateField(data.email, MAX_SHORT);
+    if (data.email !== undefined && (emailValue === null || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue))) {
+      return res.status(400).json({ error: 'Invalid email address' });
     }
 
     // Determine recipient and email content
