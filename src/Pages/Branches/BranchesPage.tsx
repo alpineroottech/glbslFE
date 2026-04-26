@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import BreadCrumb from "../../BreadCrumb/BreadCrumb";
 import BranchTile from "./components/BranchTile";
 import { getBranches, BranchData } from "./data";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 // BranchesPage component - main page for displaying all bank branches
 // Follows the same design patterns as other pages in the application
 const BranchesPage: React.FC = () => {
+  const { t } = useLanguage();
   
   // State for branch data
   const [branches, setBranches] = useState<BranchData[]>([]);
@@ -49,7 +51,7 @@ const BranchesPage: React.FC = () => {
   if (loading) {
     return (
       <div className="min-h-screen">
-        <BreadCrumb title="Our Branches" home="/" />
+        <BreadCrumb title={t('page.our_branches')} home="/" />
         <div className="dark:bg-normalBlack py-20 2xl:py-[120px]">
           <div className="Container">
             <div className="text-center">
@@ -66,7 +68,7 @@ const BranchesPage: React.FC = () => {
   if (error) {
     return (
       <div className="min-h-screen">
-        <BreadCrumb title="Our Branches" home="/" />
+        <BreadCrumb title={t('page.our_branches')} home="/" />
         <div className="dark:bg-normalBlack py-20 2xl:py-[120px]">
           <div className="Container">
             <div className="text-center">
@@ -89,7 +91,7 @@ const BranchesPage: React.FC = () => {
   return (
     <section className="min-h-screen">
       {/* Breadcrumb navigation */}
-      <BreadCrumb title="Our Branches" home="/" />
+      <BreadCrumb title={t('page.our_branches')} home="/" />
 
       {/* Main content */}
       <section className="dark:bg-normalBlack">
@@ -102,9 +104,9 @@ const BranchesPage: React.FC = () => {
             <div className="flex items-center justify-center space-x-2">
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
               <img
-                src="/images/inner/inner-logo.png"
-                alt="branches_section_logo"
-                className="w-[50px] h-[50px]"
+                src="/images/home-1/gurans.png"
+                alt="Gurans Laghubitta logo"
+                className="h-8 w-auto object-contain"
               />
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
             </div>

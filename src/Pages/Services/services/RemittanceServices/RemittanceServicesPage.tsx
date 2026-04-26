@@ -11,7 +11,7 @@ const RemittanceServicesPage: React.FC = () => {
   const [content, setContent] = useState<any | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     const fetch = async () => {
@@ -46,7 +46,7 @@ const RemittanceServicesPage: React.FC = () => {
   return (
     <section className="">
       {/* Breadcrumb navigation */}
-      <BreadCrumb title="Remittance Services" />
+      <BreadCrumb title={t('submenu.remittance_services')} />
 
       {/* Remittance services page content */}
       <div className="dark:bg-mediumBlack">

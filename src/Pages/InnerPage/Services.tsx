@@ -1,11 +1,13 @@
 import React from "react";
 import BreadCrumb from "../../BreadCrumb/BreadCrumb";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../contexts/LanguageContext";
 import ServiceCard from "../Services/components/ServiceCard";
 import ServiceHeader from "../Services/components/ServiceHeader";
 import { ServiceCardProps, ServiceCategory } from "../Services/types";
 
 const Services: React.FC = () => {
+  const { t } = useLanguage();
   
   // Service data for the 4 financial services
   // This will later be replaced with data from Strapi CMS
@@ -50,7 +52,7 @@ const Services: React.FC = () => {
 
   return (
     <section className="">
-      <BreadCrumb title="services" />
+      <BreadCrumb title={t('page.services')} />
 
       {/* service page content */}
       <div className="dark:bg-mediumBlack">

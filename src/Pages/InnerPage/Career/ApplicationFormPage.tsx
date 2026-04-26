@@ -83,7 +83,7 @@ const ApplicationFormPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [viewerOpen, setViewerOpen] = useState(false);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     const fetchApplicationForm = async () => {
@@ -154,7 +154,7 @@ const ApplicationFormPage: React.FC = () => {
         />
       )}
 
-      <BreadCrumb title="APPLICATION FORMS" home={"/"} />
+      <BreadCrumb title={t('page.application_forms')} home={"/"} />
 
       <div className="bg-whiteSmoke dark:bg-lightBlack py-20 2xl:py-[120px]">
         <div className="Container">
@@ -171,9 +171,9 @@ const ApplicationFormPage: React.FC = () => {
               <div className="flex items-center justify-center text-center mx-auto mt-2 lg:mt-[6px]">
                 <div className="w-[100px] h-[1px] bg-[#ccc] dark:bg-[#3b3b3b] mr-5 "></div>
                 <img
-                  src="/images/home-1/section-shape1.png"
-                  className="w-[30px] h-[30px]"
-                  alt=""
+                  src="/images/home-1/gurans.png"
+                  className="h-6 w-auto object-contain"
+                  alt="Gurans Laghubitta logo"
                 />
                 <div className="w-[100px] h-[1px] bg-[#ccc] dark:bg-[#3b3b3b] ml-5"></div>
               </div>

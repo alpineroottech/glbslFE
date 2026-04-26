@@ -27,7 +27,7 @@ const AboutUs: React.FC = () => {
 
   return (
     <div>
-      <BreadCrumb title="About Us" home="/" />
+      <BreadCrumb title={t('submenu.about_us')} home="/" />
       {/* About Us Content */}
       <div className="dark:bg-normalBlack py-20 2xl:py-[120px]">
         <div className="Container">
@@ -36,9 +36,9 @@ const AboutUs: React.FC = () => {
             <div className="flex items-center justify-center space-x-2">
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
               <img
-                src="/images/inner/inner-logo.png"
-                alt="about_section_logo"
-                className="w-[50px] h-[50px]"
+                src="/images/home-1/gurans.png"
+                alt="Gurans Laghubitta logo"
+                className="h-8 w-auto object-contain"
               />
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
             </div>

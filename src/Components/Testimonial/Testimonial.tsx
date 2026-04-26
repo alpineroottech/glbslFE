@@ -120,9 +120,9 @@ const Testimonial: React.FC = () => {
           <div className="flex items-center justify-center space-x-2 mb-4 lg:mb-5">
             <hr className="w-[100px] h-[1px] text-[#473f39]" />
             <img
-              src="/images/home-1/section-shape1.png"
-              alt="room_section_logo"
-              className="w-[50px] h-[50px]"
+              src="/images/home-1/gurans.png"
+              alt="Gurans Laghubitta logo"
+              className="h-8 w-auto object-contain"
             />
             <hr className="w-[100px] h-[1px] text-[#473f39]" />
           </div>

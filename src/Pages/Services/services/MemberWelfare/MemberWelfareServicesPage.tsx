@@ -17,7 +17,7 @@ interface WelfareItem {
 // Follows website theme and design patterns
 // Compatible with Strapi CMS for future data integration
 const MemberWelfareServicesPage: React.FC = () => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const [items, setItems] = useState<WelfareItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -72,7 +72,7 @@ const MemberWelfareServicesPage: React.FC = () => {
   return (
     <section className="">
       {/* Breadcrumb navigation */}
-      <BreadCrumb title="Member Welfare Services" />
+      <BreadCrumb title={t('submenu.member_welfare')} />
 
       {/* Member welfare services page content */}
       <div className="dark:bg-mediumBlack">

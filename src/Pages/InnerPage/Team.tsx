@@ -2,11 +2,13 @@ import React from "react";
 import { FaFacebookF, FaLinkedinIn, FaPinterestP } from "react-icons/fa";
 import BreadCrumb from "../../BreadCrumb/BreadCrumb";
 import { BsTwitter } from "react-icons/bs";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 const Team: React.FC = () => {
+  const { t } = useLanguage();
   return (
     <div>
-      <BreadCrumb title="our team" />
+      <BreadCrumb title={t('page.our_team')} />
       {/* Content */}
 
       {/* Expert Members */}
@@ -17,9 +19,9 @@ const Team: React.FC = () => {
             <div className="flex items-center justify-center space-x-2">
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
               <img
-                src="/images/inner/inner-logo.png"
-                alt="room_section_logo"
-                className="w-[50px] h-[50px]"
+                src="/images/home-1/gurans.png"
+                alt="Gurans Laghubitta logo"
+                className="h-8 w-auto object-contain"
               />
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
             </div>

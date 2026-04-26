@@ -651,8 +651,8 @@ export const translations: Translations = {
     ne: 'हामीलाई सम्पर्क गर्नुहोस्'
   },
   'footer.copyright': {
-    en: '© 2024, Royella. All Rights Reserved.',
-    ne: '© २०२४, रोयला। सबै अधिकार सुरक्षित।'
+    en: '© 2026, Gurans Laghubitta Bittiya Sanstha Ltd. All Rights Reserved.',
+    ne: '© २०२६, गुराँस लघुवित्त वित्तीय संस्था लिमिटेड। सबै अधिकार सुरक्षित।'
   },
   
   // Language toggle
@@ -1333,5 +1333,39 @@ export const translations: Translations = {
   'reports.back_to_all': {
     en: 'Back to All Reports',
     ne: 'सबै प्रतिवेदनमा फर्कनुहोस्'
+  },
+
+  // Page breadcrumb titles
+  'page.career_opportunities': {
+    en: 'Career Opportunities',
+    ne: 'करियर अवसरहरू'
+  },
+  'page.reports_documents': {
+    en: 'Reports & Documents',
+    ne: 'प्रतिवेदन र कागजपत्रहरू'
+  },
+  'page.application_forms': {
+    en: 'Application Forms',
+    ne: 'आवेदन फारमहरू'
+  },
+  'page.contact': {
+    en: 'Contact Us',
+    ne: 'हामीलाई सम्पर्क गर्नुहोस्'
+  },
+  'page.our_branches': {
+    en: 'Our Branches',
+    ne: 'हाम्रा शाखाहरू'
+  },
+  'page.our_team': {
+    en: 'Our Team',
+    ne: 'हाम्रो टोली'
+  },
+  'page.services': {
+    en: 'Services',
+    ne: 'सेवाहरू'
+  },
+  'page.service_details': {
+    en: 'Service Details',
+    ne: 'सेवाको विवरण'
   }
 };

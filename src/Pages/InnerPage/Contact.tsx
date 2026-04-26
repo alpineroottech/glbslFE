@@ -129,7 +129,7 @@ const Contact: React.FC = () => {
 
   return (
     <div>
-      <BreadCrumb title="Contact " />
+      <BreadCrumb title={t('page.contact')} />
 
       <div className="py-20 2xl:py-[120px] dark:bg-lightBlack">
         <div className="Container bg-whiteSmoke dark:bg-normalBlack px-7 md:px-10 lg:px-14 2xl:px-20 py-10 md:py-14 lg:py-18 xl:py-20 2xl:py-[100px] ">

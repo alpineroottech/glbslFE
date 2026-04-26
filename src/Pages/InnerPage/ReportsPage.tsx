@@ -1,6 +1,7 @@
 import React from "react";
 import BreadCrumb from "../../BreadCrumb/BreadCrumb";
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../contexts/LanguageContext";
 import { BsArrowRight, BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { useKeenSlider } from "keen-slider/react";
@@ -11,6 +12,7 @@ import Swal from "sweetalert2";
 import PDFPreview from "../../Components/Reports/PDFPreview";
 
 const ReportsPage: React.FC = () => {
+  const { t } = useLanguage();
   // facilities slider breakpoints
   const [sliderRef] = useKeenSlider({
     breakpoints: {
@@ -36,7 +38,7 @@ const ReportsPage: React.FC = () => {
 
   return (
     <section className="">
-      <BreadCrumb title="REPORTS & DOCUMENTS" home={"/"} />
+      <BreadCrumb title={t('page.reports_documents')} home={"/"} />
 
       {/* All reports */}
 
@@ -55,9 +57,9 @@ const ReportsPage: React.FC = () => {
               <div className="flex items-center justify-center text-center mx-auto mt-2 lg:mt-[6px]">
                 <div className="w-[100px] h-[1px] bg-[#ccc] dark:bg-[#3b3b3b] mr-5 "></div>
                 <img
-                  src="/images/home-1/section-shape1.png"
-                  className="w-[30px] h-[30px]"
-                  alt=""
+                  src="/images/home-1/gurans.png"
+                  className="h-6 w-auto object-contain"
+                  alt="Gurans Laghubitta logo"
                 />
                 <div className="w-[100px] h-[1px] bg-[#ccc] dark:bg-[#3b3b3b] ml-5"></div>
               </div>
@@ -320,9 +322,9 @@ const ReportsPage: React.FC = () => {
                 <div className="flex items-center justify-center text-center mx-auto mt-2 lg:mt-[6px]">
                   <div className="w-[100px] h-[1px] bg-[#ccc] dark:bg-[#3b3b3b] mr-5 "></div>
                   <img
-                    src="/images/home-1/section-shape1.png"
-                    className="w-[30px] h-[30px]"
-                    alt=""
+                    src="/images/home-1/gurans.png"
+                    className="h-6 w-auto object-contain"
+                    alt="Gurans Laghubitta logo"
                   />
                   <div className="w-[100px] h-[1px] bg-[#ccc] dark:bg-[#3b3b3b] ml-5"></div>
                 </div>
@@ -409,9 +411,9 @@ const ReportsPage: React.FC = () => {
                 <div className="flex items-center justify-center text-center mx-auto mt-2 lg:mt-[6px]">
                   <div className="w-[100px] h-[1px] bg-[#3B3B3B] mr-5 "></div>
                   <img
-                    src="/images/home-1/section-shape1.png"
-                    className="w-[30px] h-[30px]"
-                    alt=""
+                    src="/images/home-1/gurans.png"
+                    className="h-6 w-auto object-contain"
+                    alt="Gurans Laghubitta logo"
                   />
                   <div className="w-[100px] h-[1px] bg-[#3B3B3B] ml-5"></div>
                 </div>

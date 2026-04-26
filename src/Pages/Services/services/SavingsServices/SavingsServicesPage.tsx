@@ -19,7 +19,7 @@ const SavingsServicesPage: React.FC = () => {
   const [items, setItems] = useState<SavingsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     const fetch = async () => {
@@ -54,7 +54,7 @@ const SavingsServicesPage: React.FC = () => {
   return (
     <section className="">
       {/* Breadcrumb navigation */}
-      <BreadCrumb title="Savings Services" />
+      <BreadCrumb title={t('submenu.savings_services')} />
 
       {/* Savings services page content */}
       <div className="dark:bg-mediumBlack">

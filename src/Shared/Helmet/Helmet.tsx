@@ -5,7 +5,7 @@ import { HelmetProps } from "../../types";
 const HelmetChanger: React.FC<HelmetProps> = ({ title }) => {
   return (
     <Helmet>
-      <title>Royella - {title}</title>
+      <title>Gurans Laghubitta - {title}</title>
     </Helmet>
   );
 };

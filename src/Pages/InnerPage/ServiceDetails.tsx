@@ -2,6 +2,7 @@ import React from "react";
 import { BsCheck2 } from "react-icons/bs";
 import BreadCrumb from "../../BreadCrumb/BreadCrumb";
 import { useEffect, useState } from "react";
+import { useLanguage } from "../../contexts/LanguageContext";
 
 interface MenuItem {
   category: string;
@@ -12,6 +13,7 @@ interface MenuItem {
 }
 
 const ServiceDetails: React.FC = () => {
+  const { t } = useLanguage();
   const [menu, setMenu] = useState<MenuItem[]>([]);
   const [showItem, setShowItem] = useState<MenuItem[]>([]);
   useEffect(() => {
@@ -24,7 +26,7 @@ const ServiceDetails: React.FC = () => {
 
   return (
     <section className="">
-      <BreadCrumb title="Service Details" />
+      <BreadCrumb title={t('page.service_details')} />
 
       {/* Service Details content */}
       <div className="py-20 2xl:py-[120px] dark:bg-lightBlack">
@@ -204,9 +206,9 @@ const ServiceDetails: React.FC = () => {
             <div className="flex items-center justify-center space-x-2">
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
               <img
-                src="/images/inner/inner-logo.png"
-                alt="room_section_logo"
-                className="w-[50px] h-[50px]"
+                src="/images/home-1/gurans.png"
+                alt="Gurans Laghubitta logo"
+                className="h-8 w-auto object-contain"
               />
               <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
             </div>
