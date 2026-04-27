@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
   // scrolling tracker
   const scrollPosition = useScrollPosition();
   // background color add and remover
-  const navbarBgColor = "lg:bg-lightBlack"; // Always opaque for better accessibility
+  const navbarBgColor = "lg:bg-khaki"; // Yellow brand color
 
   const toggleNavbar = (): void => {
     setIsOpen(!isOpen);
@@ -37,8 +37,8 @@ const Navbar: React.FC = () => {
           <div className="lg:p-2 lg:pr-6 flex-shrink-0">
             <Link to="/">
               <img
-                src="/images/home-1/gurans.png"
-                className="hidden lg:block h-14 w-auto max-w-[200px] object-contain"
+                src="/images/home-1/logo-1.png"
+                className="hidden lg:block h-16 w-auto max-w-[320px] object-contain"
                 alt="Gurans Laghubitta logo"
               />
             </Link>
@@ -48,8 +48,8 @@ const Navbar: React.FC = () => {
             <div className="w-36">
               <Link to="/">
                 <img
-                  src="/images/home-1/gurans.png"
-                  className="block lg:hidden h-12 w-auto max-w-[160px] object-contain"
+                  src="/images/home-1/logo-1.png"
+                  className="block lg:hidden h-12 w-auto max-w-[200px] object-contain"
                   alt="Gurans Laghubitta logo"
                 />
               </Link>
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
           <ul
             className={`${
               isOpen ? "block" : "hidden"
-            } text-left w-full lg:w-fit ease-in-out lg:flex space-y-2 lg:space-y-0 lg:text-center space-x-0 lg:space-x-2 xl:space-x-3 2xl:space-x-4 flex flex-col lg:flex-row text-sm text-lightBlack lg:text-white dark:text-white uppercase font-normal bg-white dark:bg-normalBlack lg:bg-transparent dark:lg:bg-transparent py-3 lg:py-0 font-Nepali lg:min-h-[4rem] lg:items-center`}
+            } text-left w-full lg:w-fit ease-in-out lg:flex space-y-2 lg:space-y-0 lg:text-center space-x-0 lg:space-x-2 xl:space-x-3 2xl:space-x-4 flex flex-col lg:flex-row text-sm text-lightBlack lg:text-lightBlack dark:text-white uppercase font-normal bg-white dark:bg-normalBlack lg:bg-transparent dark:lg:bg-transparent py-3 lg:py-0 font-Nepali lg:min-h-[4rem] lg:items-center`}
           >
             <NavLink
               className={`${({ isActive, isPending }: { isActive: boolean; isPending: boolean }) =>
@@ -98,7 +98,7 @@ const Navbar: React.FC = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
+                  : ""} text-lightBlack lg:text-lightBlack dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
               to="#"
             >
               <span className="nav-text-wrapper">
@@ -160,7 +160,7 @@ const Navbar: React.FC = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
+                  : ""} text-lightBlack lg:text-lightBlack dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
               to="#"
             >
               <span className="nav-text-wrapper">
@@ -216,7 +216,7 @@ const Navbar: React.FC = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
+                  : ""} text-lightBlack lg:text-lightBlack dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
               to="#"
             >
               <span className="nav-text-wrapper">
@@ -285,7 +285,7 @@ const Navbar: React.FC = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 nav-item`}
+                  : ""} text-lightBlack lg:text-lightBlack dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 nav-item`}
               to="/reports/notices"
             >
               <span className="nav-item">
@@ -298,7 +298,7 @@ const Navbar: React.FC = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
+                  : ""} text-lightBlack lg:text-lightBlack dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
               to="#"
             >
               <span className="nav-text-wrapper">
@@ -339,7 +339,7 @@ const Navbar: React.FC = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
+                  : ""} text-lightBlack lg:text-lightBlack dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
               to="#"
             >
               <span className="nav-text-wrapper">
@@ -380,7 +380,7 @@ const Navbar: React.FC = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
+                  : ""} text-lightBlack lg:text-lightBlack dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 group relative nav-item`}
               to="#"
             >
               <span className="nav-text-wrapper">
@@ -414,7 +414,7 @@ const Navbar: React.FC = () => {
                   ? "pending"
                   : isActive
                   ? "active"
-                  : ""} text-lightBlack lg:text-white dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 nav-item`}
+                  : ""} text-lightBlack lg:text-lightBlack dark:text-white lg:border-b-0 px-3 py-2 w-full block transition-all duration-300 nav-item`}
               to="/contact"
             >
               <span className="nav-item">
