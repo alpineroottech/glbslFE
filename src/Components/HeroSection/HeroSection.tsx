@@ -71,10 +71,10 @@ const HeroSection: React.FC = () => {
       <Swiper
         centeredSlides={true}
         navigation={true}
-        speed={3000}
+        speed={800}
         autoplay={{
-          delay: 10000,
-          disableOnInteraction: true,
+          delay: 5000,
+          disableOnInteraction: false,
         }}
         pagination={{
           clickable: true,

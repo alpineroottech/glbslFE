@@ -136,7 +136,7 @@ const Footer: React.FC = () => {
                   <div className="rounded border border-[#eee] overflow-hidden w-[250px] sm:w-[300px] lg:w-full">
                     <iframe
                       title="GLBSL Location"
-                      src="https://www.google.com/maps?q=Buddhiganga-1%20PuspalalChowk%20Morang%20Nepal&output=embed"
+                      src="https://www.google.com/maps?q=Dhankuta+Municipality+Dhankuta+Nepal&output=embed"
                       width="100%"
                       height="193"
                       style={{ border: 0, display: "block" }}

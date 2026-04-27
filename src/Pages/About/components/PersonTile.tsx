@@ -33,16 +33,22 @@ const PersonTile: React.FC<PersonProps> = ({
       </div>
 
       {/* Overlay: hidden by translateY (120%), slides up on hover. pointer-events disabled when hidden. */}
-      <div className="p-6 bg-normalBlack grid items-center justify-center absolute bottom-0 left-0 right-0 transform translate-y-[120%] group-hover:translate-y-0 group-hover:pointer-events-auto pointer-events-none transition-transform duration-500 z-10">
-        <div className="text-center text-white space-y-1">
-          <p className="text-white font-medium leading-6 text-base lg:text-lg font-Garamond">
-            {phone || "+977-1-234567"}
-          </p>
-          <p className="text-white font-medium leading-6 text-base lg:text-lg font-Garamond">
-            {email || "example@gmail.com"}
-          </p>
+      {(phone || email) && (
+        <div className="p-6 bg-normalBlack grid items-center justify-center absolute bottom-0 left-0 right-0 transform translate-y-[120%] group-hover:translate-y-0 group-hover:pointer-events-auto pointer-events-none transition-transform duration-500 z-10">
+          <div className="text-center text-white space-y-1">
+            {phone && (
+              <p className="text-white font-medium leading-6 text-base lg:text-lg font-Garamond">
+                {phone}
+              </p>
+            )}
+            {email && (
+              <p className="text-white font-medium leading-6 text-base lg:text-lg font-Garamond">
+                {email}
+              </p>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
