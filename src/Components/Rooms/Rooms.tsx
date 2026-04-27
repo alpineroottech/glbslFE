@@ -96,7 +96,7 @@ const ProductsSlider: React.FC = () => {
                     <div className="relative">
                       <div className="overflow-hidden">
                         <img
-                          src="/images/home-1/room-1.jpg"
+                          src="/images/home-1/loan_image.jpg"
                           className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
                           alt="Loan Services"
                         />
@@ -139,7 +139,7 @@ const ProductsSlider: React.FC = () => {
                     <div className="relative">
                       <div className="overflow-hidden">
                         <img
-                          src="/images/home-1/room-2.jpg"
+                          src="/images/home-1/savings_image.jpg"
                           className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
                           alt="Savings Accounts"
                         />
@@ -182,7 +182,7 @@ const ProductsSlider: React.FC = () => {
                     <div className="relative">
                       <div className="overflow-hidden">
                         <img
-                          src="/images/home-1/room-3.jpg"
+                          src="/images/home-1/remittance_image.jpg"
                           className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
                           alt="Remittance Services"
                         />

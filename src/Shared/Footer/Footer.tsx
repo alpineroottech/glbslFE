@@ -110,12 +110,12 @@ const Footer: React.FC = () => {
                 GALLERY
               </h1>
               <div className="grid grid-cols-3 gap-2 mt-[45px] w-[250px] sm:w-[300px] lg:w-full  content-center ">
-                <img src="/images/home-1/gallery-1.jpg" alt="Gallery image 1" />
-                <img src="/images/home-1/gallery-2.jpg" alt="Gallery image 2" />
-                <img src="/images/home-1/gallery-3.jpg" alt="Gallery image 3" />
-                <img src="/images/home-1/gallery-4.jpg" alt="Gallery image 4" />
-                <img src="/images/home-1/gallery-5.jpg" alt="Gallery image 5" />
-                <img src="/images/home-1/gallery-6.jpg" alt="Gallery image 6" />
+                <img src="/images/home-1/image1.jpg" alt="glbsl gallery image 1" />
+                <img src="/images/home-1/image2.jpg" alt="glbsl gallery image 2" />
+                <img src="/images/home-1/image3.jpg" alt="glbsl gallery image 3" />
+                <img src="/images/home-1/image4.jpg" alt="glbsl gallery image 4" />
+                <img src="/images/home-1/image5.jpg" alt="glbsl gallery image 5" />
+                <img src="/images/home-1/image6.jpg" alt="glbsl gallery image 6" />
               </div>
             </div>
 
