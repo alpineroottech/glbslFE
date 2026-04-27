@@ -14,7 +14,7 @@ const BreadCrumb: React.FC<BreadCrumbProps> = ({ title, home: _home }) => {
   
   return (
     <section className="bg-lightBlack h-[280px] grid items-center justify-center">
-      <div className="mt-10 text-center">
+      <div className="text-center">
         <h1 className="text-3xl md:text-4xl lg:text-5xl 2xl:text-6xl leading-10 lg:leading-[60px] 2xl:leading-[70px] text-white font-semibold font-Garamond uppercase">
           {title}
         </h1>

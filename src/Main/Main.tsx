@@ -21,7 +21,7 @@ const Main: React.FC = () => {
       <GoToTop />
       <NoticePopup />
       <Navbar />
-      <div>
+      <div className="lg:pt-[112px]">
         <Outlet />
       </div>
       <Footer />
