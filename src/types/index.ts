@@ -24,16 +24,6 @@ export interface BlogPost {
   excerpt?: string;
 }
 
-export interface Room {
-  id: string;
-  name: string;
-  price: number;
-  description: string;
-  images: string[];
-  amenities: string[];
-  capacity: number;
-}
-
 export interface Service {
   id: string;
   name: string;
@@ -82,14 +72,6 @@ export interface NavigationItem {
 }
 
 // Form interfaces
-export interface BookingFormData {
-  checkIn: string;
-  checkOut: string;
-  adults: number;
-  children: number;
-  roomType?: string;
-}
-
 export interface ContactFormData {
   name: string;
   email: string;

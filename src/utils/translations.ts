@@ -10,10 +10,6 @@ export const translations: Translations = {
     en: 'About',
     ne: 'हाम्रो बारेमा'
   },
-  'nav.rooms': {
-    en: 'Rooms',
-    ne: 'कोठाहरू'
-  },
   'nav.reports': {
     en: 'Reports',
     ne: 'प्रतिवेदनहरू'
@@ -38,10 +34,6 @@ export const translations: Translations = {
     en: 'Page',
     ne: 'पृष्ठ'
   },
-  'nav.blog': {
-    en: 'Blog',
-    ne: 'ब्लग'
-  },
   'nav.contact': {
     en: 'Contact',
     ne: 'सम्पर्क'
@@ -54,47 +46,6 @@ export const translations: Translations = {
     en: 'Branches',
     ne: 'शाखाहरू'
   },
-  'nav.booking_online': {
-    en: 'Booking Online',
-    ne: 'अनलाइन बुकिङ'
-  },
-  
-  // Home submenu
-  'submenu.hotel_booking': {
-    en: 'Hotel Booking',
-    ne: 'होटल बुकिङ'
-  },
-  'submenu.resort': {
-    en: 'Resort',
-    ne: 'रिसोर्ट'
-  },
-  'submenu.hostel': {
-    en: 'Hostel',
-    ne: 'होस्टेल'
-  },
-  'submenu.city_hotel': {
-    en: 'City Hotel',
-    ne: 'सहरी होटल'
-  },
-  'submenu.apartment': {
-    en: 'Apartment',
-    ne: 'अपार्टमेन्ट'
-  },
-  
-  // Rooms submenu
-  'submenu.room': {
-    en: 'Room',
-    ne: 'कोठा'
-  },
-  'submenu.find_room': {
-    en: 'Find Room',
-    ne: 'कोठा खोज्नुहोस्'
-  },
-  'submenu.room_details': {
-    en: 'Room Details',
-    ne: 'कोठाको विवरण'
-  },
-  
   // Reports submenu
   'submenu.all_reports': {
     en: 'All Reports',
@@ -217,33 +168,7 @@ export const translations: Translations = {
     ne: 'मूल्य निर्धारण'
   },
   
-  // Blog submenu
-  'submenu.blog_list': {
-    en: 'Blog',
-    ne: 'ब्लग'
-  },
-  'submenu.blog_details': {
-    en: 'Blog Details',
-    ne: 'ब्लगको विवरण'
-  },
-
   // Hero Section
-  'hero.luxury_hotel_resort': {
-    en: 'LUXURY HOTEL AND RESORT',
-    ne: 'लक्जरी होटल र रिसोर्ट'
-  },
-  'hero.best_luxury_hotel': {
-    en: 'THE BEST LUXURY HOTEL',
-    ne: 'सर्वोत्तम लक्जरी होटल'
-  },
-  'hero.in_california': {
-    en: 'IN CALIFORNIA',
-    ne: 'क्यालिफोर्नियामा'
-  },
-  'hero.in_kashmir': {
-    en: 'IN KASHMIR',
-    ne: 'कश्मीरमा'
-  },
   'hero.gurans_full': {
     en: 'GURANS LAGHUBITTA BITTIYA SANSTHA LIMITED',
     ne: 'गुराँस लघुवित्त वित्तीय संस्था लिमिटेड'
@@ -252,131 +177,43 @@ export const translations: Translations = {
     en: 'Gurans Microfinance: Empowering the Poor',
     ne: 'गुराँस सूक्ष्म वित्त: गरिबलाई सशक्त पार्दै'
   },
-  'hero.in_colosseum': {
-    en: 'IN COLOSSEUM',
-    ne: 'कोलोसियममा'
-  },
-  'hero.in_srilanka': {
-    en: 'IN SRILANKA',
-    ne: 'श्रीलङ्कामा'
-  },
   'hero.discover_more': {
     en: 'Discover More',
     ne: 'थप पत्ता लगाउनुहोस्'
   },
 
-  // Rooms Section
-  'rooms.title': {
-    en: 'ROOMS',
-    ne: 'कोठाहरू'
-  },
-  'rooms.subtitle': {
-    en: 'LUXURIOUS ROOM',
-    ne: 'लक्जरी कोठा'
-  },
-  'rooms.description': {
-    en: 'Rapidiously myocardinate cross-platform intellectual capital after model. Appropriately create interactive infrastructures',
-    ne: 'मोडेल पछि द्रुत रूपमा क्रस-प्लेटफर्म बौद्धिक पूंजी मायोकार्डिनेट। उपयुक्त रूपमा अन्तरक्रियात्मक पूर्वाधारहरू सिर्जना गर्नुहोस्'
-  },
-  'rooms.book_now': {
-    en: 'BOOK NOW',
-    ne: 'अहिले बुक गर्नुहोस्'
-  },
-  'rooms.night': {
-    en: 'Night',
-    ne: 'रात'
-  },
-  'rooms.super_deluxe': {
-    en: 'Super Deluxe',
-    ne: 'सुपर डिलक्स'
-  },
-  'rooms.deluxe_plus': {
-    en: 'Deluxe Plus',
-    ne: 'डिलक्स प्लस'
-  },
-  'rooms.couple_room': {
-    en: 'Couple Room',
-    ne: 'दम्पती कोठा'
-  },
-
-  // Hotel and Resort Section
-  'hotel_resort.best_hostel': {
-    en: 'BEST HOSTEL',
-    ne: 'उत्कृष्ट होस्टेल'
-  },
-  'hotel_resort.hotel_resort': {
-    en: 'HOTEL AND RESORT',
-    ne: 'होटल र रिसोर्ट'
-  },
-  'hotel_resort.description': {
-    en: 'Rapidiously myocardinate cross-platform intellectual capital after model. Appropriately create interactive infrastructures after maintenance Holisticly facilitate',
-    ne: 'मोडेल पछि द्रुत रूपमा क्रस-प्लेटफर्म बौद्धिक पूंजी मायोकार्डिनेट। मर्मतसम्भार पछि उपयुक्त रूपमा अन्तरक्रियात्मक पूर्वाधारहरू सिर्जना गर्नुहोस्'
-  },
-  'hotel_resort.more_about': {
-    en: 'MORE ABOUT',
-    ne: 'थप बारेमा'
-  },
-
-  // Hotel Facilities Section
+  // Facilities Section
   'facilities.title': {
     en: 'FACILITIES',
     ne: 'सुविधाहरू'
   },
   'facilities.subtitle': {
-    en: 'CORE FEATURES',
-    ne: 'मुख्य सुविधाहरू'
-  },
-  'facilities.swimming_pool': {
-    en: 'Swimming Pool',
-    ne: 'पौंडी पोखरी'
-  },
-  'facilities.gym_fitness': {
-    en: 'Gym & Fitness',
-    ne: 'जिम र फिटनेस'
-  },
-  'facilities.restaurant': {
-    en: 'Restaurant',
-    ne: 'रेस्टुरेन्ट'
-  },
-  'facilities.conference_room': {
-    en: 'Conference Room',
-    ne: 'सम्मेलन कक्ष'
-  },
-  'facilities.free_wifi': {
-    en: 'Free WiFi',
-    ne: 'नि:शुल्क वाइफाइ'
+    en: 'MEMBER BENEFITS',
+    ne: 'सदस्य सुविधाहरू'
   },
 
   // Call to Action Section
   'cta.title': {
-    en: 'GET BETTER EXPERIENCES WITH US',
-    ne: 'हामीसँग राम्रो अनुभव लिनुहोस्'
+    en: 'GROW WITH GURANS LAGHUBITTA',
+    ne: 'गुराँस लघुवित्तसँग अगाडि बढौं'
   },
   'cta.description': {
-    en: 'Rapidiously myocardinate cross-platform intellectual capital after the model. Appropriately create interactive infrastructures after maintance',
-    ne: 'मोडेल पछि द्रुत रूपमा क्रस-प्लेटफर्म बौद्धिक पूंजी मायोकार्डिनेट। मर्मतसम्भार पछि उपयुक्त रूपमा अन्तरक्रियात्मक पूर्वाधारहरू सिर्जना गर्नुहोस्'
+    en: 'Access affordable financial services, grow your savings, and build a better future for your family with Gurans Laghubitta.',
+    ne: 'गुराँस लघुवित्तसँग किफायती वित्तीय सेवाहरू प्राप्त गर्नुहोस्, बचत बढाउनुहोस् र आफ्नो परिवारको उज्ज्वल भविष्य बनाउनुहोस्।'
   },
-  'cta.book_now': {
-    en: 'BOOK NOW',
-    ne: 'अहिले बुक गर्नुहोस्'
+  'cta.contact_us': {
+    en: 'CONTACT US',
+    ne: 'सम्पर्क गर्नुहोस्'
   },
 
-  // Offers Section
+  // Key Officers Section
   'offers.title': {
-    en: 'SPECIAL OFFERS',
-    ne: 'विशेष प्रस्तावहरू'
+    en: 'KEY OFFICERS',
+    ne: 'प्रमुख अधिकारीहरू'
   },
   'offers.subtitle': {
-    en: 'THE BEST OFFERS',
-    ne: 'उत्कृष्ट प्रस्तावहरू'
-  },
-  'offers.discount': {
-    en: 'DISCOUNT',
-    ne: 'छुट'
-  },
-  'offers.off': {
-    en: 'OFF',
-    ne: 'छुट'
+    en: 'CONTACT OUR TEAM',
+    ne: 'हाम्रो टोलीसँग सम्पर्क गर्नुहोस्'
   },
 
   // Testimonials Section
@@ -388,13 +225,13 @@ export const translations: Translations = {
     en: 'CLIENT FEEDBACK',
     ne: 'ग्राहक प्रतिक्रिया'
   },
-  'testimonials.luxury_feedback': {
-    en: 'LUXURY FEEDBACK',
-    ne: 'लक्जरी प्रतिक्रिया'
+  'testimonials.member_feedback': {
+    en: 'MEMBER FEEDBACK',
+    ne: 'सदस्यको प्रतिक्रिया'
   },
   'testimonials.clients_feedback': {
-    en: 'resote clients feedback about services',
-    ne: 'सेवाहरूको बारेमा रिसोर्ट ग्राहकहरूको प्रतिक्रिया'
+    en: 'What our members say about our services',
+    ne: 'हाम्रा सेवाहरूको बारेमा सदस्यहरूले के भन्छन्'
   },
 
   // Latest Blog Section
@@ -416,17 +253,9 @@ export const translations: Translations = {
     en: 'About Us',
     ne: 'हाम्रो बारेमा'
   },
-  'about.luxury_hotel': {
-    en: 'LUXURY HOTEL',
-    ne: 'लक्जरी होटल'
-  },
-  'about.about_our_hostel': {
-    en: 'ABOUT OUR HOSTEL',
-    ne: 'हाम्रो होस्टेलको बारेमा'
-  },
   'about.description': {
-    en: 'Rapidiously myocardinate cross-platform intellectual capital after model. Appropriately create interactive infrastructures after maintenance Holisticly facilitate stand-alone',
-    ne: 'मोडेल पछि द्रुत रूपमा क्रस-प्लेटफर्म बौद्धिक पूंजी मायोकार्डिनेट। मर्मतसम्भार पछि उपयुक्त रूपमा अन्तरक्रियात्मक पूर्वाधारहरू सिर्जना गर्नुहोस्'
+    en: 'Gurans Laghubitta Bittiya Sanstha Ltd. is a regulated microfinance institution dedicated to providing accessible financial services to underserved communities across Nepal.',
+    ne: 'गुराँस लघुवित्त वित्तीय संस्था लिमिटेड एक नियमित लघुवित्त संस्था हो जुन नेपालका सुविधाविहीन समुदायहरूलाई सुलभ वित्तीय सेवाहरू प्रदान गर्न समर्पित छ।'
   },
 
   // Contact Page
@@ -479,8 +308,8 @@ export const translations: Translations = {
     ne: 'विषय छान्नुहोस्'
   },
   'contact.description': {
-    en: 'Rapidiously myocardinate cross-platform intellectual capital after the model. Appropriately create interactive infrastructures after maintance Holisticly facilitate stand-alone',
-    ne: 'मोडेल पछि द्रुत रूपमा क्रस-प्लेटफर्म बौद्धिक पूंजी मायोकार्डिनेट। मर्मतसम्भार पछि उपयुक्त रूपमा अन्तरक्रियात्मक पूर्वाधारहरू सिर्जना गर्नुहोस्'
+    en: 'We are here to assist you with any questions about our financial services, membership, or branch locations. Reach out and we will get back to you shortly.',
+    ne: 'हामी तपाईंलाई हाम्रा वित्तीय सेवाहरू, सदस्यता, वा शाखा स्थानहरूको बारेमा कुनै पनि प्रश्नमा सहयोग गर्न यहाँ छौं। सम्पर्क गर्नुहोस् र हामी चाँडै फर्किनेछौं।'
   },
 
   // Services Page
@@ -489,44 +318,12 @@ export const translations: Translations = {
     ne: 'सेवाहरू'
   },
   'services.enjoy_facilities': {
-    en: 'ENJOY COMPLETE & BEST QUALITY FACILITIES',
-    ne: 'पूर्ण र उत्कृष्ट गुणस्तरका सुविधाहरूको आनन्द लिनुहोस्'
+    en: 'COMPREHENSIVE FINANCIAL SERVICES FOR EVERY MEMBER',
+    ne: 'प्रत्येक सदस्यका लागि व्यापक वित्तीय सेवाहरू'
   },
   'services.view_more': {
     en: 'view more item',
     ne: 'थप हेर्नुहोस्'
-  },
-
-  // Room Page
-  'room.title': {
-    en: 'Room',
-    ne: 'कोठा'
-  },
-  'room.extra_facilities': {
-    en: 'RESOTE\'S EXTRA FACILITIES FOR LUXURIOUS LIFE',
-    ne: 'लक्जरी जीवनका लागि रिसोर्टका अतिरिक्त सुविधाहरू'
-  },
-  'room.gym_training': {
-    en: 'Gym Training Ground',
-    ne: 'जिम प्रशिक्षण मैदान'
-  },
-
-  // Pricing Page
-  'pricing.title': {
-    en: 'Pricing',
-    ne: 'मूल्य निर्धारण'
-  },
-  'pricing.purchases_now': {
-    en: 'PURCHASES NOW',
-    ne: 'अहिले किन्नुहोस्'
-  },
-  'pricing.frequently_asked': {
-    en: 'FREEQUENTLY ASKED QESTION',
-    ne: 'बारम्बार सोधिने प्रश्नहरू'
-  },
-  'pricing.wash_clean': {
-    en: 'Wash & Clean equipment',
-    ne: 'धुने र सफा गर्ने उपकरण'
   },
 
   // Common UI Elements
@@ -554,9 +351,9 @@ export const translations: Translations = {
     en: 'Learn More',
     ne: 'थप जान्नुहोस्'
   },
-  'common.book_now': {
-    en: 'BOOK NOW',
-    ne: 'अहिले बुक गर्नुहोस्'
+  'common.apply_now': {
+    en: 'APPLY NOW',
+    ne: 'अहिले आवेदन दिनुहोस्'
   },
   'common.read_more': {
     en: 'Read More',
@@ -630,17 +427,17 @@ export const translations: Translations = {
     en: 'Subscribe Now',
     ne: 'अहिले सब्स्क्राइब गर्नुहोस्'
   },
-  'footer.about_hotel': {
-    en: 'About Hotel',
-    ne: 'होटलको बारेमा'
+  'footer.about_us': {
+    en: 'About Us',
+    ne: 'हाम्रो बारेमा'
   },
-  'footer.rooms_suites': {
-    en: 'Rooms & Suites',
-    ne: 'कोठा र स्वीट'
+  'footer.products_services': {
+    en: 'Products & Services',
+    ne: 'उत्पादन र सेवाहरू'
   },
-  'footer.reservations': {
-    en: 'Reservations',
-    ne: 'आरक्षण'
+  'footer.member_portal': {
+    en: 'Member Portal',
+    ne: 'सदस्य पोर्टल'
   },
   'footer.news_blogs': {
     en: 'News & Blogs',

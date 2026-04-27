@@ -1,309 +1,186 @@
 import React from "react";
 import { BsCheck2 } from "react-icons/bs";
 import BreadCrumb from "../../BreadCrumb/BreadCrumb";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useLanguage } from "../../contexts/LanguageContext";
-
-interface MenuItem {
-  category: string;
-  image: string;
-  title: string;
-  price: number;
-  description: string;
-}
 
 const ServiceDetails: React.FC = () => {
   const { t } = useLanguage();
-  const [menu, setMenu] = useState<MenuItem[]>([]);
-  const [showItem, setShowItem] = useState<MenuItem[]>([]);
-  useEffect(() => {
-    fetch("/food.menu.json")
-      .then((res) => res.json())
-      .then((data: MenuItem[]) => {
-        setMenu(data), setShowItem(data);
-      });
-  }, []);
+
+  const loanTypes = [
+    {
+      name: "Group Loan",
+      ne: "समूह ऋण",
+      desc: "Collateral-free loans provided to self-help groups for productive income-generating activities.",
+      ne_desc: "उत्पादनशील आय-आर्जनका क्रियाकलापहरूका लागि स्व-सहायता समूहलाई धितोविना ऋण।",
+    },
+    {
+      name: "Micro-Enterprise Loan",
+      ne: "साना उद्यम ऋण",
+      desc: "Financing for small businesses and micro-enterprises to support growth and expansion.",
+      ne_desc: "साना व्यवसाय र सूक्ष्म उद्यमहरूलाई वृद्धि र विस्तारको लागि वित्तपोषण।",
+    },
+    {
+      name: "Agriculture Loan",
+      ne: "कृषि ऋण",
+      desc: "Affordable loans for farming activities, livestock, and agricultural equipment.",
+      ne_desc: "कृषि क्रियाकलाप, पशुपालन र कृषि उपकरणका लागि किफायती ऋण।",
+    },
+    {
+      name: "Education Loan",
+      ne: "शैक्षिक ऋण",
+      desc: "Support children's education with low-interest education loans for school and higher studies.",
+      ne_desc: "विद्यालय र उच्च शिक्षाका लागि कम ब्याजदरमा शैक्षिक ऋणसहित बच्चाहरूको शिक्षालाई समर्थन।",
+    },
+  ];
+
+  const eligibilityPoints = [
+    "Must be a registered member of Gurans Laghubitta",
+    "Minimum 3 months of active membership",
+    "Must participate in a recognized group/centre",
+    "Regular savings and good repayment history",
+    "Valid citizenship and KYC documents",
+  ];
 
   return (
-    <section className="">
-      <BreadCrumb title={t('page.service_details')} />
+    <section>
+      <BreadCrumb title={t("page.service_details")} />
 
-      {/* Service Details content */}
+      {/* Overview */}
       <div className="py-20 2xl:py-[120px] dark:bg-lightBlack">
         <div className="Container">
-          {/* image and Food list */}
-          <div className="grid items-center grid-cols-6 md:grid-cols-7 lg:grid-cols-6 gap-5 ">
-            <div
-              className="col-span-6 md:col-span-4"
-              data-aos="zoom-in-up"
-              data-aos-duration="1000"
-            >
-              <img src="/images/inner/service-details.jpg" alt="" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            {/* Left: image */}
+            <div data-aos="zoom-in-up" data-aos-duration="1000">
+              <img
+                src="/images/inner/service-details.jpg"
+                alt="Gurans Laghubitta financial services"
+                className="w-full rounded-md object-cover"
+              />
             </div>
-            <div className="col-span-6 md:col-span-3 lg:col-span-2">
-              <div className=" bg-whiteSmoke dark:bg-normalBlack px-7 py-8 md:px-5 md:py-10 lg:px-6 lg:py-11 2xl:px-10 2xl:py-[50px]  grid-flow-row-dense">
-                <h4 className="font-Garamond text-xl sm:text-[22px] md:text-2xl xl:text-3xl leading-7 md:leading-8 lg:leading-10 xl:leading-[50px] 2xl:leading-[60px] 3xl:leading-[70px] text-lightBlack dark:text-white font-semibold mb-7">
-                  Hours
+
+            {/* Right: service highlights */}
+            <div className="space-y-6">
+              <p className="text-base font-Lora text-khaki uppercase font-semibold">
+                Financial Services
+              </p>
+              <h2 className="font-Garamond text-2xl md:text-3xl lg:text-4xl font-semibold text-lightBlack dark:text-white leading-snug">
+                Accessible Microfinance for Every Member
+              </h2>
+              <p className="text-sm lg:text-base leading-7 text-gray dark:text-lightGray font-Lora">
+                Gurans Laghubitta Bittiya Sanstha Ltd. provides a range of
+                financial products designed to uplift communities across Nepal.
+                Our services — from group loans to savings and remittance —
+                are built on trust, transparency, and a commitment to financial
+                inclusion.
+              </p>
+
+              {/* Office Hours */}
+              <div className="bg-whiteSmoke dark:bg-normalBlack px-7 py-8 rounded-md">
+                <h4 className="font-Garamond text-xl font-semibold text-lightBlack dark:text-white mb-5">
+                  Branch Service Hours
                 </h4>
-                <div
-                  className="grid items-center gap-[25px] "
-                  data-aos="zoom-in-up"
-                  data-aos-duration="1000"
-                >
-                  <div className="bg-white dark:bg-lightBlack h-10 lg:h-[50px] 2xl:h-[56px] grid items-center justify-start px-3 sm:px-5 2xl:px-6 ">
-                    <p className="text-sm md:text-[13px] xl:text-[15px] leading-[26px] font-Lora font-medium text-lightBlack dark:text-white">
-                      Breakfast -
-                      <span className="text-khaki"> 7.00 AM to 10.30 AM</span>
-                    </p>
-                  </div>
-                  <div className="bg-white dark:bg-lightBlack h-10 lg:h-[50px] 2xl:h-[56px] grid items-center justify-start px-3 sm:px-5 2xl:px-6">
-                    <p className="text-sm md:text-[13px] xl:text-[15px] leading-[26px] font-Lora font-medium text-lightBlack dark:text-white">
-                      Lunch -{" "}
-                      <span className="text-khaki"> 1.00 PM to 2.30 PM</span>
-                    </p>
-                  </div>
-                  <div className="bg-white dark:bg-lightBlack h-10 lg:h-[50px] 2xl:h-[56px] grid items-center justify-start px-3 sm:px-5 2xl:px-6">
-                    <p className="text-sm md:text-[13px] xl:text-[15px] leading-[26px] font-Lora font-medium text-lightBlack dark:text-white">
-                      Supper -{" "}
-                      <span className="text-khaki"> 6.00 PM to 7.00 PM</span>{" "}
-                    </p>
-                  </div>
-                  <div className="bg-white dark:bg-lightBlack h-10 lg:h-[50px] 2xl:h-[56px] grid items-center justify-start px-3 sm:px-5 2xl:px-6">
-                    <p className="text-sm md:text-[13px] xl:text-[15px] leading-[26px] font-Lora font-medium text-lightBlack dark:text-white">
-                      Dinner -{" "}
-                      <span className="text-khaki"> 8.30 PM to 10.00 PM</span>{" "}
-                    </p>
-                  </div>
+                <div className="space-y-3">
+                  {[
+                    { label: "Sunday – Friday", hours: "9:00 AM – 5:00 PM" },
+                    { label: "Saturday", hours: "9:00 AM – 1:00 PM" },
+                    { label: "Public Holidays", hours: "Closed" },
+                  ].map((row) => (
+                    <div
+                      key={row.label}
+                      className="bg-white dark:bg-lightBlack h-12 flex items-center justify-between px-5 rounded"
+                    >
+                      <p className="text-sm font-Lora font-medium text-lightBlack dark:text-white">
+                        {row.label}
+                      </p>
+                      <p className="text-sm font-Lora font-semibold text-khaki">
+                        {row.hours}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Restaurants center */}
-          <div className="pt-5 lg:pt-[35px]  pr-3">
-            <p className="text-base font-Lora text-khaki">FOODS</p>
-            <h2 className="py-2 sm:py-3 md:py-4 lg:py-[19px] 2xl:py-[25px] font-Garamond text-[22px] sm:text-2xl md:text-3xl lg:text-4xl 2xl:text-[38px] 3xl:text-[40px] leading-6 lg:leading-[26px]  text-lightBlack dark:text-white font-semibold">
-              The Restaurant Center
+          {/* Loan Products */}
+          <div className="pt-16 lg:pt-[60px]">
+            <p className="text-base font-Lora text-khaki uppercase font-semibold">
+              Loan Products
+            </p>
+            <h2 className="py-3 font-Garamond text-2xl md:text-3xl lg:text-4xl font-semibold text-lightBlack dark:text-white">
+              Types of Loans We Offer
             </h2>
-            <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-normal font-Lora">
-              Rapidiously myocardinate cross-platform intellectual capital after
-              marketing model. Appropriately create interactive infrastructures
-              after maintainable are Holisticly facilitate stand-alone inframe
-              extend state of the art benefits via web-enabled value. Completely
-              fabricate extensible infomediaries rather than reliable
-              e-services. Dramatically whiteboard alternative Conveniently
-              fashion pandemic potentialities for team driven technologies.
-              Proactively orchestrate robust systems rather than user-centric
-              vortals. Distinctively seize top-line e-commerce with premier
+            <p className="text-sm lg:text-base leading-7 text-gray dark:text-lightGray font-Lora max-w-2xl">
+              All our loan products are designed to support productive
+              activities, improve livelihoods, and build financial resilience
+              among our members.
             </p>
 
-            {/* Restaurant Rules */}
-            <div
-              className="py-10 lg:py-[60px]"
-              data-aos="zoom-in-up"
-              data-aos-duration="1000"
-            >
-              <h2
-                className="pb-2 sm:pb-3 md:pb-4 lg:pb-[19px] 2xl:pb-6
-                font-Garamond text-[22px] sm:text-2xl md:text-3xl 2xl:text-[32px] leading-7 lg:leading-[26px] text-lightBlack dark:text-white font-semibold"
-              >
-                Restaurant Rules
-              </h2>
-              <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-normal font-Lora">
-                Professionally deliver fully researched scenarios with turnkey
-                communities. Competently unleash empowered applications without
-                seamless data. Uniquely under quality outsourcing before
-                transparent relationships. Efficiently enhance diverse
-                relationships whereas leveraged leverage existing just in time
-                architectures before economically sound systems. Conveniently
-                administrate
-              </p>
-            </div>
-            {/* Dress Code Rules */}
-            <div
-              className="pb-10 lg:pb-[60px]"
-              data-aos="zoom-in-up"
-              data-aos-duration="1000"
-            >
-              <h2
-                className="pb-2 sm:pb-3 md:pb-4 lg:pb-[19px] 2xl:pb-6
-                font-Garamond text-[22px] sm:text-2xl md:text-3xl 2xl:text-[32px] leading-7 lg:leading-[26px] text-lightBlack dark:text-white font-semibold"
-              >
-                Dress Code
-              </h2>
-              <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-normal font-Lora">
-                Professionally deliver fully researched scenarios with turnkey
-                communities competently
-              </p>
-              <ul className="space-y-2 lg:space-y-3 mt-5 lg:mt-[30px]">
-                <li className="flex items-center">
-                  <BsCheck2 size={16} className="text-khaki mr-2" />
-                  <span className="text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-normal font-Lora">
-                    Quickly generate bricks-and-clicks
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <BsCheck2 size={16} className="text-khaki mr-2" />
-                  <span className="text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-normal font-Lora">
-                    Interactively cultivate visionary platforms
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <BsCheck2 size={16} className="text-khaki mr-2" />
-                  <span className="text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-normal font-Lora">
-                    Energistically envisioneer resource
-                  </span>
-                </li>
-              </ul>
-            </div>
-            {/* Dress Code Rules */}
-            <div className="" data-aos="zoom-in-up" data-aos-duration="1000">
-              <h2
-                className="pb-2 sm:pb-3 md:pb-4 lg:pb-[19px] 2xl:pb-6
-                font-Garamond text-[22px] sm:text-2xl md:text-3xl 2xl:text-[32px] leading-7 lg:leading-[26px] text-lightBlack dark:text-white font-semibold"
-              >
-                Terrace
-              </h2>
-              <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-normal font-Lora">
-                Open the drinks only maintain restaurent rules and regulations
-                below
-              </p>
-              <ul className="space-y-2 lg:space-y-3 mt-5 lg:mt-[30px]">
-                <li className="flex items-center">
-                  <BsCheck2 size={16} className="text-khaki mr-2" />
-                  <span className="text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-normal font-Lora">
-                    Quickly generate bricks-and-clicks
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <BsCheck2 size={16} className="text-khaki mr-2" />
-                  <span className="text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-normal font-Lora">
-                    Interactively cultivate visionary platforms
-                  </span>
-                </li>
-                <li className="flex items-center">
-                  <BsCheck2 size={16} className="text-khaki mr-2" />
-                  <span className="text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-normal font-Lora">
-                    Energistically envisioneer resource
-                  </span>
-                </li>
-              </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+              {loanTypes.map((loan) => (
+                <div
+                  key={loan.name}
+                  className="bg-whiteSmoke dark:bg-normalBlack p-6 rounded-md border border-[#e8e8e8] dark:border-[#424242]"
+                  data-aos="fade-up"
+                  data-aos-duration="800"
+                >
+                  <h3 className="font-Garamond text-xl font-semibold text-lightBlack dark:text-white mb-2">
+                    {loan.name}
+                    <span className="block text-base text-gray dark:text-lightGray font-normal font-Lora mt-1">
+                      {loan.ne}
+                    </span>
+                  </h3>
+                  <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-Lora">
+                    {loan.desc}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* RESTAURANT FOOD MENU */}
-      <div className="bg-whiteSmoke dark:bg-lightBlack py-20 2xl:py-[120px] ">
-        <div className="Container">
-          {/* food menu tab header */}
-          <div
-            className="text-center"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-          >
-            {/* Section logo */}
-            <div className="flex items-center justify-center space-x-2">
-              <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
-              <img
-                src="/images/home-1/gurans.png"
-                alt="Gurans Laghubitta logo"
-                className="h-8 w-auto object-contain"
-              />
-              <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
-            </div>
-            <h1 className="text-xl sm:text-2xl md:text-3xl 2xl:text-[38px] leading-[42px] 2xl:leading-[52px] text-lightBlack dark:text-white mt-[10px] mb-[14px] font-Garamond font-semibold uppercase">
-              RESTAURANT FOOD MENU
-            </h1>
+          {/* Eligibility */}
+          <div className="py-16 lg:py-[60px]" data-aos="zoom-in-up" data-aos-duration="1000">
+            <h2 className="pb-4 font-Garamond text-2xl md:text-3xl font-semibold text-lightBlack dark:text-white">
+              Eligibility Criteria
+            </h2>
+            <p className="text-sm lg:text-base leading-6 text-gray dark:text-lightGray font-Lora mb-6">
+              To access our loan products, applicants must meet the following
+              basic requirements:
+            </p>
+            <ul className="space-y-3">
+              {eligibilityPoints.map((point, i) => (
+                <li key={i} className="flex items-start">
+                  <BsCheck2 size={18} className="text-khaki mr-3 mt-1 flex-shrink-0" />
+                  <span className="text-sm lg:text-base leading-[26px] text-gray dark:text-lightGray font-Lora">
+                    {point}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
-          {/* food menu tab  */}
-          <div className="mt-14 2xl:mt-[60px]">
-            {/* Tab Control Button */}
-            <div
-              className="grid grid-cols-2 sm:grid-cols-4 sm:flex items-center justify-center gap-3"
-              data-aos="zoom-in-up"
-              data-aos-duration="1000"
-            >
-              <button
-                className="px-5 lg:px-[26px] py-2 lg:py-[10px] bg-white dark:bg-normalBlack text-lightBlack dark:text-white rounded focus:bg-khaki focus:text-white dark:focus:bg-khaki dark:focus:text-white hover:ring-2 ring-khaki ring-offset-2 dark:ring-offset-lightBlack text-sm sm:text-[15px] font-Garamond font-medium leading-7 lg:leading-[38px]"
-                onClick={() => {
-                  let items = menu.filter(
-                    (element) => element.category === "breakfast"
-                  );
-                  setShowItem(items);
-                }}
-              >
-                BREAKFAST
-              </button>
-              <button
-                className="px-5 lg:px-[26px] py-2 lg:py-[10px] bg-white dark:bg-normalBlack text-lightBlack dark:text-white rounded focus:bg-khaki focus:text-white dark:focus:bg-khaki dark:focus:text-white hover:ring-2 ring-khaki ring-offset-2 text-sm sm:text-[15px] font-Garamond font-medium leading-7 lg:leading-[38px] dark:ring-offset-lightBlack"
-                onClick={() => {
-                  let items = menu.filter(
-                    (element) => element.category === "lunch"
-                  );
-                  setShowItem(items);
-                }}
-              >
-                LUNCH
-              </button>
-              <button
-                className="px-5 lg:px-[26px] py-2 lg:py-[10px] bg-white dark:bg-normalBlack text-lightBlack dark:text-white rounded focus:bg-khaki focus:text-white dark:focus:bg-khaki dark:focus:text-white hover:ring-2 ring-khaki ring-offset-2 text-sm sm:text-[15px] font-Garamond font-medium leading-7 lg:leading-[38px] dark:ring-offset-lightBlack"
-                onClick={() => {
-                  let items = menu.filter(
-                    (element) => element.category === "supper"
-                  );
-                  setShowItem(items);
-                }}
-              >
-                SUPPER
-              </button>
-              <button
-                className="px-5 lg:px-[26px] py-2 lg:py-[10px] bg-white dark:bg-normalBlack text-lightBlack dark:text-white rounded focus:bg-khaki focus:text-white dark:focus:bg-khaki dark:focus:text-white hover:ring-2 ring-khaki ring-offset-2 text-sm sm:text-[15px] font-Garamond font-medium leading-7 lg:leading-[38px] dark:ring-offset-lightBlack"
-                onClick={() => {
-                  let items = menu.filter(
-                    (element) => element.category === "dinner"
-                  );
-                  setShowItem(items);
-                }}
-              >
-                DINNER
-              </button>
+
+          {/* CTA */}
+          <div className="bg-lightBlack rounded-md px-8 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div>
+              <h3 className="font-Garamond text-2xl lg:text-3xl font-semibold text-white mb-2">
+                Ready to Apply?
+              </h3>
+              <p className="text-sm lg:text-base font-Lora text-lightGray">
+                Visit your nearest Gurans Laghubitta branch or apply online.
+              </p>
             </div>
-            {/* Tab Items. */}
-            <div
-              className="grid items-center justify-between grid-cols-1 lg:grid-cols-2 gap-5 2xl:gap-[30px] mt-5 md:mt-7 lg:mt-10 xl:mt-[45px]"
-              data-aos="zoom-in-up"
-              data-aos-duration="1000"
-            >
-              {showItem.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="flex flex-col sm:flex-row items-center bg-white dark:bg-normalBlack pl-5 py-5 hover:shadow-custom"
-                  >
-                    <img
-                      src={item.image}
-                      alt="food image"
-                      className="w-[100px] h-[100px] sm:w-fit sm:h-fit rounded-2xl sm:rounded-none mb-5 sm:mb-0 "
-                    />
-                    <div className="px-5 md:px-6 2xl:px-[30px]">
-                      <div className="flex items-center justify-between pb-4">
-                        <h4 className="text-lg sm:text-xl xl:text-2xl 2xl:text-[26px] leading-[26px] md:leading-7 lg:leading-8 xl:leading-[34px] 2xl:leading-[38px] text-lightBlack dark:text-white font-Garamond font-medium">
-                          {item.title}
-                        </h4>
-                        <h4 className="text-lg sm:text-xl md:text-2xl leading-[26px] md:leading-7 lg:leading-8 xl:leading-[34px] 2xl:leading-[38px] text-khaki font-Garamond font-medium">
-                          $ {item.price}
-                        </h4>
-                      </div>
-                      {/* bottom Border  */}
-                      <div className="border-t-[1px] border-dashed border-lightGray dark:border-gray pb-4"></div>
-                      <p className="text-gray dark:text-lightGray leading-6 font-normal font-Lora text-sm md:text-[15px]">
-                        {item.description}
-                      </p>
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="flex gap-4 flex-wrap">
+              <Link to="/online/apply-for-loan">
+                <button className="px-7 py-3 bg-khaki text-white font-Garamond text-base font-semibold hover:bg-opacity-90 transition-all duration-300">
+                  Apply Online
+                </button>
+              </Link>
+              <Link to="/contact">
+                <button className="px-7 py-3 border border-white text-white font-Garamond text-base font-semibold hover:bg-white hover:text-lightBlack transition-all duration-300">
+                  Contact Branch
+                </button>
+              </Link>
             </div>
           </div>
         </div>

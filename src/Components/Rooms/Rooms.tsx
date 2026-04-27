@@ -1,20 +1,11 @@
 import React from "react";
 import { BsArrowRight } from "react-icons/bs";
-import { FaStar } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { useState } from "react";
-import { BiChevronDown } from "react-icons/bi";
 
-// import required modules
-
-const Rooms: React.FC = () => {
-  const [open, setOpen] = useState(false);
-  const [guestOpen, setGuestOpen] = useState(false);
-  const [room, setRoom] = useState(1);
-  const [adult, setAdult] = useState(1);
-  const [children, setChildren] = useState(0);
+const ProductsSlider: React.FC = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [loaded] = useState(false);
 
@@ -67,7 +58,7 @@ const Rooms: React.FC = () => {
           </div>
         </div>
       </div>
-      {/* Rooms section heading */}
+      {/* Products & Services section heading */}
       <div className=" py-20 2xl:py-[120px] w-full bg-[url('/images/home-1/section-shape2.png')] bg-no-repeat bg-top bg-opacity-[0.07]">
         <div className="Container ">
           {/* section heading */}
@@ -91,12 +82,10 @@ const Rooms: React.FC = () => {
               OUR PRODUCTS AND SERVICES
             </h1>
             <p className="font-Lora leading-[26px] text-gray dark:text-lightGray font-normal text-sm sm:text-base mt-[15px] lg:mt-0">
-              Proactively morph optimal infomediaries rather than accurate
-              expertise. Intrinsicly progressive resources rather than
-              resource-leveling
+              Explore our comprehensive range of financial products and services designed to meet your diverse needs.
             </p>
           </div>
-          {/* Rooms Slider Container */}
+          {/* Products & Services Slider */}
 
           <div className="relative">
             <div className="mt-14 2xl:mt-[60px] keen-slider " ref={sliderRef}>
@@ -107,9 +96,9 @@ const Rooms: React.FC = () => {
                     <div className="relative">
                       <div className="overflow-hidden">
                         <img
-                          src="/images/home-1/room-1.jpg "
+                          src="/images/home-1/room-1.jpg"
                           className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
-                          alt=""
+                          alt="Loan Services"
                         />
                       </div>
                       <div className="">
@@ -150,9 +139,9 @@ const Rooms: React.FC = () => {
                     <div className="relative">
                       <div className="overflow-hidden">
                         <img
-                          src="/images/home-1/room-2.jpg "
+                          src="/images/home-1/room-2.jpg"
                           className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
-                          alt=""
+                          alt="Savings Accounts"
                         />
                       </div>
                       <div className="">
@@ -193,9 +182,9 @@ const Rooms: React.FC = () => {
                     <div className="relative">
                       <div className="overflow-hidden">
                         <img
-                          src="/images/home-1/room-3.jpg "
+                          src="/images/home-1/room-3.jpg"
                           className="w-full h-full object-cover group-hover:scale-110 transition-all duration-300"
-                          alt=""
+                          alt="Remittance Services"
                         />
                       </div>
                       <div className="">
@@ -262,4 +251,4 @@ const Rooms: React.FC = () => {
   );
 };
 
-export default Rooms;
+export default ProductsSlider;

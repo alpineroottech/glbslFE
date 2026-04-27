@@ -64,7 +64,7 @@ const AboutUs: React.FC = () => {
                   {t('about.our_vision')}
                 </h2>
                 <p className="text-base sm:text-lg leading-7 lg:leading-8 text-lightGray dark:text-lightGray font-Lora">
-                  {content?.vision?.[0]?.children?.[0]?.text || 'To be the premier destination for luxury hospitality, setting new standards in comfort, service excellence, and memorable experiences.'}
+                  {content?.vision?.[0]?.children?.[0]?.text || 'To be a leading microfinance institution in Nepal, empowering rural and underserved communities through accessible, affordable, and sustainable financial services.'}
                 </p>
               </div>
 
@@ -74,10 +74,10 @@ const AboutUs: React.FC = () => {
                   {t('about.our_mission')}
                 </h2>
                 <p className="text-base sm:text-lg leading-7 lg:leading-8 text-lightGray dark:text-lightGray font-Lora mb-4">
-                  {content?.mission?.[0]?.children?.[0]?.text || 'We are committed to providing exceptional hospitality services through personalized attention, world-class amenities, and sustainable practices.'}
+                  {content?.mission?.[0]?.children?.[0]?.text || 'To provide accessible and responsible financial services — including loans, savings, and remittance — to members across Nepal, particularly those in rural and semi-urban areas.'}
                 </p>
                 <p className="text-base sm:text-lg leading-7 lg:leading-8 text-lightGray dark:text-lightGray font-Lora">
-                  {content?.goal?.[0]?.children?.[0]?.text || 'Our dedicated team strives to exceed expectations while fostering meaningful connections and contributing positively to our local community.'}
+                  {content?.goal?.[0]?.children?.[0]?.text || 'Our dedicated team works to strengthen financial literacy, foster member trust, and contribute positively to economic development at the grassroots level.'}
                 </p>
               </div>
 
