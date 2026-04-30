@@ -126,23 +126,23 @@ const Navbar: React.FC = () => {
 
   return (
     <>
-      <nav className={`w-full 3xl:fixed font-Lora z-10 3xl:px-5 3xl:py-4 transition-all duration-300 ${navbarBgColor}`}>
-        <div className="3xl:px-10">
-          <div className="flex flex-col 3xl:flex-row items-center justify-between 3xl:min-h-[80px]">
+      <nav className={`w-full 2xl:fixed font-Lora z-10 2xl:px-5 2xl:py-4 transition-all duration-300 ${navbarBgColor}`}>
+        <div className="2xl:px-10">
+          <div className="flex flex-col 2xl:flex-row items-center justify-between 2xl:min-h-[80px]">
 
             {/* Desktop logo */}
-            <div className="3xl:p-2 3xl:pr-3 4xl:pr-6 flex-shrink-0">
+            <div className="2xl:p-2 2xl:pr-3 3xl:pr-6 flex-shrink-0">
               <Link to="/">
                 <img
                   src="/images/home-1/logo-1.png"
-                  className="hidden 3xl:block h-16 w-auto max-w-[320px] object-contain"
+                  className="hidden 2xl:block h-16 w-auto max-w-[320px] object-contain"
                   alt="Gurans Laghubitta logo"
                 />
               </Link>
             </div>
 
             {/* Mobile top bar */}
-            <div className="px-3 w-full 3xl:hidden flex justify-between text-lightBlack bg-khaki h-[70px] items-center">
+            <div className="px-3 w-full 2xl:hidden flex justify-between text-lightBlack bg-khaki h-[70px] items-center">
               <Link to="/">
                 <img
                   src="/images/home-1/logo-1.png"
@@ -169,14 +169,14 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* ── Desktop nav links ── */}
-            <ul className="hidden 3xl:flex text-sm text-lightBlack uppercase font-normal font-Nepali min-h-[4rem] items-center flex-1 justify-center overflow-hidden">
+            <ul className="hidden 2xl:flex text-sm text-lightBlack uppercase font-normal font-Nepali min-h-[4rem] items-center flex-1 justify-center overflow-hidden">
               {menu.map((item) => (
                 <li key={item.key} className="relative group">
                   {item.children ? (
                     <>
                       <NavLink
                         to="#"
-                        className="flex items-center text-lightBlack dark:text-white px-2 4xl:px-3 py-2 transition-all duration-300 nav-item whitespace-nowrap"
+                        className="flex items-center text-lightBlack dark:text-white px-2 3xl:px-3 py-2 transition-all duration-300 nav-item whitespace-nowrap"
                       >
                         <span className="nav-item">{t(item.labelKey)}</span>
                         <BiChevronDown className="ml-1 flex-shrink-0" />
@@ -198,7 +198,7 @@ const Navbar: React.FC = () => {
                   ) : (
                     <NavLink
                       to={item.to!}
-                      className="flex items-center text-lightBlack dark:text-white px-2 4xl:px-3 py-2 transition-all duration-300 nav-item whitespace-nowrap"
+                      className="flex items-center text-lightBlack dark:text-white px-2 3xl:px-3 py-2 transition-all duration-300 nav-item whitespace-nowrap"
                     >
                       <span className="nav-item">{t(item.labelKey)}</span>
                     </NavLink>
@@ -208,7 +208,7 @@ const Navbar: React.FC = () => {
             </ul>
 
             {/* Desktop right controls */}
-            <div className="hidden 3xl:flex items-center pl-3 4xl:pl-6 gap-3 4xl:gap-4 flex-shrink-0">
+            <div className="hidden 2xl:flex items-center pl-3 3xl:pl-6 gap-3 3xl:gap-4 flex-shrink-0">
               <SearchBar />
               <button onClick={toggleLanguage} className="cursor-pointer">
                 <span
@@ -227,7 +227,7 @@ const Navbar: React.FC = () => {
 
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 3xl:hidden ${
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 2xl:hidden ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={closeDrawer}
@@ -236,7 +236,7 @@ const Navbar: React.FC = () => {
 
       {/* Drawer panel */}
       <div
-        className={`fixed top-0 right-0 h-full w-[80vw] max-w-[340px] bg-white dark:bg-normalBlack z-50 flex flex-col shadow-2xl transition-transform duration-300 ease-in-out 3xl:hidden ${
+        className={`fixed top-0 right-0 h-full w-[80vw] max-w-[340px] bg-white dark:bg-normalBlack z-50 flex flex-col shadow-2xl transition-transform duration-300 ease-in-out 2xl:hidden ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
