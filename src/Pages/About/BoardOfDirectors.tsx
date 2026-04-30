@@ -73,9 +73,11 @@ const BoardOfDirectors: React.FC = () => {
                     <hr className="flex-1 border-[#e8e8e8] dark:border-[#333]" />
                   </div>
                 )}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px]">
+                <div className="flex flex-wrap justify-center gap-5 lg:gap-[30px]">
                   {group.members.map((m) => (
-                    <PersonTile key={m.id} id={m.id} name={m.name} position={m.position} email={m.email} phone={m.phone} image={m.image} />
+                    <div key={m.id} className="w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-20px)]">
+                      <PersonTile id={m.id} name={m.name} position={m.position} email={m.email} phone={m.phone} image={m.image} />
+                    </div>
                   ))}
                 </div>
               </div>

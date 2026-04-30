@@ -76,7 +76,7 @@ const Offers: React.FC = () => {
         </div>
 
         {/* Section Content */}
-        <div className="mt-[60px] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px]">
+        <div className="mt-[60px] flex flex-wrap justify-center gap-5 lg:gap-[30px]">
           {loading && (
             <div className="col-span-full text-center py-10">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-khaki mx-auto"></div>
@@ -99,7 +99,9 @@ const Offers: React.FC = () => {
             </div>
           )}
           {!loading && !error && officers.map((m) => (
-            <PersonTile key={m.id} id={m.id} name={m.name} position={m.position} email={m.email} phone={m.phone} image={m.image} />
+            <div key={m.id} className="w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-20px)]">
+              <PersonTile id={m.id} name={m.name} position={m.position} email={m.email} phone={m.phone} image={m.image} />
+            </div>
           ))}
         </div>
       </div>
