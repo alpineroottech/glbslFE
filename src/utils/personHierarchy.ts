@@ -19,30 +19,44 @@ export interface RoleGroup {
   members: PersonRecord[];
 }
 
-/** Priority tiers — lower index = higher in hierarchy */
-const ROLE_TIERS: { label: string; keywords: string[] }[] = [
-  { label: 'Chairman', keywords: ['chairman', 'chairperson', 'अध्यक्ष'] },
-  { label: 'Vice Chairman', keywords: ['vice chair', 'vice-chair', 'उपाध्यक्ष'] },
-  { label: 'Chief Executive Officer', keywords: ['chief executive', 'ceo', 'प्रमुख कार्यकारी'] },
-  { label: 'Directors', keywords: ['director', 'सञ्चालक', 'निर्देशक'] },
-  { label: 'Secretary', keywords: ['secretary', 'सचिव'] },
-  { label: 'Committee Members', keywords: ['committee', 'समिति'] },
-  { label: 'Members', keywords: ['member', 'सदस्य'] },
-  { label: 'Officers', keywords: ['officer', 'अधिकृत', 'अधिकारी'] },
-  { label: 'Staff', keywords: ['staff', 'कर्मचारी'] },
+/** Priority tiers — lower index = higher in hierarchy.
+ *  Keywords are tested as whole-word regex (\b boundaries) so e.g.
+ *  "ceo" does NOT match "DCEO". Phrases like 'chief executive' use
+ *  a simple includes() since they are multi-word and unambiguous.
+ */
+const ROLE_TIERS: { label: string; keywords: string[]; exact?: boolean[] }[] = [
+  { label: 'Chairman',               keywords: ['chairman', 'chairperson', 'अध्यक्ष'] },
+  { label: 'Vice Chairman',          keywords: ['vice chair', 'vice-chair', 'उपाध्यक्ष'] },
+  { label: 'Chief Executive Officer',keywords: ['chief executive officer', 'chief executive', 'प्रमुख कार्यकारी अधिकृत', 'प्रमुख कार्यकारी'] },
+  { label: 'Deputy CEO',             keywords: ['deputy ceo', 'dceo', 'उप-प्रमुख', 'deputy chief'] },
+  { label: 'CEO',                    keywords: ['ceo'] },   // word-boundary matched below
+  { label: 'Directors',              keywords: ['director', 'सञ्चालक', 'निर्देशक'] },
+  { label: 'Secretary',              keywords: ['secretary', 'सचिव'] },
+  { label: 'Committee Members',      keywords: ['committee', 'समिति'] },
+  { label: 'Members',                keywords: ['member', 'सदस्य'] },
+  { label: 'Officers',               keywords: ['officer', 'अधिकृत', 'अधिकारी'] },
+  { label: 'Staff',                  keywords: ['staff', 'कर्मचारी'] },
 ];
+
+/** Match keyword as whole word — prevents 'ceo' matching inside 'dceo'. */
+function kwMatches(lower: string, kw: string): boolean {
+  // Multi-word phrases: use simple includes
+  if (kw.includes(' ') || kw.includes('-')) return lower.includes(kw);
+  // Single words: require word boundary
+  return new RegExp(`(^|[^a-z])${kw}([^a-z]|$)`).test(lower);
+}
 
 function getTierIndex(position: string): number {
   const lower = (position || '').toLowerCase();
   const idx = ROLE_TIERS.findIndex(tier =>
-    tier.keywords.some(kw => lower.includes(kw))
+    tier.keywords.some(kw => kwMatches(lower, kw))
   );
   return idx === -1 ? ROLE_TIERS.length : idx;
 }
 
 function getTierLabel(position: string): string {
   const lower = (position || '').toLowerCase();
-  const tier = ROLE_TIERS.find(t => t.keywords.some(kw => lower.includes(kw)));
+  const tier = ROLE_TIERS.find(t => t.keywords.some(kw => kwMatches(lower, kw)));
   return tier ? tier.label : 'Team Members';
 }
 

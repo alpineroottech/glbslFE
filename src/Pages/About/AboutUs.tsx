@@ -46,9 +46,9 @@ const AboutUs: React.FC = () => {
               {t('about.title')}
             </h1>
           </div>
-          {/* Description - full width, left-aligned */}
+          {/* Description - full width */}
           <div className="mb-16">
-            <p className="font-Lora leading-7 lg:leading-8 text-lightGray dark:text-lightGray font-normal text-base lg:text-lg max-w-3xl">
+            <p className="font-Lora leading-7 lg:leading-8 text-lightGray dark:text-lightGray font-normal text-base lg:text-lg w-full text-justify">
               {loading ? 'Loading...' : error ? error : (
                 content?.aboutUsDescription?.[0]?.children?.[0]?.text ||
                 'Discover our story, vision, and commitment to excellence in financial services'
