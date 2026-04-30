@@ -36,10 +36,11 @@ const ROLE_TIERS: RoleTierDef[] = [
   { label: 'Vice Chairman',           keywords: ['vice chair', 'vice-chair', 'उपाध्यक्ष'] },
   {
     label: 'Chief Executive Officer',
-    keywords: ['chief executive officer', 'chief executive', 'ceo', 'प्रमुख कार्यकारी अधिकृत', 'प्रमुख कार्यकारी'],
+    // 'cheif' variant handles the known typo in Sanity data
+    keywords: ['chief executive', 'cheif executive', 'executive officer', 'ceo', 'प्रमुख कार्यकारी अधिकृत', 'प्रमुख कार्यकारी'],
     excludeKeywords: ['deputy', 'उप'],
   },
-  { label: 'Deputy CEO',              keywords: ['deputy ceo', 'dceo', 'deputy chief', 'उप-प्रमुख'] },
+  { label: 'Deputy CEO', keywords: ['deputy ceo', 'dceo', 'deputy chief', 'उप-प्रमुख', 'उपप्रमुख'] },
   { label: 'Directors',               keywords: ['director', 'सञ्चालक', 'निर्देशक'] },
   { label: 'Secretary',               keywords: ['secretary', 'सचिव'] },
   { label: 'Committee Members',       keywords: ['committee', 'समिति'] },
