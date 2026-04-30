@@ -169,7 +169,7 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* ── Desktop nav links ── */}
-            <ul className="hidden 2xl:flex text-sm text-lightBlack uppercase font-normal font-Nepali min-h-[4rem] items-center flex-1 justify-center overflow-hidden">
+            <ul className="hidden 2xl:flex text-sm text-lightBlack uppercase font-normal font-Nepali min-h-[4rem] items-center flex-1 justify-center">
               {menu.map((item) => (
                 <li key={item.key} className="relative group">
                   {item.children ? (
