@@ -33,6 +33,8 @@ import {
   BaseRatePage, 
   StaffTrainingPage, 
   GovernanceReportPage,
+  InterestRatePage,
+  FinancialIndicatorPage,
   NoticePage 
 } from "../Pages/InnerPage/Reports";
 
@@ -143,6 +145,14 @@ const router = createBrowserRouter([
       {
         path: "/reports/governance-report",
         element: <GovernanceReportPage />,
+      },
+      {
+        path: "/reports/interest-rate",
+        element: <InterestRatePage />,
+      },
+      {
+        path: "/reports/financial-indicator",
+        element: <FinancialIndicatorPage />,
       },
       {
         path: "/reports/notices",

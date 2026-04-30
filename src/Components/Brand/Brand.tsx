@@ -1,7 +1,7 @@
 import React from "react";
 const Brand: React.FC = () => {
   return (
-    <div className="bg-khaki pt-[54px] pb-[44px]">
+    <div className="relative z-10 bg-khaki pt-[54px] pb-[44px]">
       <div className="text-center mb-8">
         <h3 className="text-xl sm:text-2xl md:text-3xl font-Garamond font-semibold text-lightBlack">
           Our Payment Partners

@@ -55,6 +55,8 @@ const useMenuConfig = (t: (k: string) => string): MenuItem[] => [
       { label: t('submenu.base_rate'), to: '/reports/base-rate' },
       { label: t('submenu.staff_training'), to: '/reports/staff-training' },
       { label: t('submenu.governance_report'), to: '/reports/governance-report' },
+      { label: t('submenu.interest_rate'), to: '/reports/interest-rate' },
+      { label: t('submenu.financial_indicator'), to: '/reports/financial-indicator' },
     ],
   },
   { key: 'branches', labelKey: 'nav.branches', to: '/branches' },
@@ -167,7 +169,7 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* ── Desktop nav links ── */}
-            <ul className="hidden lg:flex space-x-2 xl:space-x-3 2xl:space-x-4 text-sm text-lightBlack uppercase font-normal font-Nepali min-h-[4rem] items-center">
+            <ul className="hidden lg:flex space-x-1 xl:space-x-2 2xl:space-x-4 text-sm text-lightBlack uppercase font-normal font-Nepali min-h-[4rem] items-center flex-shrink min-w-0">
               {menu.map((item) => (
                 <li key={item.key} className="relative group">
                   {item.children ? (
@@ -206,7 +208,7 @@ const Navbar: React.FC = () => {
             </ul>
 
             {/* Desktop right controls */}
-            <div className="hidden lg:flex items-center lg:pl-8 gap-4">
+            <div className="hidden lg:flex items-center lg:pl-4 xl:pl-8 gap-3 xl:gap-4 flex-shrink-0">
               <SearchBar />
               <button onClick={toggleLanguage} className="cursor-pointer">
                 <span

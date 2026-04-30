@@ -46,6 +46,8 @@ export default defineType({
           {title: 'Base Rate', value: 'base-rate'},
           {title: 'Staff Training', value: 'staff-training'},
           {title: 'Governance', value: 'governance'},
+          {title: 'Interest Rate', value: 'interest-rate'},
+          {title: 'Financial Indicator', value: 'financial-indicator'},
           {title: 'Other', value: 'other'},
         ],
       },

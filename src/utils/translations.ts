@@ -75,6 +75,14 @@ export const translations: Translations = {
     en: 'Governance Report',
     ne: 'शासन प्रतिवेदन'
   },
+  'submenu.interest_rate': {
+    en: 'Interest Rate',
+    ne: 'ब्याज दर'
+  },
+  'submenu.financial_indicator': {
+    en: 'Financial Indicator',
+    ne: 'वित्तीय सूचक'
+  },
   'submenu.about_us': {
     en: 'About Us',
     ne: 'हाम्रो बारेमा'

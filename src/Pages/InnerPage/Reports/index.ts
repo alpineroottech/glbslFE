@@ -5,4 +5,6 @@ export { default as AGMMinutesPage } from './AGMMinutesPage';
 export { default as BaseRatePage } from './BaseRatePage';
 export { default as StaffTrainingPage } from './StaffTrainingPage';
 export { default as GovernanceReportPage } from './GovernanceReportPage';
+export { default as InterestRatePage } from './InterestRatePage';
+export { default as FinancialIndicatorPage } from './FinancialIndicatorPage';
 export { default as NoticePage } from './NoticePage';
