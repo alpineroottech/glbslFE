@@ -14,8 +14,8 @@ const Footer: React.FC = () => {
       <Brand />
       <footer className="">
         {/* footer content */}
-        <div className="bg-lightBlack">
-          <div className="Container  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 2xl:grid-cols-12 gap-5 lg:gap-3 xl:gap-5 2xl:gap-[30px] pt-14 lg:pt-[100px]">
+        <div className="bg-lightBlack overflow-x-hidden">
+          <div className="Container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 2xl:grid-cols-12 gap-5 lg:gap-3 xl:gap-5 2xl:gap-[30px] pt-14 lg:pt-[100px]">
             {/* Footer Content one. */}
             <div
               className="lg:mt-[-195px] lg:col-span-3 2xl:col-span-4 bg-[#385344]"
@@ -109,13 +109,13 @@ const Footer: React.FC = () => {
               <h1 className="text-lg sm:text-xl md:text-[22px] leading-[38px] font-medium text-white relative font-Garamond before:w-7 before:h-[1px] before:bg-khaki before:absolute before:left-0 before:top-10 uppercase ">
                 GALLERY
               </h1>
-              <div className="grid grid-cols-3 gap-2 mt-[45px] w-[250px] sm:w-[300px] lg:w-full  content-center ">
-                <img src="/images/home-1/image1.jpg" alt="glbsl gallery image 1" />
-                <img src="/images/home-1/image2.jpg" alt="glbsl gallery image 2" />
-                <img src="/images/home-1/image3.jpg" alt="glbsl gallery image 3" />
-                <img src="/images/home-1/image4.jpg" alt="glbsl gallery image 4" />
-                <img src="/images/home-1/image5.jpg" alt="glbsl gallery image 5" />
-                <img src="/images/home-1/image6.jpg" alt="glbsl gallery image 6" />
+              <div className="grid grid-cols-3 gap-2 mt-[45px] w-full content-center">
+                <img src="/images/home-1/image1.jpg" alt="glbsl gallery image 1" className="w-full h-auto object-cover" />
+                <img src="/images/home-1/image2.jpg" alt="glbsl gallery image 2" className="w-full h-auto object-cover" />
+                <img src="/images/home-1/image3.jpg" alt="glbsl gallery image 3" className="w-full h-auto object-cover" />
+                <img src="/images/home-1/image4.jpg" alt="glbsl gallery image 4" className="w-full h-auto object-cover" />
+                <img src="/images/home-1/image5.jpg" alt="glbsl gallery image 5" className="w-full h-auto object-cover" />
+                <img src="/images/home-1/image6.jpg" alt="glbsl gallery image 6" className="w-full h-auto object-cover" />
               </div>
             </div>
 
@@ -129,30 +129,22 @@ const Footer: React.FC = () => {
                 LOCATE US:
               </h1>
               <div className="space-y-4 py-[44px]">
-                {/* <p className="text-lightGray font-Lora font-normal text-sm sm:text-base leading-[26px]">Open with google maps</p> */}
-
-                {/* Map preview (approx 300x200) — opens maps.app link when clicked */}
-                <div className="w-full flex items-center">
-                  <div className="rounded border border-[#eee] overflow-hidden w-[250px] sm:w-[300px] lg:w-full">
-                    <iframe
-                      title="GLBSL Location"
-                      src="https://www.google.com/maps?q=Dhankuta+Municipality+Dhankuta+Nepal&output=embed"
-                      width="100%"
-                      height="193"
-                      style={{ border: 0, display: "block" }}
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="ml-4 flex-1">
-                    <a
-                      href="https://maps.app.goo.gl/MhHVaeRkMNNVjpN19"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-block text-khaki font-Lora text-sm hover:underline"
-                    >
-                    </a>
-                  </div>
-                </div>
+                {/* Map preview — full width, links to Google Maps */}
+                <a
+                  href="https://maps.app.goo.gl/MhHVaeRkMNNVjpN19"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block rounded border border-[#eee] overflow-hidden w-full hover:opacity-90 transition-opacity"
+                >
+                  <iframe
+                    title="GLBSL Location"
+                    src="https://www.google.com/maps?q=Dhankuta+Municipality+Dhankuta+Nepal&output=embed"
+                    width="100%"
+                    height="193"
+                    style={{ border: 0, display: "block", pointerEvents: "none" }}
+                    loading="lazy"
+                  />
+                </a>
               </div>
             </div>
           </div>

@@ -35,26 +35,24 @@ const ProductsSlider: React.FC = () => {
     <div className="bg-whiteSmoke dark:bg-lightBlack">
       <div className="relative z-[1] ">
         <div
-          className="Container-Hero bg-lightBlack dark:bg-normalBlack  grid grid-cols-2 md:grid-cols-3 xl:grid-cols-5 2xl:grid-cols-5 items-center justify-center font-Lora py-3 lg:py-4 xl:py-5 2xl:py-6 border-t-[3px] border-t-khaki mt-[-75px]  left-0 right-0 z-[1]"
+          className="Container-Hero bg-lightBlack dark:bg-normalBlack flex flex-col sm:flex-row items-center justify-between font-Lora py-4 lg:py-5 px-5 sm:px-8 border-t-[3px] border-t-khaki mt-[-75px] left-0 right-0 z-[1] gap-4"
           data-aos="fade-down"
           data-aos-duration="1000"
         >
-          <div className="col-span-6 md:col-span-5 lg:col-span-5 flex items-center justify-center px-6 gap-6">
-            <div className="text-center">
-              <p className="text-white font-Garamond font-bold" style={{ fontSize: "150%" }}>
-                GURANS LAGHUBITTA BITTIYA SANSTHA LIMITED
-              </p>
-              <p className="text-lightGray font-bold mt-1" style={{ fontSize: "150%" }}>
-                गरिबको मित्र गुराँस लघुवीत्त
-              </p>
-            </div>
-            <div>
-              <Link to="/about">
-                <button style={{ marginLeft: '100px' }} className="w-[142px] h-10 lg:h-[50px] text-[15px] bg-khaki font-Garamond border border-khaki text-white mx-auto relative z-10 before:absolute before:top-0 before:right-0 before:-z-10 before:w-0 before:h-full before:bg-lightBlack before:transition-all before:duration-500 hover:before:w-full hover:before:left-0">
-                  Learn more
-                </button>
-              </Link>
-            </div>
+          <div className="text-center sm:text-left">
+            <p className="text-white font-Garamond font-bold text-base sm:text-lg md:text-xl lg:text-2xl leading-tight">
+              GURANS LAGHUBITTA BITTIYA SANSTHA LIMITED
+            </p>
+            <p className="text-lightGray font-bold mt-1 text-base sm:text-lg md:text-xl lg:text-2xl leading-tight">
+              गरिबको मित्र गुराँस लघुवीत्त
+            </p>
+          </div>
+          <div className="flex-shrink-0">
+            <Link to="/about">
+              <button className="w-[130px] sm:w-[142px] h-10 lg:h-[50px] text-[15px] bg-khaki font-Garamond border border-khaki text-white relative z-10 before:absolute before:top-0 before:right-0 before:-z-10 before:w-0 before:h-full before:bg-lightBlack before:transition-all before:duration-500 hover:before:w-full hover:before:left-0">
+                Learn more
+              </button>
+            </Link>
           </div>
         </div>
       </div>

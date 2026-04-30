@@ -8,19 +8,13 @@ const Brand: React.FC = () => {
         </h3>
       </div>
       <div
-        className="Container grid grid-cols-2 sm:grid-cols-2  md:grid-cols-5 2xl:grid-cols-5 items-center justify-center gap-[30px]"
+        className="Container flex flex-wrap items-center justify-center gap-8 sm:gap-12"
         data-aos="fade-up"
         data-aos-duration="1000"
       >
-        <span>
-          {/* <img src="/images/home-1/brand-3.png" alt="" className="lg:hidden" /> */}
-        </span>
-        <span>
-          {/* <img src="/images/home-1/brand-3.png" alt="" className="lg:hidden" /> */}
-        </span>
-        <img src="/images/home-1/brand-1.png" alt="" className="h-32 w-32 object-contain" />
-        <img src="/images/home-1/brand-2.png" alt="" className="h-32 w-32 object-contain" />
-        <img src="/images/home-1/brand-3.png" alt="" className="h-32 w-32 object-contain" />
+        <img src="/images/home-1/brand-1.png" alt="Payment partner 1" className="h-24 w-24 sm:h-28 sm:w-28 object-contain" />
+        <img src="/images/home-1/brand-2.png" alt="Payment partner 2" className="h-24 w-24 sm:h-28 sm:w-28 object-contain" />
+        <img src="/images/home-1/brand-3.png" alt="Payment partner 3" className="h-24 w-24 sm:h-28 sm:w-28 object-contain" />
       </div>
     </div>
   );
