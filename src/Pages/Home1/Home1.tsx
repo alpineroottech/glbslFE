@@ -4,7 +4,7 @@ import Facilities from "../../Components/Facilities/Facilities";
 import HeroSection from "../../Components/HeroSection/HeroSection";
 import Offers from "../../Components/Offers/Offers";
 import Reports from "../../Components/Reports/Reports";
-import ProductsSlider from "../../Components/Rooms/Rooms";
+import ProductsSlider from "../../Components/ProductsSlider/ProductsSlider";
 
 const Home1: React.FC = () => {
   return (

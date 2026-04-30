@@ -190,7 +190,7 @@ export const translations: Translations = {
     ne: 'प्रमुख कार्यकारी अधिकृत, गुराँस लघुवित्त वित्तीय संस्था लिमिटेड'
   },
 
-  // Products & Services section (Rooms.tsx)
+  // Products & Services section (ProductsSlider.tsx)
   'products.section_label': {
     en: 'OUR PRODUCTS AND SERVICES',
     ne: 'हाम्रा उत्पादन र सेवाहरू'

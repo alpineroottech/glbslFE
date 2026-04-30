@@ -17,7 +17,7 @@ const Services: React.FC = () => {
       title: "Loan Services",
       category: "FINANCIAL",
       description: "Comprehensive loan products designed to meet your financial needs. From personal loans to business financing, we offer competitive rates and flexible terms to help you achieve your goals.",
-      imageUrl: "/images/home-1/facilities-1.png",
+      imageUrl: "/images/home-1/loan_image.jpg",
       linkTo: "/services/loan",
       orderNumber: "1"
     },
@@ -26,7 +26,7 @@ const Services: React.FC = () => {
       title: "Savings Services",
       category: "FINANCIAL",
       description: "Build your financial future with our diverse savings products. Enjoy attractive interest rates and secure your money while it grows with our trusted savings accounts and deposit schemes.",
-      imageUrl: "/images/home-1/facilities-thumb-2.jpg",
+      imageUrl: "/images/home-1/savings_image.jpg",
       linkTo: "/services/savings", 
       orderNumber: "2"
     },
@@ -35,7 +35,7 @@ const Services: React.FC = () => {
       title: "Remittance Services", 
       category: "FINANCIAL",
       description: "Fast, secure, and reliable money transfer services. Send and receive money domestically and internationally with competitive exchange rates and minimal processing time.",
-      imageUrl: "/images/home-1/facilities-thumb-3.jpg",
+      imageUrl: "/images/home-1/remittance_image.jpg",
       linkTo: "/services/remittance",
       orderNumber: "3"
     },

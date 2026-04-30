@@ -162,28 +162,25 @@ export const aboutService = {
   },
 
   getInformationOfficer: async () => {
-    const lang = getLocale();
     const results = await sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "informationOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
-      { lang },
+      `*[_type == "person" && personType == "informationOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      {},
     );
     return results?.[0] || null;
   },
 
   getComplianceOfficer: async () => {
-    const lang = getLocale();
     const results = await sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "complianceOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
-      { lang },
+      `*[_type == "person" && personType == "complianceOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      {},
     );
     return results?.[0] || null;
   },
 
   getComplaintOfficer: async () => {
-    const lang = getLocale();
     const results = await sanityFetch<any[]>(
-      `*[_type == "person" && language == $lang && personType == "complaintOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
-      { lang },
+      `*[_type == "person" && personType == "complaintOfficer"] | order(order asc) [0..0] { ${PERSON_FIELDS} }`,
+      {},
     );
     return results?.[0] || null;
   },

@@ -57,6 +57,7 @@ const useMenuConfig = (t: (k: string) => string): MenuItem[] => [
       { label: t('submenu.governance_report'), to: '/reports/governance-report' },
     ],
   },
+  { key: 'branches', labelKey: 'nav.branches', to: '/branches' },
   { key: 'notices', labelKey: 'nav.notices', to: '/reports/notices' },
   {
     key: 'career',

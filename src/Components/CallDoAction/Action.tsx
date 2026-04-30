@@ -49,9 +49,9 @@ const Action: React.FC = () => {
             data-aos-duration="1000"
           >
             <img
-              src="/images/home-1/action-img.png"
+              src="/images/home-1/Bishnu-Prasad-Upadhayay.jpg"
               className="w-full h-full object-cover"
-              alt=""
+              alt={t('ceo.name')}
             />
             <div
               className="w-[70px] h-[70px] text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-khaki rounded-full flex items-center justify-center cursor-pointer z-[1]"
