@@ -370,8 +370,20 @@ export const noticesService = {
   getPopupNotices: async () => {
     try {
       const lang = getLocale();
+      // Lean projection — only what the popup UI needs, with expiry guard
       return sanityFetch<any[]>(
-        `*[_type == "notice" && language == $lang && displayPopup == true && isActive == true] | order(publishDate desc) { ${NOTICE_FIELDS} }`,
+        `*[_type == "notice"
+            && language == $lang
+            && displayPopup == true
+            && isActive == true
+            && (expiryDate == null || expiryDate > now())
+          ] | order(priority desc, publishDate desc) {
+          _id,
+          title,
+          "slug": slug.current,
+          noticeImage,
+          uploadedFile { asset->{ url, originalFilename, mimeType } }
+        }`,
         { lang },
       );
     } catch (error) {
