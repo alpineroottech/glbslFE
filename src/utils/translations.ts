@@ -168,6 +168,150 @@ export const translations: Translations = {
     ne: 'मूल्य निर्धारण'
   },
   
+  // CEO / Message from the CEO section (Action.tsx)
+  'ceo.section_label': {
+    en: 'MESSAGE FROM THE CEO',
+    ne: 'CEO को सन्देश'
+  },
+  'ceo.subtitle': {
+    en: 'Serving marginalized communities with microcredit, savings, and financial literacy',
+    ne: 'सूक्ष्म ऋण, बचत र वित्तीय साक्षरताद्वारा सीमान्तकृत समुदायको सेवा'
+  },
+  'ceo.message': {
+    en: 'The microfinance sector in Nepal provides crucial financial access in remote, underserved areas. GLBSL, a province-level institution supported by 24 promoters, serves marginalized communities in Province-1 with microcredit, savings, microinsurance, remittances, and financial literacy programs. It is expanding outreach, emphasizes client protection, and continually refines products and delivery to better meet clients\' needs.',
+    ne: 'नेपालमा लघुवित्त क्षेत्रले दुर्गम र सुविधाविहीन क्षेत्रहरूमा महत्वपूर्ण वित्तीय पहुँच प्रदान गर्दछ। २४ प्रवर्द्धकहरूको समर्थनमा रहेको प्रदेश-स्तरीय संस्था GLBSL ले प्रदेश-१ का सीमान्तकृत समुदायहरूलाई सूक्ष्म ऋण, बचत, सूक्ष्म बीमा, रेमिट्यान्स र वित्तीय साक्षरता कार्यक्रमहरू मार्फत सेवा प्रदान गर्दछ।'
+  },
+  'ceo.name': {
+    en: 'Bishnu Prasad Upadhayay',
+    ne: 'बिष्णु प्रसाद उपाध्याय'
+  },
+  'ceo.designation': {
+    en: 'CEO, Gurans Laghubitta Bittiya Sanstha Ltd.',
+    ne: 'प्रमुख कार्यकारी अधिकृत, गुराँस लघुवित्त वित्तीय संस्था लिमिटेड'
+  },
+
+  // Products & Services section (Rooms.tsx)
+  'products.section_label': {
+    en: 'OUR PRODUCTS AND SERVICES',
+    ne: 'हाम्रा उत्पादन र सेवाहरू'
+  },
+  'products.section_desc': {
+    en: 'Explore our comprehensive range of financial products and services designed to meet your diverse needs.',
+    ne: 'तपाईंका विविध आवश्यकताहरू पूरा गर्न डिजाइन गरिएका हाम्रा व्यापक वित्तीय उत्पादन र सेवाहरू अन्वेषण गर्नुहोस्।'
+  },
+  'products.loan_category': {
+    en: 'Loan Services',
+    ne: 'ऋण सेवाहरू'
+  },
+  'products.loan_title': {
+    en: 'Loan Services',
+    ne: 'ऋण सेवाहरू'
+  },
+  'products.loan_desc': {
+    en: 'Microfinance loans tailored for small enterprises and individuals.',
+    ne: 'साना उद्यम र व्यक्तिहरूका लागि अनुकूलित सूक्ष्म वित्त ऋणहरू।'
+  },
+  'products.savings_category': {
+    en: 'Saving Accounts',
+    ne: 'बचत खाताहरू'
+  },
+  'products.savings_title': {
+    en: 'Saving Accounts',
+    ne: 'बचत खाताहरू'
+  },
+  'products.savings_desc': {
+    en: 'Secure savings products with competitive interest rates and easy access.',
+    ne: 'प्रतिस्पर्धात्मक ब्याज दर र सजिलो पहुँचसहितका सुरक्षित बचत उत्पादनहरू।'
+  },
+  'products.remittance_category': {
+    en: 'Remittance',
+    ne: 'रेमिट्यान्स'
+  },
+  'products.remittance_title': {
+    en: 'Remittance',
+    ne: 'रेमिट्यान्स'
+  },
+  'products.remittance_desc': {
+    en: 'Fast and reliable money transfer services locally and internationally.',
+    ne: 'स्थानीय र अन्तर्राष्ट्रिय रूपमा द्रुत र भरपर्दो मनी ट्रान्सफर सेवाहरू।'
+  },
+  'products.view_details': {
+    en: 'View Details',
+    ne: 'विवरण हेर्नुहोस्'
+  },
+
+  // Reports & Documents section homepage (Reports.tsx)
+  'reports.section_label': {
+    en: 'REPORTS AND DOCUMENTS',
+    ne: 'प्रतिवेदन र कागजपत्रहरू'
+  },
+  'reports.section_desc': {
+    en: 'Access our comprehensive collection of financial reports, regulatory documents, and institutional publications',
+    ne: 'हाम्रा वित्तीय प्रतिवेदनहरू, नियामक कागजातहरू र संस्थागत प्रकाशनहरूको व्यापक संग्रहमा पहुँच गर्नुहोस्।'
+  },
+  'reports.quarterly_category': {
+    en: 'Financial Report',
+    ne: 'वित्तीय प्रतिवेदन'
+  },
+  'reports.quarterly_slide_title': {
+    en: 'Quarterly Report',
+    ne: 'त्रैमासिक प्रतिवेदन'
+  },
+  'reports.quarterly_slide_desc': {
+    en: 'Quarterly financial performance and business highlights for stakeholders.',
+    ne: 'सरोकारवालाहरूको लागि त्रैमासिक वित्तीय कार्यसम्पादन र व्यापारिक मुख्य बुँदाहरू।'
+  },
+  'reports.annual_category': {
+    en: 'Annual Report',
+    ne: 'वार्षिक प्रतिवेदन'
+  },
+  'reports.annual_slide_title': {
+    en: 'Annual Report',
+    ne: 'वार्षिक प्रतिवेदन'
+  },
+  'reports.annual_slide_desc': {
+    en: 'Comprehensive annual financial report and institutional achievements overview.',
+    ne: 'व्यापक वार्षिक वित्तीय प्रतिवेदन र संस्थागत उपलब्धिहरूको अवलोकन।'
+  },
+  'reports.agm_category': {
+    en: 'AGM Documents',
+    ne: 'साधारण सभाका कागजातहरू'
+  },
+  'reports.agm_slide_title': {
+    en: 'AGM Minutes',
+    ne: 'साधारण सभाको मिनेट'
+  },
+  'reports.agm_slide_desc': {
+    en: 'Annual General Meeting minutes and resolutions for transparency and governance.',
+    ne: 'पारदर्शिता र शासनको लागि वार्षिक साधारण सभाका मिनेट र प्रस्तावहरू।'
+  },
+  'reports.view_report': {
+    en: 'View Report',
+    ne: 'प्रतिवेदन हेर्नुहोस्'
+  },
+  'reports.view_document': {
+    en: 'View Document',
+    ne: 'कागजात हेर्नुहोस्'
+  },
+
+  // Offers / Key Officers section (Offers.tsx)
+  'offers.description': {
+    en: 'Get in touch with our dedicated team members for assistance',
+    ne: 'सहायताको लागि हाम्रो समर्पित टोलीका सदस्यहरूसँग सम्पर्क गर्नुहोस्'
+  },
+  'offers.loading': {
+    en: 'Loading contact officers...',
+    ne: 'सम्पर्क अधिकारीहरू लोड गर्दैछ...'
+  },
+  'offers.no_officers': {
+    en: 'No contact officers configured yet.',
+    ne: 'अहिलेसम्म कुनै सम्पर्क अधिकारी थपिएको छैन।'
+  },
+  'offers.add_in_cms': {
+    en: 'Please add people with personType: informationOfficer, complianceOfficer, or complaintOfficer in Sanity CMS.',
+    ne: 'कृपया Sanity CMS मा informationOfficer, complianceOfficer, वा complaintOfficer personType भएका व्यक्तिहरू थप्नुहोस्।'
+  },
+
   // Hero Section
   'hero.gurans_full': {
     en: 'GURANS LAGHUBITTA BITTIYA SANSTHA LIMITED',

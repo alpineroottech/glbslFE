@@ -8,7 +8,7 @@ const Offers: React.FC = () => {
   const [officers, setOfficers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   useEffect(() => {
     const fetchOfficers = async () => {
@@ -68,10 +68,10 @@ const Offers: React.FC = () => {
             <hr className="w-[100px] h-[1px] bg-lightGray dark:bg-gray text-lightGray dark:text-gray" />
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl 2xl:text-[38px] leading-[42px] 2xl:leading-[52px] text-lightBlack dark:text-white mt-[10px] mb-[14px] font-Garamond font-semibold uppercase">
-            CONTACT OUR TEAM
+            {t('offers.subtitle')}
           </h1>
           <p className="font-Lora leading-7 lg:leading-[26px] text-lightGray font-normal text-sm sm:text-base">
-            Get in touch with our dedicated team members for assistance
+            {t('offers.description')}
           </p>
         </div>
 
@@ -80,7 +80,7 @@ const Offers: React.FC = () => {
           {loading && (
             <div className="col-span-full text-center py-10">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-khaki mx-auto"></div>
-              <p className="mt-4 text-gray dark:text-lightGray">Loading contact officers...</p>
+              <p className="mt-4 text-gray dark:text-lightGray">{t('offers.loading')}</p>
             </div>
           )}
           {error && (
@@ -91,10 +91,10 @@ const Offers: React.FC = () => {
           {!loading && !error && officers.length === 0 && (
             <div className="col-span-full text-center py-10">
               <p className="text-gray dark:text-lightGray">
-                No contact officers configured in the system yet.
+                {t('offers.no_officers')}
               </p>
               <p className="text-sm text-gray dark:text-lightGray mt-2">
-                Please add people with personType: informationOfficer, complianceOfficer, or complaintOfficer in Strapi CMS.
+                {t('offers.add_in_cms')}
               </p>
             </div>
           )}
