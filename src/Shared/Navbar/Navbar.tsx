@@ -131,7 +131,7 @@ const Navbar: React.FC = () => {
           <div className="flex flex-col lg:flex-row items-center justify-between lg:min-h-[80px]">
 
             {/* Desktop logo */}
-            <div className="lg:p-2 lg:pr-6 flex-shrink-0">
+            <div className="lg:p-2 lg:pr-3 xl:pr-6 flex-shrink-0">
               <Link to="/">
                 <img
                   src="/images/home-1/logo-1.png"
@@ -169,14 +169,14 @@ const Navbar: React.FC = () => {
             </div>
 
             {/* ── Desktop nav links ── */}
-            <ul className="hidden lg:flex space-x-1 xl:space-x-2 2xl:space-x-4 text-sm text-lightBlack uppercase font-normal font-Nepali min-h-[4rem] items-center flex-shrink min-w-0">
+            <ul className="hidden lg:flex text-xs xl:text-sm text-lightBlack uppercase font-normal font-Nepali min-h-[4rem] items-center flex-1 justify-center overflow-hidden">
               {menu.map((item) => (
                 <li key={item.key} className="relative group">
                   {item.children ? (
                     <>
                       <NavLink
                         to="#"
-                        className="flex items-center text-lightBlack dark:text-white px-3 py-2 transition-all duration-300 nav-item"
+                        className="flex items-center text-lightBlack dark:text-white px-1.5 xl:px-2.5 py-2 transition-all duration-300 nav-item whitespace-nowrap"
                       >
                         <span className="nav-item">{t(item.labelKey)}</span>
                         <BiChevronDown className="ml-1 flex-shrink-0" />
@@ -198,7 +198,7 @@ const Navbar: React.FC = () => {
                   ) : (
                     <NavLink
                       to={item.to!}
-                      className="flex items-center text-lightBlack dark:text-white px-3 py-2 transition-all duration-300 nav-item"
+                      className="flex items-center text-lightBlack dark:text-white px-1.5 xl:px-2.5 py-2 transition-all duration-300 nav-item whitespace-nowrap"
                     >
                       <span className="nav-item">{t(item.labelKey)}</span>
                     </NavLink>
@@ -208,7 +208,7 @@ const Navbar: React.FC = () => {
             </ul>
 
             {/* Desktop right controls */}
-            <div className="hidden lg:flex items-center lg:pl-4 xl:pl-8 gap-3 xl:gap-4 flex-shrink-0">
+            <div className="hidden lg:flex items-center pl-3 xl:pl-6 gap-2 xl:gap-4 flex-shrink-0">
               <SearchBar />
               <button onClick={toggleLanguage} className="cursor-pointer">
                 <span

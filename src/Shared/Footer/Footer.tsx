@@ -12,13 +12,13 @@ const Footer: React.FC = () => {
   return (
     <>
       <Brand />
-      <footer className="">
+      <footer className="relative z-0">
         {/* footer content */}
         <div className="bg-lightBlack overflow-x-hidden">
           <div className="Container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-10 2xl:grid-cols-12 gap-5 lg:gap-3 xl:gap-5 2xl:gap-[30px] pt-14 lg:pt-[100px]">
             {/* Footer Content one. */}
             <div
-              className="lg:mt-[-195px] lg:col-span-3 2xl:col-span-4 bg-[#385344]"
+              className="lg:col-span-3 2xl:col-span-4 bg-[#385344]"
               data-aos="fade-up"
               data-aos-duration="1000"
             >
