@@ -1,10 +1,16 @@
 /**
  * seed-branches.mjs
  * One-time script to seed all 36 branches from the static data into Sanity.
- * Run: node seed-branches.mjs
  *
- * Safe to run multiple times — it checks for existing branches by name
- * and skips them to avoid duplicates.
+ * Prerequisites:
+ * - Sanity dataset lives on sanity.io (NOT DigitalOcean — that was the old Strapi host).
+ * - Your API write token is NEVER committed to git — set it only in your shell.
+ *
+ * Run (PowerShell):
+ *   $env:SANITY_TOKEN = "<token from sanity.io/manage>"
+ *   node seed-branches.mjs
+ *
+ * Safe to run multiple times — it skips branches that already exist by name.
  */
 import { createClient } from '@sanity/client';
 

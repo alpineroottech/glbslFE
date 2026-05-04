@@ -13,9 +13,22 @@ const BranchTile: React.FC<BranchTileProps> = ({ branch }) => {
         <span className="text-xs font-semibold text-khaki uppercase tracking-widest font-Lora">
           Branch #{branch.sn}
         </span>
-        <h3 className="text-xl lg:text-2xl font-Garamond font-semibold text-lightBlack dark:text-white mt-1 leading-tight">
-          {branch.name}
-        </h3>
+        <div className="mt-2 flex flex-col sm:flex-row sm:items-start gap-4">
+          {branch.managerImage ? (
+            <div className="flex-shrink-0 mx-auto sm:mx-0">
+              <img
+                src={branch.managerImage}
+                alt={branch.contactPerson || branch.name}
+                className="w-24 h-24 object-cover rounded-sm border border-[#e8e8e8] dark:border-[#333]"
+              />
+            </div>
+          ) : null}
+          <div className="flex-1 text-center sm:text-left">
+            <h3 className="text-xl lg:text-2xl font-Garamond font-semibold text-lightBlack dark:text-white leading-tight">
+              {branch.name}
+            </h3>
+          </div>
+        </div>
       </div>
 
       {/* Location details */}
