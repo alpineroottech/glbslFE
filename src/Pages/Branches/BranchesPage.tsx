@@ -1,17 +1,46 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import BreadCrumb from "../../BreadCrumb/BreadCrumb";
 import BranchTile from "./components/BranchTile";
 import { getBranches, BranchData } from "./data";
+import { branchesService, getStrapiMediaUrl } from "../../services/strapi";
 import { useLanguage } from "../../contexts/LanguageContext";
-
-const allDistricts = Array.from(new Set(getBranches().map((b) => b.district))).sort();
 
 const BranchesPage: React.FC = () => {
   const { t } = useLanguage();
-  const branches = getBranches();
+  const [branches, setBranches] = useState<BranchData[]>(getBranches());
+  const [loading, setLoading] = useState(true);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedDistrict, setSelectedDistrict] = useState("all");
+
+  useEffect(() => {
+    branchesService.getBranches().then((data) => {
+      if (data && data.length > 0) {
+        const mapped: BranchData[] = data.map((b: any) => ({
+          id: b._id,
+          sn: b.sn ?? 0,
+          name: b.name ?? '',
+          district: b.district ?? '',
+          municipality: b.municipality ?? '',
+          ward: b.ward ?? 0,
+          locality: b.locality ?? '',
+          contactPerson: b.contactPerson ?? '',
+          phone: b.phone ?? '',
+          email: b.email ?? '',
+          managerImage: b.managerImage ? getStrapiMediaUrl(b.managerImage) : undefined,
+        }));
+        setBranches(mapped);
+      }
+      // If CMS returns empty, keep the static fallback already set in useState
+    }).catch(() => {
+      // Network error — keep static fallback
+    }).finally(() => setLoading(false));
+  }, []);
+
+  const allDistricts = useMemo(
+    () => Array.from(new Set(branches.map((b) => b.district))).sort(),
+    [branches],
+  );
 
   const filteredBranches = useMemo(() => {
     return branches.filter((branch) => {

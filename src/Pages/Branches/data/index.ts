@@ -13,6 +13,7 @@ export interface BranchData {
   contactPerson: string;
   phone: string;
   email: string;
+  managerImage?: string;
 }
 
 const branchData: BranchData[] = [

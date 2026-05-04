@@ -393,6 +393,40 @@ export const noticesService = {
   },
 };
 
+// ── Base Rate Entries Service ─────────────────────────────────────
+export const baseRateService = {
+  getEntries: async () => {
+    try {
+      return sanityFetch<any[]>(
+        `*[_type == "baseRateEntry"] | order(nepaliYear desc, nepaliMonth asc) {
+          _id, nepaliYear, nepaliMonth, monthlyBaseRate
+        }`,
+      );
+    } catch (error) {
+      console.error('Error fetching base rate entries:', error);
+      return [];
+    }
+  },
+};
+
+// ── Branches Service ──────────────────────────────────────────────
+export const branchesService = {
+  getBranches: async () => {
+    try {
+      return sanityFetch<any[]>(
+        `*[_type == "branch"] | order(sn asc) {
+          _id, sn, name, district, municipality, ward, locality,
+          contactPerson, phone, email,
+          managerImage
+        }`,
+      );
+    } catch (error) {
+      console.error('Error fetching branches:', error);
+      return [];
+    }
+  },
+};
+
 // ── Hero Images Service ───────────────────────────────────────────
 export const heroImagesService = {
   getHeroImages: async () => {

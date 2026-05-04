@@ -11,6 +11,8 @@ import organizationStructure from './documents/organizationStructure'
 import remittanceService from './documents/remittanceService'
 
 // Collection document types
+import baseRateEntry from './documents/baseRateEntry'
+import branch from './documents/branch'
 import committee from './documents/committee'
 import heroImage from './documents/heroImage'
 import loanProduct from './documents/loanProduct'
@@ -34,6 +36,8 @@ export const schemaTypes = [
   remittanceService,
 
   // Collections
+  baseRateEntry,
+  branch,
   committee,
   heroImage,
   loanProduct,

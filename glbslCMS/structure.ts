@@ -11,6 +11,8 @@ import {
   TransferIcon,
   HeartIcon,
   ComponentIcon,
+  PinIcon,
+  TrendUpwardIcon,
 } from '@sanity/icons'
 
 // Singleton document types that should not allow "Create new"
@@ -192,6 +194,24 @@ export const structure = (S: StructureBuilder) =>
                     .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
                 ),
               S.listItem()
+                .title('Interest Rate Reports')
+                .icon(TrendUpwardIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('Interest Rate Reports')
+                    .filter('_type == "report" && reportType == "interest-rate"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
+                .title('Financial Indicator Reports')
+                .icon(TrendUpwardIcon)
+                .child(
+                  S.documentTypeList('report')
+                    .title('Financial Indicator Reports')
+                    .filter('_type == "report" && reportType == "financial-indicator"')
+                    .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.listItem()
                 .title('Other Reports')
                 .icon(DocumentTextIcon)
                 .child(
@@ -199,6 +219,15 @@ export const structure = (S: StructureBuilder) =>
                     .title('Other Reports')
                     .filter('_type == "report" && reportType == "other"')
                     .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
+                ),
+              S.divider(),
+              S.listItem()
+                .title('Base Rate Entries (Table)')
+                .icon(TrendUpwardIcon)
+                .child(
+                  S.documentTypeList('baseRateEntry')
+                    .title('Base Rate Entries')
+                    .defaultOrdering([{field: 'nepaliYear', direction: 'desc'}])
                 ),
             ])
         ),
@@ -229,6 +258,16 @@ export const structure = (S: StructureBuilder) =>
                     .defaultOrdering([{field: 'publishDate', direction: 'desc'}])
                 ),
             ])
+        ),
+
+      // === BRANCHES ===
+      S.listItem()
+        .title('Branches')
+        .icon(PinIcon)
+        .child(
+          S.documentTypeList('branch')
+            .title('Branches')
+            .defaultOrdering([{field: 'sn', direction: 'asc'}])
         ),
 
       // === TESTIMONIALS ===

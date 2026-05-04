@@ -31,6 +31,8 @@ interface ReportListPageProps {
   breadcrumbTitle: string;
   pageTitle: string;
   pageSubtitle: string;
+  hideBreadcrumb?: boolean;
+  hideHeader?: boolean;
 }
 
 const PAGE_SIZE = 9;
@@ -61,6 +63,8 @@ const ReportListPage: React.FC<ReportListPageProps> = ({
   breadcrumbTitle,
   pageTitle,
   pageSubtitle,
+  hideBreadcrumb = false,
+  hideHeader = false,
 }) => {
   const [reports, setReports] = useState<StrapiReport[]>([]);
   const [loading, setLoading] = useState(true);
@@ -127,11 +131,12 @@ const ReportListPage: React.FC<ReportListPageProps> = ({
 
   return (
     <section>
-      <BreadCrumb title={breadcrumbTitle} home="/" />
+      {!hideBreadcrumb && <BreadCrumb title={breadcrumbTitle} home="/" />}
 
       <div className="bg-whiteSmoke dark:bg-lightBlack py-20 2xl:py-[120px]">
         <div className="Container">
           {/* Section heading */}
+          {!hideHeader && (
           <div className="flex justify-center mb-12" data-aos="fade-up" data-aos-duration="1000">
             <div className="text-center">
               <h1 className="text-xl sm:text-2xl md:text-3xl 2xl:text-[38px] leading-tight text-lightBlack dark:text-white font-Garamond font-semibold capitalize">
@@ -156,6 +161,7 @@ const ReportListPage: React.FC<ReportListPageProps> = ({
               )}
             </div>
           </div>
+          )}
 
           {/* Loading */}
           {loading && (
