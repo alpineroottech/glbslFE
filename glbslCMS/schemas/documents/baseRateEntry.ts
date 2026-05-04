@@ -2,14 +2,14 @@ import {defineType, defineField} from 'sanity'
 
 const NEPALI_MONTHS = [
   {title: 'Baisakh (बैशाख)', value: 'Baisakh'},
-  {title: 'Jestha (जेठ)', value: 'Jestha'},
-  {title: 'Ashadh (आषाढ)', value: 'Ashadh'},
+  {title: 'Jestha (जेष्ठ)', value: 'Jestha'},
+  {title: 'Asar (असार)', value: 'Asar'},
   {title: 'Shrawan (श्रावण)', value: 'Shrawan'},
   {title: 'Bhadra (भाद्र)', value: 'Bhadra'},
   {title: 'Ashwin (आश्विन)', value: 'Ashwin'},
   {title: 'Kartik (कार्तिक)', value: 'Kartik'},
   {title: 'Mangsir (मंसिर)', value: 'Mangsir'},
-  {title: 'Poush (पुष)', value: 'Poush'},
+  {title: 'Poush (पौष)', value: 'Poush'},
   {title: 'Magh (माघ)', value: 'Magh'},
   {title: 'Falgun (फाल्गुण)', value: 'Falgun'},
   {title: 'Chaitra (चैत्र)', value: 'Chaitra'},

@@ -5,8 +5,9 @@ import { baseRateService } from "../../../services/strapi";
 import ReportListPage from "../../../Components/Reports/ReportListPage";
 
 // Nepali month order for correct fiscal-year sorting (Baisakh=1 … Chaitra=12)
+// Keep both Asar and Ashadh for backward compatibility with existing entries.
 const MONTH_ORDER: Record<string, number> = {
-  Baisakh: 1,  Jestha: 2,   Ashadh: 3,  Shrawan: 4,
+  Baisakh: 1,  Jestha: 2,   Asar: 3,  Ashadh: 3,  Shrawan: 4,
   Bhadra: 5,   Ashwin: 6,   Kartik: 7,  Mangsir: 8,
   Poush: 9,    Magh: 10,    Falgun: 11, Chaitra: 12,
 };
@@ -113,10 +114,10 @@ const BaseRatePage: React.FC = () => {
               <div className="overflow-x-auto rounded-lg shadow">
                 <table className="w-full text-sm font-Lora border-collapse">
                   <thead>
-                    <tr className="bg-[#c0392b] text-white">
-                      <th className="px-5 py-4 text-left font-semibold border-r border-red-700 w-16">S.N.</th>
-                      <th className="px-5 py-4 text-left font-semibold border-r border-red-700">Year (BS)</th>
-                      <th className="px-5 py-4 text-left font-semibold border-r border-red-700">Month</th>
+                    <tr className="bg-khaki text-white">
+                      <th className="px-5 py-4 text-left font-semibold border-r border-[#d8b66f] w-16">S.N.</th>
+                      <th className="px-5 py-4 text-left font-semibold border-r border-[#d8b66f]">Year (BS)</th>
+                      <th className="px-5 py-4 text-left font-semibold border-r border-[#d8b66f]">Month</th>
                       <th className="px-5 py-4 text-left font-semibold">Monthly Base Rate</th>
                     </tr>
                   </thead>
